@@ -21,7 +21,7 @@ const Routes = () => {
           </Link>
           <Link className="nav-link" to="/about">
             <Menu.Item name="editorials" active={true}>
-              About About
+              About
             </Menu.Item>
           </Link>
           <Link className="nav-link" to="/status">
