@@ -1,0 +1,18 @@
+{
+  "name": "graduation-project",
+  "version": "1.0.0",
+  "description": "Glasgow Graduation Project",
+  "main": "index.js",
+  "scripts": {
+    "install": "npm --prefix server install && npm --prefix client install",
+    "start": "npm --prefix server start",
+    "heroku-postbuild": "npm --prefix client run build"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules",
+    "server/node_modules"
+  ],
+  "author": "",
+  "license": "ISC"
+}
