@@ -6,11 +6,7 @@ const Home = () => {
   return (
     <div>
       <header className="home-header">
-        {/* <h1>
-          Graduation Project skeleton
-        </h1> */}
-
-        <Header as="h1">Hello, Graduation Project</Header>
+        <h1>Broca Translation</h1>
       </header>
     </div>
   );
