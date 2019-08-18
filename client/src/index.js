@@ -4,29 +4,31 @@ import "./index.css";
 import Home from "./components/Home";
 import About from "./components/About";
 import Status from "./components/Status";
+import { Menu } from "semantic-ui-react";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const Routes = () => {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link className="nav-link" to="/">
+        <Menu>
+          <Link className="nav-link" to="/">
+            <Menu.Item name="editorials" active={true}>
               Home
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/about">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link className="nav-link" to="/status">
+            </Menu.Item>
+          </Link>
+          <Link className="nav-link" to="/about">
+            <Menu.Item name="editorials" active={true}>
+              About About
+            </Menu.Item>
+          </Link>
+          <Link className="nav-link" to="/status">
+            <Menu.Item name="editorials" active={true}>
               Status
-            </Link>
-          </li>
-        </ul>
+            </Menu.Item>
+          </Link>
+        </Menu>
 
         <div>
           <Route path="/" exact component={Home} />
