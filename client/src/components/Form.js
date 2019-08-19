@@ -92,18 +92,32 @@ export class FormRig extends Component {
         </Form.Field>
         <Form.Field>
           <label>Languages</label>
-          <input
-            value={this.state.languages}
-            onChange={this.handleChange}
-            placeholder="Languages"
-            name="languages"
-          />
+
+          <div class="ui input">
+            <input
+              type="text"
+              list="languages"
+              placeholder="Choose language..."
+              value={this.state.languages}
+              onChange={this.handleChange}
+              placeholder="Languages"
+              name="languages"
+            />
+          </div>
+          <datalist id="languages">
+            <option value="English" />
+            <option value="Arabic" />
+            <option value="French" />
+            <option value="Chinese" />
+            <option value="Dutch" />
+          </datalist>
         </Form.Field>
+
         <Form.Field>
           <Checkbox label="I agree to the Terms and Conditions" />
         </Form.Field>
         <Button type="submit">Submit</Button>
-        <div>Form saved successfully</div>
+        <Button type="submit">Cancel</Button>
       </Form>
     );
   }
