@@ -1,3 +1,4 @@
+
 # Team members
 
 1. Mohamed Lafiteh
@@ -10,7 +11,8 @@
 
 1. Create a fork of this project
 2. Clone your fork into your local machine.
-3. Add an `upstream` remote pointing to the main CYF repo (to be able to pull updates from your team members)
+3. Add an `upstream` remote pointing to the main CYF repo (to be able to pull updates from your team members).
+   `git remote add upstream git@github.com:CodeYourFuture/scot-broca-translators.git`
 
 After cloning the project, we will create the local database that the project will use.
 
