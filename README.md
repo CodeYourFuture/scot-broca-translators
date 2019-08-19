@@ -19,7 +19,7 @@ After cloning the project, we will create the local database that the project wi
 ## Database
 
 - Open the terminal, and `cd` into `server`
-- Create your database: `createdb final_project`
+- Create your database: `createdb final_project_broca`
 - `npm run recreate-db:local` (this will create and populate your new team's DB with the data your colleague added)
 
 > Your actual database schema will go to `server/db/recreate-schema.sql` and you can add sample test data in `server/db/populate-db.sql`
