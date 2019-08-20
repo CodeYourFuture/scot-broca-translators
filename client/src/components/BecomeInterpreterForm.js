@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Dropdown } from "semantic-ui-react";
-import { Grid } from "semantic-ui-react";
+import { Button, Form, Dropdown, Grid } from "semantic-ui-react";
 
 const languageOptions = [
   { key: "Arabic", text: "Arabic", value: "Arabic" },
@@ -27,7 +26,7 @@ const languageOptions = [
   { key: "Vietnamese", text: "Vietnamese", value: "Vietnamese" }
 ];
 
-export class BecomeInterpreterForm extends Component {
+class BecomeInterpreterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +43,6 @@ export class BecomeInterpreterForm extends Component {
     this.setState({
       [event.target.name]: event.target.value
     });
-    //console.log(this.state);
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -59,8 +57,8 @@ export class BecomeInterpreterForm extends Component {
         body: JSON.stringify({
           email: this.state.email,
           username: this.state.username,
-          password: this.state.password,
-          confirmationpassword: this.state.confirmationpassword,
+          password,
+          confirmationpassword,
           languages: this.state.languages
         }),
         headers: {
@@ -70,7 +68,6 @@ export class BecomeInterpreterForm extends Component {
       fetch("http://localhost:4000/auth/register", interpreterRequest)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
           this.setState({
             email: "",
             username: "",
@@ -87,7 +84,7 @@ export class BecomeInterpreterForm extends Component {
   render() {
     let userCreateAcount;
     if (this.state.userCreated) {
-      userCreateAcount = "You are registered succsefully";
+      userCreateAcount = "You are registered successfully";
     } else {
       userCreateAcount = null;
     }
