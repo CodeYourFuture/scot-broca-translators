@@ -48,34 +48,41 @@ export class BecomeInterpreterForm extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    // use fetch /auth/register with POST and body = state
-    const interpreterRequest = {
-      method: "POST",
-      body: JSON.stringify({
-        email: this.state.email,
-        username: this.state.username,
-        password: this.state.password,
-        confirmationpassword: this.state.confirmationpassword,
-        languages: this.state.languages
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    fetch("http://localhost:4000/auth/register", interpreterRequest)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          email: "",
-          username: "",
-          password: "",
-          confirmationpassword: "",
-          languages: "",
-          userCreated: true
+    const { password, confirmationpassword } = this.state;
+    // perform all neccassary validations
+    if (password !== confirmationpassword) {
+      alert("Passwords don't match");
+    } else {
+      // make API call
+      const interpreterRequest = {
+        method: "POST",
+        body: JSON.stringify({
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password,
+          confirmationpassword: this.state.confirmationpassword,
+          languages: this.state.languages
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch("http://localhost:4000/auth/register", interpreterRequest)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          this.setState({
+            email: "",
+            username: "",
+            password: "",
+            confirmationpassword: "",
+            languages: "",
+            userCreated: true
+          });
         });
-      });
+    }
   };
+  // use fetch /auth/register with POST and body = state
 
   render() {
     let userCreateAcount;
