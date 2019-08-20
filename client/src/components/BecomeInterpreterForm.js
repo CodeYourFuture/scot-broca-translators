@@ -3,27 +3,27 @@ import { Link } from "react-router-dom";
 import { Button, Form, Dropdown, Grid } from "semantic-ui-react";
 
 const languageOptions = [
-  { key: "Arabic", text: "Arabic", value: "Arabic" },
-  { key: "Chinese", text: "Chinese", value: "Chinese" },
-  { key: "Danish", text: "Danish", value: "Danish" },
-  { key: "Dutch", text: "Dutch", value: "Dutch" },
-  { key: "English", text: "English", value: "English" },
-  { key: "French", text: "French", value: "French" },
-  { key: "German", text: "German", value: "German" },
-  { key: "Greek", text: "Greek", value: "Greek" },
-  { key: "Hungarian", text: "Hungarian", value: "Hungarian" },
-  { key: "Italian", text: "Italian", value: "Italian" },
-  { key: "Japanese", text: "Japanese", value: "Japanese" },
-  { key: "Korean", text: "Korean", value: "Korean" },
-  { key: "Lithuanian", text: "Lithuanian", value: "Lithuanian" },
-  { key: "Persian", text: "Persian", value: "Persian" },
-  { key: "Polish", text: "Polish", value: "Polish" },
-  { key: "Portuguese", text: "Portuguese", value: "Portuguese" },
-  { key: "Russian", text: "Russian", value: "Russian" },
-  { key: "Spanish", text: "Spanish", value: "Spanish" },
-  { key: "Swedish", text: "Swedish", value: "Swedish" },
-  { key: "Turkish", text: "Turkish", value: "Turkish" },
-  { key: "Vietnamese", text: "Vietnamese", value: "Vietnamese" }
+  { key: "Ar", text: "Arabic", value: "Arabic" },
+  { key: "Chi", text: "Chinese", value: "Chinese" },
+  { key: "Dan", text: "Danish", value: "Danish" },
+  { key: "Dut", text: "Dutch", value: "Dutch" },
+  { key: "En", text: "English", value: "English" },
+  { key: "Fre", text: "French", value: "French" },
+  { key: "Ger", text: "German", value: "German" },
+  { key: "Grek", text: "Greek", value: "Greek" },
+  { key: "Hun", text: "Hungarian", value: "Hungarian" },
+  { key: "Ita", text: "Italian", value: "Italian" },
+  { key: "Jap", text: "Japanese", value: "Japanese" },
+  { key: "Kor", text: "Korean", value: "Korean" },
+  { key: "Lith", text: "Lithuanian", value: "Lithuanian" },
+  { key: "Per", text: "Persian", value: "Persian" },
+  { key: "Pol", text: "Polish", value: "Polish" },
+  { key: "Por", text: "Portuguese", value: "Portuguese" },
+  { key: "Rus", text: "Russian", value: "Russian" },
+  { key: "Spa", text: "Spanish", value: "Spanish" },
+  { key: "Swe", text: "Swedish", value: "Swedish" },
+  { key: "Tur", text: "Turkish", value: "Turkish" },
+  { key: "Viet", text: "Vietnamese", value: "Vietnamese" }
 ];
 
 class BecomeInterpreterForm extends Component {
