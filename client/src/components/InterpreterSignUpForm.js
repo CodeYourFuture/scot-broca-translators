@@ -46,7 +46,13 @@ class InterpreterSignUpForm extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    const { password, confirmationpassword } = this.state;
+    const {
+      password,
+      confirmationpassword,
+      email,
+      username,
+      languages
+    } = this.state;
     // perform all neccassary validations
     if (password !== confirmationpassword) {
       alert("Passwords don't match");
@@ -55,11 +61,11 @@ class InterpreterSignUpForm extends Component {
       const interpreterRequest = {
         method: "POST",
         body: JSON.stringify({
-          email: this.state.email,
-          username: this.state.username,
+          email,
+          username,
           password,
           confirmationpassword,
-          languages: this.state.languages
+          languages
         }),
         headers: {
           "Content-Type": "application/json"
@@ -123,7 +129,7 @@ class InterpreterSignUpForm extends Component {
               />
             </Form.Field>
             <Form.Field>
-              <label> confirmationPassword</label>
+              <label> Password confirmation</label>
               <input
                 value={this.state.confirmationpassword}
                 onChange={this.handleChange}
