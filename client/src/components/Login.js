@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Form, Input, Button, Segment, Grid, Header } from "semantic-ui-react";
+import { getToken } from "../api/status";
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loginErr: false
     };
   }
 
@@ -18,10 +20,17 @@ export class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log("submit");
-  };
-  render() {
     const { email, password } = this.state;
+    getToken(email, password)
+      .then(res => sessionStorage.setItem("token", res.token))
+      .catch(err => {
+        this.setState({ loginErr: true });
+        console.log(this.state);
+      });
+  };
+
+  render() {
+    const { email, password, loginErr } = this.state;
     return (
       <Grid centered columns={2}>
         <Grid.Column>
@@ -58,14 +67,21 @@ export class Login extends Component {
                 </Grid>
               </Form.Field>
 
-              <Form.Field inline>
-                <Grid>
-                  <Grid.Column textAlign="center">
-                    <Button content="Cancel" secondary />
-                    <Button type="submit" content="Submit" primary />
-                  </Grid.Column>
-                </Grid>
-              </Form.Field>
+              <Grid>
+                <Grid.Column textAlign="center">
+                  {loginErr ? (
+                    <p>Something went wrong! Please check email or password!</p>
+                  ) : null}
+                  <Button type="submit" content="Submit" primary />
+                  <Button
+                    content="Cancel"
+                    secondary
+                    onClick={() => {
+                      this.props.history.push(`/`);
+                    }}
+                  />
+                </Grid.Column>
+              </Grid>
             </Form>
           </Segment>
         </Grid.Column>
