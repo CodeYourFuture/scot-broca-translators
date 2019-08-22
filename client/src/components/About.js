@@ -4,7 +4,6 @@ import { Header, Icon, Grid } from "semantic-ui-react";
 const About = () => {
   return (
     <div>
- 
       <Header as="h2" icon textAlign="left">
         <Icon name="users" />
         <Header.Content style={textStyle}>
@@ -23,7 +22,7 @@ const About = () => {
         for translation and distribution.
         <br /> Users can also use the app as a platform to upload texts or
         photos of texts in another language that they do not understand. <br />
-     
+      </p>
     </div>
   );
 };
