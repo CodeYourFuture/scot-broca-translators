@@ -48,6 +48,7 @@ export class Login extends Component {
                       onChange={this.handleChange}
                       name="email"
                       value={email}
+                      type="email"
                     />
                   </Grid.Column>
                 </Grid>
