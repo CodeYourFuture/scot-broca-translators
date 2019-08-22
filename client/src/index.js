@@ -8,6 +8,7 @@ import Status from "./components/Status";
 import { Menu } from "semantic-ui-react";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Login from "./components/Login";
 
 const Routes = () => {
   return (
@@ -29,12 +30,18 @@ const Routes = () => {
               Status
             </Menu.Item>
           </Link>
+          <Link className="nav-link" to="/login">
+            <Menu.Item name="editorials" active={true}>
+              Login
+            </Menu.Item>
+          </Link>
         </Menu>
 
         <div>
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/status/" component={Status} />
+          <Route path="/login/" component={Login} />
         </div>
       </div>
     </Router>
