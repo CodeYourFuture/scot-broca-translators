@@ -1,20 +1,22 @@
 import React from "react";
 import "../styles/Home.css";
 import { Header } from "semantic-ui-react";
-import { Menu } from "semantic-ui-react";
 
 const Home = () => {
   return (
     <div>
       <header className="home-header">
-        <h1>Broca Translation</h1>
+        <Header as="h1">Broca Translation</Header>
       </header>
-      <img
-        src="http://www.24hourtranslation.com/wp-content/uploads/2010/04/global-translation.jpg"
-        alt="logo"
-        className="logo"
-      />
-      <button className="loginButton">Login here</button>;
+      <Header as="h2">
+        <img
+          circular
+          src="http://www.24hourtranslation.com/wp-content/uploads/2010/04/global-translation.jpg"
+          alt="logo"
+          className="logo"
+        />
+      </Header>
+      <button className="loginButton">Login here</button>
       <img
         src="https://blogsensebybarb.files.wordpress.com/2014/03/happiness9-aristotle.jpg"
         className="homePageImg"
