@@ -1,10 +1,11 @@
-#Team members
 
-1.Mohamed Lafiteh.
-2.Mariama Sillah.
-4.Blaise Lubuma.
-5.Viktoriia Kosenko.
-5.Adnan.
+# Team members
+
+1. Mohamed Lafiteh
+2. Mariama Sillah
+3. Blaise Lubuma
+4. Vicky
+5. Adnan
 
 # Get started
 
