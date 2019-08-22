@@ -25,7 +25,6 @@ export class Login extends Component {
       .then(res => sessionStorage.setItem("token", res.token))
       .catch(err => {
         this.setState({ loginErr: true });
-        console.log(this.state);
       });
   };
 
