@@ -16,7 +16,7 @@ class TextForm extends Component {
     this.state = {
       fromLanguage: "",
       toLanguage: "",
-      dateSubmited: "",
+      dateSubmited: new Date().toDateString(),
       dueDate: "",
       text: ""
     };
@@ -24,14 +24,13 @@ class TextForm extends Component {
   handleSubmit = () => {
     console.log(this.state);
   };
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+
+  handleChange = (e, { value, name }) => {
+    this.setState({ [name]: value });
   };
-  handleChang = (e, { value }) => {
-    this.setState({ fromLanguage: value });
-  };
+
   render() {
-    const { value } = this.state;
+    let { value } = this.state;
     return (
       <Container>
         <Header as="h2">
@@ -41,17 +40,17 @@ class TextForm extends Component {
           <Form.Group widths="equal">
             <Form.Dropdown
               label="From"
-              onChange={this.handleChang}
+              onChange={this.handleChange}
               options={languages}
               placeholder="Choose an language"
               selection
-              name="fromLanguage"
               value={value}
               required
+              name="fromLanguage"
             />
             <Form.Dropdown
               label="To"
-              onChange={this.handleChang}
+              onChange={this.handleChange}
               options={languages}
               placeholder="Choose an language"
               selection
@@ -65,6 +64,7 @@ class TextForm extends Component {
               label="Due date"
               type="date"
               name="dueDate"
+              value={value}
               onChange={this.handleChange}
             />
           </Form.Group>
@@ -73,6 +73,7 @@ class TextForm extends Component {
             label="Text to be translated"
             placeholder="Please, put your text here..."
             name="text"
+            value={value}
             onChange={this.handleChange}
           />
           <Form.Group>
