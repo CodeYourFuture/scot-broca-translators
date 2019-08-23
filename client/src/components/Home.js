@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <header className="home-header">
-        <h1>Broca Translation</h1>
+        <Header as="h1">Broca Translation</Header>
       </header>
     </div>
   );
