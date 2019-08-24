@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Grid, Select, Header } from "semantic-ui-react";
+import { Button, Form, Grid, Select, Header, Message } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 
 class InterpreterSignUpForm extends Component {
@@ -10,7 +10,7 @@ class InterpreterSignUpForm extends Component {
       email: "",
       username: "",
       password: "",
-      confirmationpassword: "",
+      confirmationPassword: "",
       languages: [],
       userCreated: false
     };
@@ -26,13 +26,13 @@ class InterpreterSignUpForm extends Component {
     e.preventDefault();
     const {
       password,
-      confirmationpassword,
+      confirmationPassword,
       email,
       username,
       languages
     } = this.state;
     // perform all neccassary validations
-    if (password !== confirmationpassword) {
+    if (password !== confirmationPassword) {
       alert("Passwords don't match");
     } else {
       // make API call
@@ -42,7 +42,7 @@ class InterpreterSignUpForm extends Component {
           email,
           username,
           password,
-          confirmationpassword,
+          confirmationPassword,
           languages
         }),
         headers: {
@@ -59,7 +59,7 @@ class InterpreterSignUpForm extends Component {
       email: "",
       username: "",
       password: "",
-      confirmationpassword: "",
+      confirmationPassword: "",
       languages: [],
       userCreated: true
     });
@@ -67,19 +67,31 @@ class InterpreterSignUpForm extends Component {
   handleClick = () => {
     window.location.href = "/";
   };
+  clickLogin = () => {
+    window.location.href = "/login";
+  };
   render() {
     return (
       <div>
-        {this.state.userCreated ? (
-          <p> succeccful</p>
-        ) : (
-          <Grid centered column={16}>
-            <Grid.Column width={6}>
-              <Header as="h2" icon textAlign="center">
-                <Header.Content style={textStyle}>
-                  Interpreter Registration Form
-                </Header.Content>
-              </Header>
+        <Grid centered column={16}>
+          <Grid.Column width={6}>
+            <Header as="h2" icon textAlign="center">
+              <Header.Content style={textStyle}>
+                Interpreter Registration Form
+              </Header.Content>
+            </Header>
+            {this.state.userCreated ? (
+              <div>
+                <Message
+                  success
+                  header="Your user registration was successful"
+                  content="You may now log-in with the username you have chosen"
+                />
+                <Button onClick={this.clickLogin} primary type="submit">
+                  Login
+                </Button>
+              </div>
+            ) : (
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
                   <Form.Input
@@ -124,10 +136,10 @@ class InterpreterSignUpForm extends Component {
                     iconPosition="left"
                     type="password"
                     label="Password confirmation"
-                    value={this.state.confirmationpassword}
+                    value={this.state.confirmationPassword}
                     onChange={this.handleChange}
                     placeholder="Password confirmation"
-                    name="confirmationpassword"
+                    name="confirmationPassword"
                     required
                   />
                 </Form.Field>
@@ -153,9 +165,9 @@ class InterpreterSignUpForm extends Component {
                   Cancel
                 </Button>
               </Form>
-            </Grid.Column>
-          </Grid>
-        )}
+            )}
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
