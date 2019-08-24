@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Grid } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
 
 export class UserRegisterForm extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export class UserRegisterForm extends Component {
     if (password !== confirmationPassword) {
       alert("passwords dont match");
     } else {
-      const UserRequest = {
+      const userRequest = {
         method: "POST",
         body: JSON.stringify({
           email: this.state.email,
@@ -37,7 +37,7 @@ export class UserRegisterForm extends Component {
           "Content-Type": "application/json"
         }
       };
-      fetch("http://localhost:4000/auth/register", UserRequest)
+      fetch("http://localhost:4000/auth/register", userRequest)
         .then(res => res.json())
         .then(this.resetForm);
     }
@@ -48,68 +48,84 @@ export class UserRegisterForm extends Component {
       email: "",
       password: "",
       confirmationPassword: "",
-      userSignUp: "true"
+      userSignUp: true
     });
+  };
+  clickLogin = () => {
+    window.location.href = "/login";
   };
   render() {
     let userSignUp;
     if (this.state.userSignUp) {
-      userSignUp = "User Logged in successfully";
+      userSignUp = "Your account has been successfully created.";
     } else {
       userSignUp = null;
     }
     return (
       <Grid centered column={16}>
         <Grid.Column width={6}>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <label>Name</label>
-              <input
-                onChange={this.handleChange}
-                value={this.state.name}
-                placeholder="Name"
-                name="name"
-                required
+          <Header as="h1">User Registration</Header>
+          {this.state.userSignUp ? (
+            <div>
+              {" "}
+              <Message
+                success
+                header="Your user registration was successful"
+                content="You may now log-in with the username you have chosen"
               />
-              <label>Email</label>
-              <input
-                onChange={this.handleChange}
-                value={this.state.email}
-                placeholder="Email"
-                name="email"
-                required
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input
-                onChange={this.handleChange}
-                placeholder="Password"
-                name="password"
-                value={this.state.password}
-                required
-              />
-            </Form.Field>
-            <Form.Field>
-              <label> Password Confirmation</label>
-              <input
-                value={this.state.confirmationPassword}
-                onChange={this.handleChange}
-                placeholder="Password confirmation"
-                name="confirmationPassword"
-                required
-              />
-            </Form.Field>
-            <Form.Field />
+              <Button onClick={this.clickLogin}>Login</Button>
+            </div>
+          ) : (
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Field>
+                <label>Name</label>
+                <input
+                  onChange={this.handleChange}
+                  value={this.state.name}
+                  placeholder="Name"
+                  name="name"
+                  required
+                />
+                <label>Email</label>
+                <input
+                  onChange={this.handleChange}
+                  value={this.state.email}
+                  placeholder="Email"
+                  name="email"
+                  required
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Password</label>
+                <input
+                  onChange={this.handleChange}
+                  placeholder="Password"
+                  name="password"
+                  value={this.state.password}
+                  required
+                />
+              </Form.Field>
+              <Form.Field>
+                <label> Password Confirmation</label>
+                <input
+                  value={this.state.confirmationPassword}
+                  onChange={this.handleChange}
+                  placeholder="Password confirmation"
+                  name="confirmationPassword"
+                  required
+                />
+              </Form.Field>
+              <Form.Field />
 
-            <Button primary type="submit">
-              Submit
-            </Button>
-            <Button secondary>
-              <Link to="/">Cancel</Link>{" "}
-            </Button>
-            <h1>{userSignUp}</h1>
-          </Form>
+              <Button primary type="submit">
+                Submit
+              </Button>
+              <Button secondary>
+                <Link to="/">Cancel</Link>{" "}
+              </Button>
+              <h1>{userSignUp}</h1>
+            </Form>
+          )}
         </Grid.Column>
       </Grid>
     );
