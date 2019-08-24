@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Grid, Select } from "semantic-ui-react";
+import { Button, Form, Grid, Select, Header } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 
 class InterpreterSignUpForm extends Component {
@@ -11,20 +11,17 @@ class InterpreterSignUpForm extends Component {
       username: "",
       password: "",
       confirmationpassword: "",
-      languages: "",
+      languages: [],
       userCreated: false
     };
   }
-  handleChangeForLanguages = (event, { value }) => {
+  handleChange = (event, { value, name }) => {
     this.setState({
-      languages: value
+      [name]: value
     });
+    console.log(value);
   };
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
+
   handleSubmit = e => {
     e.preventDefault();
     const {
@@ -67,6 +64,9 @@ class InterpreterSignUpForm extends Component {
       userCreated: true
     });
   };
+  handleClick = () => {
+    window.location.href = "/";
+  };
   render() {
     return (
       <div>
@@ -75,10 +75,17 @@ class InterpreterSignUpForm extends Component {
         ) : (
           <Grid centered column={16}>
             <Grid.Column width={6}>
+              <Header as="h2" icon textAlign="center">
+                <Header.Content style={textStyle}>
+                  Interpreter Registration Form
+                </Header.Content>
+              </Header>
               <Form onSubmit={this.handleSubmit}>
                 <Form.Field>
-                  <label>Email</label>
-                  <input
+                  <Form.Input
+                    icon="envelope"
+                    iconPosition="left"
+                    label="Email"
                     onChange={this.handleChange}
                     value={this.state.email}
                     placeholder="Email"
@@ -87,8 +94,10 @@ class InterpreterSignUpForm extends Component {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <label>Username</label>
-                  <input
+                  <Form.Input
+                    icon="user"
+                    iconPosition="left"
+                    label="Username"
                     value={this.state.username}
                     onChange={this.handleChange}
                     placeholder="Username"
@@ -97,8 +106,11 @@ class InterpreterSignUpForm extends Component {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <label>Password</label>
-                  <input
+                  <Form.Input
+                    icon="lock"
+                    iconPosition="left"
+                    type="password"
+                    label="Password"
                     onChange={this.handleChange}
                     placeholder="Password"
                     name="password"
@@ -107,8 +119,11 @@ class InterpreterSignUpForm extends Component {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <label> Password confirmation</label>
-                  <input
+                  <Form.Input
+                    icon="lock"
+                    iconPosition="left"
+                    type="password"
+                    label="Password confirmation"
                     value={this.state.confirmationpassword}
                     onChange={this.handleChange}
                     placeholder="Password confirmation"
@@ -117,12 +132,16 @@ class InterpreterSignUpForm extends Component {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <Select
+                  <Form.Dropdown
+                    label="Languages"
                     value={this.state.languages}
                     name="languages"
-                    onChange={this.handleChangeForLanguages}
+                    onChange={this.handleChange}
                     options={languageOptions}
                     placeholder="Select Language"
+                    multiple
+                    selection
+                    search
                     required
                   />
                 </Form.Field>
@@ -130,8 +149,8 @@ class InterpreterSignUpForm extends Component {
                 <Button primary type="submit">
                   Submit
                 </Button>
-                <Button secondary>
-                  <Link to="/">Cancel</Link>{" "}
+                <Button onClick={this.handleClick} secondary>
+                  Cancel
                 </Button>
               </Form>
             </Grid.Column>
@@ -143,3 +162,10 @@ class InterpreterSignUpForm extends Component {
 }
 
 export default InterpreterSignUpForm;
+
+const textStyle = {
+  fontSize: "25px",
+  color: "black",
+  fontFamily: "Helvetica, Arial, sansSerif",
+  fontWeight: "bold"
+};
