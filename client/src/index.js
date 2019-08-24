@@ -9,6 +9,7 @@ import UserRegisterForm from "./components/UserRegisterForm";
 import { Menu } from "semantic-ui-react";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Login from "./components/Login";
 
 const Routes = () => {
   return (
@@ -35,6 +36,11 @@ const Routes = () => {
               User Sign Up
             </Menu.Item>
           </Link>
+          <Link className="nav-link" to="/login">
+            <Menu.Item name="editorials" active={true}>
+              Login
+            </Menu.Item>
+          </Link>
         </Menu>
 
         <div>
@@ -42,6 +48,7 @@ const Routes = () => {
           <Route path="/about/" component={About} />
           <Route path="/status/" component={Status} />
           <Route path="/UserRegisterForm/" component={UserRegisterForm} />
+          <Route path="/login/" component={Login} />
         </div>
       </div>
     </Router>
