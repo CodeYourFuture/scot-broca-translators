@@ -5,18 +5,13 @@ import { Header } from "semantic-ui-react";
 const Home = () => {
   return (
     <div>
-      <header className="home-header">
-        <Header as="h1">Broca Translation</Header>
-      </header>
-      <Header as="h2">
-        <img
-          circular
-          src="http://www.24hourtranslation.com/wp-content/uploads/2010/04/global-translation.jpg"
-          alt="logo"
-          className="logo"
-        />
-      </Header>
-      <button className="loginButton">Login here</button>
+      <Header
+        as="h1"
+        textAlign="center"
+        content="Broca Translation"
+        image="http://www.24hourtranslation.com/wp-content/uploads/2010/04/global-translation.jpg"
+      ></Header>
+
       <img
         src="https://blogsensebybarb.files.wordpress.com/2014/03/happiness9-aristotle.jpg"
         className="homePageImg"
