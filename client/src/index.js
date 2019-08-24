@@ -5,6 +5,7 @@ import "./index.css";
 import Home from "./components/Home";
 import About from "./components/About";
 import Status from "./components/Status";
+import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
 import { Menu } from "semantic-ui-react";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -35,13 +36,21 @@ const Routes = () => {
               Login
             </Menu.Item>
           </Link>
+          <Link className="nav-link" to="/sign-up-interpreter">
+            <Menu.Item name="editorials" active={true}>
+              Become Interpreter
+            </Menu.Item>
+          </Link>
         </Menu>
-
         <div>
           <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/status/" component={Status} />
           <Route path="/login/" component={Login} />
+          <Route
+            path="/sign-up-interpreter/"
+            component={InterpreterSignUpForm}
+          />
         </div>
       </div>
     </Router>
