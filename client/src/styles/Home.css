@@ -28,21 +28,11 @@
   text-align: justify;
 }
 .signUp {
-  background-color: rgb(49, 141, 202);
   float: right;
-  height: 50px;
-  width: 150px;
-  margin: 3%;
-  color: black;
-  margin-right: 30%;
+  margin: 1%;
 }
 .interpreter {
-  background-color: rgb(66, 159, 221);
   float: left;
-  height: 50px;
-  width: 250px;
   margin-left: -30%;
   margin-top: 3%;
-
-  color: black;
 }

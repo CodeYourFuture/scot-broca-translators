@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Home.css";
-import { Header } from "semantic-ui-react";
+import { Header, Button } from "semantic-ui-react";
 
 const Home = () => {
   return (
@@ -33,8 +33,13 @@ const Home = () => {
           “legalese”.
         </p>
       </div>
-      <button className="signUp">Sign Up</button>
-      <button className="interpreter">Become an Interpreter</button>
+      <Button primary className="signUp">
+        {" "}
+        Sign Up
+      </Button>
+      <Button primary className="interpreter">
+        Become an Interpreter
+      </Button>
     </div>
   );
 };
