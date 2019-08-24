@@ -47,6 +47,12 @@ const Routes = () => {
               Login
             </Menu.Item>
           </Link>
+          <Link className="nav-link" to="/logout">
+            <Menu.Item name="editorials" active={true}>
+              Logout
+            </Menu.Item>
+          </Link>
+        </Menu>
 
           <Link className="nav-link" to="/sign-up-interpreter">
             <Menu.Item name="editorials" active={true}>

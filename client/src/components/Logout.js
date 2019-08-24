@@ -1,7 +1,7 @@
-import React from "react";
+//import React from "react";
 import React, { Component } from "react";
 
-class logout extends Component {
+class Logout extends Component {
   logout = () => {
     localStorage.clear();
     window.location.href = "/";
@@ -16,4 +16,4 @@ class logout extends Component {
   }
 }
 
-export default logout;
+export default Logout;
