@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Dropdown, Grid } from "semantic-ui-react";
+import { Button, Form, Grid, Select } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 
 class InterpreterSignUpForm extends Component {
@@ -11,11 +11,15 @@ class InterpreterSignUpForm extends Component {
       username: "",
       password: "",
       confirmationpassword: "",
-      languages: [],
+      languages: "",
       userCreated: false
     };
   }
-
+  handleChangeForLanguages = (event, { value }) => {
+    this.setState({
+      languages: value
+    });
+  };
   handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -113,15 +117,12 @@ class InterpreterSignUpForm extends Component {
                   />
                 </Form.Field>
                 <Form.Field>
-                  <Dropdown
-                    button
-                    className="icon"
-                    floating
-                    labeled
-                    icon="world"
+                  <Select
+                    value={this.state.languages}
+                    name="languages"
+                    onChange={this.handleChangeForLanguages}
                     options={languageOptions}
-                    search
-                    text="Select Language"
+                    placeholder="Select Language"
                     required
                   />
                 </Form.Field>
