@@ -31,22 +31,25 @@ router.post("/login", async (req, res, next) => {
  * Users Registration
  */
 router.post("/register", async (req, res, next) => {
-  const { email, password, username, role } = req.body;
+  const { email, password, name, role } = req.body;
 
   const user = {
     email,
     password,
-    username,
+    name,
     role
   };
-  console.log("req body" + user);
-  console.log("req body" + user.email);
+
   if (
     user.email != null &&
     user.email.length > 1 &&
+    user.password != null &&
     user.password.length > 1 &&
-    user.username.length > 1 &&
-    user.role.length > 1
+    user.name != null &&
+    user.name.length > 1 &&
+    user.role != null &&
+    user.role.length > 1 &&
+    (user.role == "Interpreter" || user.role == "User")
   ) {
     db.createUser(user)
       .then(() => {

@@ -38,9 +38,10 @@ const createUser = ({ email, password, name, role }) => {
       [email, password, name, role],
       (error, result) => {
         if (error) {
+          console.log(error);
           reject(error);
         }
-        console.log(result);
+
         resolve(result.rows);
       }
     );
