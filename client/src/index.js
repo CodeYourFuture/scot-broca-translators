@@ -7,6 +7,7 @@ import About from "./components/About";
 import Status from "./components/Status";
 import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
+import TextForm from "./components/TextForm";
 import { Menu } from "semantic-ui-react";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -22,29 +23,39 @@ const Routes = () => {
               Home
             </Menu.Item>
           </Link>
+
           <Link className="nav-link" to="/about">
             <Menu.Item name="editorials" active={true}>
               About
             </Menu.Item>
           </Link>
+
           <Link className="nav-link" to="/status">
             <Menu.Item name="editorials" active={true}>
               Status
             </Menu.Item>
           </Link>
+
           <Link className="nav-link" to="/sign-up-user">
             <Menu.Item name="editorials" active={true}>
               User Sign Up
             </Menu.Item>
           </Link>
+
           <Link className="nav-link" to="/login">
             <Menu.Item name="editorials" active={true}>
               Login
             </Menu.Item>
           </Link>
+
           <Link className="nav-link" to="/sign-up-interpreter">
             <Menu.Item name="editorials" active={true}>
               Become Interpreter
+            </Menu.Item>
+          </Link>
+          <Link className="nav-link" to="/text">
+            <Menu.Item name="editorials" active={true}>
+              Add text
             </Menu.Item>
           </Link>
         </Menu>
@@ -58,6 +69,7 @@ const Routes = () => {
             path="/sign-up-interpreter/"
             component={InterpreterSignUpForm}
           />
+          <Route path="/text" component={TextForm} />
         </div>
       </div>
     </Router>

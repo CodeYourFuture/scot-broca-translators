@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import { Header, Container, Button, Form } from "semantic-ui-react";
-
-const languages = [
-  { key: "Rus", text: "Russian", value: "Russian" },
-  { key: "Spa", text: "Spanish", value: "Spanish" },
-  { key: "Swe", text: "Swedish", value: "Swedish" },
-  { key: "Tur", text: "Turkish", value: "Turkish" },
-  { key: "Viet", text: "Vietnamese", value: "Vietnamese" }
-];
+import { Header, Segment, Container, Button, Form } from "semantic-ui-react";
+import languageOptions from "./LanguageOptions";
 
 class TextForm extends Component {
   constructor(props) {
@@ -16,74 +9,109 @@ class TextForm extends Component {
     this.state = {
       fromLanguage: "",
       toLanguage: "",
-      dateSubmited: new Date().toDateString(),
+      haveAllFielsValue: false,
       dueDate: "",
       text: ""
     };
   }
+
   handleSubmit = () => {
+    console.log(this.state);
+    this.setState({
+      fromLanguage: "",
+      toLanguage: "",
+      dueDate: "",
+      text: "",
+      haveAllFielsValue: false
+    });
     console.log(this.state);
   };
 
+  checkAllFields = () => {
+    let haveAllFielsValue = false;
+    if (this.state.fromLanguage && this.state.toLanguage && this.state.text) {
+      haveAllFielsValue = true;
+    }
+    this.setState({ haveAllFielsValue: haveAllFielsValue });
+  };
+
   handleChange = (e, { value, name }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => this.checkAllFields());
   };
 
   render() {
-    let { value } = this.state;
+    const {
+      fromLanguage,
+      toLanguage,
+      dueDate,
+      text,
+      haveAllFielsValue
+    } = this.state;
+
     return (
       <Container>
         <Header as="h2">
           To get your text translated, you need to fill in the form
         </Header>
-        <Form>
-          <Form.Group widths="equal">
-            <Form.Dropdown
-              label="From"
-              onChange={this.handleChange}
-              options={languages}
-              placeholder="Choose an language"
-              selection
-              value={value}
+
+        <Segment>
+          <Form>
+            <Form.Group widths="equal">
+              <Form.Dropdown
+                label="From"
+                onChange={this.handleChange}
+                options={languageOptions}
+                placeholder="Choose an language"
+                selection
+                value={fromLanguage}
+                required
+                name="fromLanguage"
+              />
+              <Form.Dropdown
+                label="To"
+                onChange={this.handleChange}
+                options={languageOptions}
+                placeholder="Choose an language"
+                selection
+                name="toLanguage"
+                value={toLanguage}
+                required
+              />
+
+              <Form.Input
+                fluid
+                label="Due date"
+                type="date"
+                name="dueDate"
+                value={dueDate}
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+
+            <Form.TextArea
               required
-              name="fromLanguage"
-            />
-            <Form.Dropdown
-              label="To"
+              label="Text to be translated"
+              placeholder="Please, put your text here..."
+              name="text"
+              value={text}
               onChange={this.handleChange}
-              options={languages}
-              placeholder="Choose an language"
-              selection
-              name="toLanguage"
-              value={value}
-              required
             />
 
-            <Form.Input
-              fluid
-              label="Due date"
-              type="date"
-              name="dueDate"
-              value={value}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.TextArea
-            required
-            label="Text to be translated"
-            placeholder="Please, put your text here..."
-            name="text"
-            value={value}
-            onChange={this.handleChange}
-          />
-          <Form.Group>
-            <Button color="blue" onClick={this.handleSubmit}>
-              Submit
-            </Button>
-            <Button color="grey">Clear</Button>
-            <Button color="black">Cancel</Button>
-          </Form.Group>
-        </Form>
+            <Form.Group>
+              {haveAllFielsValue ? (
+                <Form.Button color="blue" onClick={this.handleSubmit}>
+                  Submit
+                </Form.Button>
+              ) : (
+                <Button color="blue" disabled>
+                  Submit
+                </Button>
+              )}
+              <Button color="grey">Clear</Button>
+              <Button color="black">Cancel</Button>
+            </Form.Group>
+          </Form>
+        </Segment>
       </Container>
     );
   }
