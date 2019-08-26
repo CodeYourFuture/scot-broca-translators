@@ -56,12 +56,7 @@ const Routes = () => {
           </Link>
 
           {/* Menu button to call 'logout' function */}
-          <Menu.Item
-            name="editorials"
-            active={true}
-            position="right"
-            onClick={logout}
-          >
+          <Menu.Item active={true} position="right" onClick={logout}>
             Logout
           </Menu.Item>
         </Menu>
