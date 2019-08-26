@@ -28,11 +28,6 @@ export class Login extends Component {
       });
   };
 
-  logout = () => {
-    localStorage.clear();
-    window.location.href = "/";
-  };
-
   render() {
     const { email, password, loginErr } = this.state;
     return (

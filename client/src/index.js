@@ -13,6 +13,13 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 
+/////Function called to delete the authentification token///
+const logout = () => {
+  sessionStorage.clear();
+  window.location.href = "/";
+};
+///////////////////////////////////////////////////////////
+
 const Routes = () => {
   return (
     <Router>
@@ -47,11 +54,16 @@ const Routes = () => {
               Login
             </Menu.Item>
           </Link>
-          <Link className="nav-link" to="/logout">
-            <Menu.Item name="editorials" active={true}>
-              Logout
-            </Menu.Item>
-          </Link>
+
+          {/* Menu button to call 'logout' function */}
+          <Menu.Item
+            name="editorials"
+            active={true}
+            position="right"
+            onClick={logout}
+          >
+            Logout
+          </Menu.Item>
         </Menu>
 
           <Link className="nav-link" to="/sign-up-interpreter">
