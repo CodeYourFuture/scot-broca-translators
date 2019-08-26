@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Home.css";
-import { Header, Button } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
         src="https://blogsensebybarb.files.wordpress.com/2014/03/happiness9-aristotle.jpg"
         className="homePageImg"
       />
-      <div>
+      <div className="information">
         <p className="land-p-one">
           An app to create a user-based network of volunteer
           interpreters/translators. Translators will be able to create profiles
@@ -32,14 +32,9 @@ const Home = () => {
           they do not understand, including what we commonly nickname
           “legalese”.
         </p>
+        <button className="signUp">Sign Up</button>
+        <button className="interpreter">Become an Interpreter</button>
       </div>
-      <Button primary className="signUp">
-        {" "}
-        Sign Up
-      </Button>
-      <Button primary className="interpreter">
-        Become an Interpreter
-      </Button>
     </div>
   );
 };
