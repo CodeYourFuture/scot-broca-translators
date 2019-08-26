@@ -8,37 +8,21 @@
 .information {
   font-size: 20px;
   text-align: justify;
-  margin-bottom: 5%;
+  margin-bottom: 6%;
 }
 
-.land-p-one {
+.parag-one {
   float: left;
   width: 45%;
-  margin-left: 20px;
+  margin-left: 2%;
 }
 
-.land-p-two {
+.parag-two {
   float: right;
   width: 45%;
-  margin-right: 20px;
+  margin-right: 2%;
 }
-
-.signUp {
-  background-color: rgb(150, 195, 223);
-  padding: 10px;
-  width: 200px;
-  color: black;
-  margin-left: -30%;
-  margin-top: 18%;
-  float: left;
-  font-size: 18px;
-}
-.interpreter {
-  background-color: rgb(150, 195, 223);
-  padding: 10px;
-  color: black;
-  margin: 5%;
-  float: right;
-  margin-right: 10%;
-  font-size: 18px;
+.homePage-buttons {
+  display: block;
+  margin-left: 40%;
 }
