@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Header, Segment, Container, Button, Form } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 
-class TextForm extends Component {
+class AddDocumentForm extends Component {
   constructor(props) {
     super(props);
 
@@ -50,12 +50,13 @@ class TextForm extends Component {
 
     return (
       <Container>
-        <Header as="h2">
-          To get your text translated, you need to fill in the form
-        </Header>
+        <Header as="h2">Add document</Header>
 
         <Segment>
           <Form>
+            <Form.Field as="p">
+              To get your text translated, you need to fill in the form
+            </Form.Field>
             <Form.Group widths="equal">
               <Form.Dropdown
                 label="From"
@@ -107,7 +108,7 @@ class TextForm extends Component {
                   Submit
                 </Button>
               )}
-              <Button color="grey">Clear</Button>
+
               <Button color="black">Cancel</Button>
             </Form.Group>
           </Form>
@@ -117,4 +118,4 @@ class TextForm extends Component {
   }
 }
 
-export default TextForm;
+export default AddDocumentForm;

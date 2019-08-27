@@ -7,7 +7,7 @@ import About from "./components/About";
 import Status from "./components/Status";
 import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
-import TextForm from "./components/TextForm";
+import AddDocumentForm from "./components/TextForm";
 import { Menu } from "semantic-ui-react";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -53,11 +53,14 @@ const Routes = () => {
               Become Interpreter
             </Menu.Item>
           </Link>
-          <Link className="nav-link" to="/text">
-            <Menu.Item name="editorials" active={true}>
-              Add text
-            </Menu.Item>
-          </Link>
+
+          {sessionStorage.getItem("token") ? (
+            <Link className="nav-link" to="/text">
+              <Menu.Item name="editorials" active={true}>
+                Add document
+              </Menu.Item>
+            </Link>
+          ) : null}
         </Menu>
         <div>
           <Route path="/" exact component={Home} />
@@ -69,7 +72,8 @@ const Routes = () => {
             path="/sign-up-interpreter/"
             component={InterpreterSignUpForm}
           />
-          <Route path="/text" component={TextForm} />
+
+          <Route path="/add-document" component={AddDocumentForm} />
         </div>
       </div>
     </Router>
