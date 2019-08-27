@@ -11,10 +11,9 @@ import AddDocumentForm from "./components/AddDocumentForm";
 import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
-import { isLoggedIn } from "./components/isLoggedIn";
+import { isLoggedIn } from "./components/helpers/isLoggedIn";
 
 const Routes = () => {
-  console.log(isLoggedIn());
   return (
     <Router>
       <div>
