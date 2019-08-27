@@ -32,20 +32,32 @@ const getUserByEmail = email => {
 };
 
 const createUser = ({ email, password, name, role }) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
-      [email, password, name, role],
-      (error, result) => {
-        if (error) {
-          console.log(error);
-          reject(error);
+  return getUserByEmail(email)
+    .then(users => {
+      return new Promise((resolve, reject) => {
+        if (users) {
+          reject("An account with the same email address already exists");
+        } else {
+          resolve();
         }
+      });
+    })
+    .then(x => {
+      return new Promise((resolve, reject) => {
+        pool.query(
+          "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
+          [email, password, name, role],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              reject(error);
+            }
 
-        resolve(result.rows);
-      }
-    );
-  });
+            resolve(result.rows);
+          }
+        );
+      });
+    });
 };
 
 const getUserById = id => {

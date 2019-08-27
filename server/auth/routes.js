@@ -60,7 +60,7 @@ router.post("/register", async (req, res, next) => {
   //   }
 
   if (
-    validateEmail(email) &&
+    validateEmailAddress(email) &&
     validateName(name) &&
     validatePassword(password) &&
     validateRole(role)
@@ -73,22 +73,38 @@ router.post("/register", async (req, res, next) => {
         });
       })
       .catch(err => {
+        res.status(400).send({
+          success: false,
+          message: err
+        });
         console.log(err);
         next(err);
       });
   } else {
     res.send(err);
   }
-
-  function validateEmail(email) {
-    if (email == null || email.length == 0) {
+  function validateEmailAddress(email) {
+    var expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    if (expression.test(String(email).toLowerCase())) {
+      return true;
+    } else {
       res.status(400).send({
         success: false,
-        message: "Email required"
+        message: "The email format is incorrect."
       });
       return false;
-    } else return true;
+    }
   }
+
+  //   function validateEmail(email) {
+  //     if (email == null || email.length == 0 && email.includes("@")) {
+  //       res.status(400).send({
+  //         success: false,
+  //         message: "Email required"
+  //       });
+  //       return false;
+  //     } else return true;
+  //   }
 
   function validateName(name) {
     if (name == null || name.length == 0) {
@@ -99,11 +115,15 @@ router.post("/register", async (req, res, next) => {
       return false;
     } else return true;
   }
+
+  // password is invalid...
+
   function validatePassword(password) {
-    if (password == null || password.length == 0) {
+    var password_pattern = /[a-z0-9_]{8,20}/i;
+    if (!password_pattern.test(password)) {
       res.status(400).send({
         success: false,
-        message: "password is required"
+        message: "The password must have at least 8 characters"
       });
       return false;
     } else return true;
