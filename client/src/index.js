@@ -7,13 +7,14 @@ import About from "./components/About";
 import Status from "./components/Status";
 import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
-import AddDocumentForm from "./components/TextForm";
+import AddDocumentForm from "./components/AddDocumentForm";
 import { Menu } from "semantic-ui-react";
-
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
+import { isLoggedIn } from "./components/isLoggedIn";
 
 const Routes = () => {
+  console.log(isLoggedIn());
   return (
     <Router>
       <div>
@@ -54,8 +55,8 @@ const Routes = () => {
             </Menu.Item>
           </Link>
 
-          {sessionStorage.getItem("token") ? (
-            <Link className="nav-link" to="/sign-up-interpreter/">
+          {isLoggedIn() ? (
+            <Link className="nav-link" to="/add-document/">
               <Menu.Item name="editorials" active={true}>
                 Add document
               </Menu.Item>
@@ -72,8 +73,9 @@ const Routes = () => {
             path="/sign-up-interpreter/"
             component={InterpreterSignUpForm}
           />
-
-          <Route path="/add-document" component={AddDocumentForm} />
+          {isLoggedIn() ? (
+            <Route path="/add-document/" component={AddDocumentForm} />
+          ) : null}
         </div>
       </div>
     </Router>
