@@ -40,16 +40,30 @@ router.post("/register", async (req, res, next) => {
     role
   };
 
+  //   if (
+  //     user.email != null &&
+  //     user.email.length > 1 &&
+  //     user.password != null &&
+  //     user.password.length > 1 &&
+  //     user.name != null &&
+  //     user.name.length > 1 &&
+  //     user.role != null &&
+  //     user.role.length > 1 &&
+  //     (user.role == "Interpreter" || user.role == "User")
+  //   ) {
+
+  //   } else {
+  //     res.status(400).send({
+  //       success: false,
+  //       message: "Empty Validation"
+  //     });
+  //   }
+
   if (
-    user.email != null &&
-    user.email.length > 1 &&
-    user.password != null &&
-    user.password.length > 1 &&
-    user.name != null &&
-    user.name.length > 1 &&
-    user.role != null &&
-    user.role.length > 1 &&
-    (user.role == "Interpreter" || user.role == "User")
+    validateEmail(email) &&
+    validateName(name) &&
+    validatePassword(password) &&
+    validateRole(role)
   ) {
     db.createUser(user)
       .then(() => {
@@ -63,10 +77,45 @@ router.post("/register", async (req, res, next) => {
         next(err);
       });
   } else {
-    res.send({
-      success: false,
-      message: "Empty Validation"
-    });
+    res.send(err);
+  }
+
+  function validateEmail(email) {
+    if (email == null || email.length == 0) {
+      res.status(400).send({
+        success: false,
+        message: "Email required"
+      });
+      return false;
+    } else return true;
+  }
+
+  function validateName(name) {
+    if (name == null || name.length == 0) {
+      res.status(400).send({
+        success: false,
+        message: "name is required"
+      });
+      return false;
+    } else return true;
+  }
+  function validatePassword(password) {
+    if (password == null || password.length == 0) {
+      res.status(400).send({
+        success: false,
+        message: "password is required"
+      });
+      return false;
+    } else return true;
+  }
+  function validateRole(role) {
+    if (role == null || role.length == 0) {
+      res.status(400).send({
+        success: false,
+        message: "role  is required"
+      });
+      return false;
+    } else return true;
   }
 });
 
