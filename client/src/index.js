@@ -55,7 +55,7 @@ const Routes = () => {
           </Link>
 
           {sessionStorage.getItem("token") ? (
-            <Link className="nav-link" to="/text">
+            <Link className="nav-link" to="/sign-up-interpreter/">
               <Menu.Item name="editorials" active={true}>
                 Add document
               </Menu.Item>
