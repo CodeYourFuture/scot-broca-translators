@@ -34,5 +34,6 @@ CREATE TABLE documents (
   submission_date  DATE NOT NULL,
   due_date         DATE NOT NULL,
   owner_id         uuid REFERENCES users(id) NOT NULL,
-  format           format_types
+  format           format_types,
+  content          text
 );
