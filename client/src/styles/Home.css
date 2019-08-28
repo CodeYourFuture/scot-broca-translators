@@ -5,24 +5,26 @@
   border-radius: 10%;
   display: block;
 }
+
 .information {
   font-size: 20px;
-  text-align: justify;
-  margin-bottom: 6%;
+  padding-bottom: 20%;
 }
 
 .parag-one {
   float: left;
   width: 45%;
   margin-left: 2%;
+  text-align: center;
 }
 
 .parag-two {
   float: right;
   width: 45%;
   margin-right: 2%;
+  text-align: center;
 }
-.homePage-buttons {
-  display: block;
-  margin-left: 40%;
+
+.information p {
+  text-align: justify;
 }
