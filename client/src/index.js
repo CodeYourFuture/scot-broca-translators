@@ -13,6 +13,11 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 
+const logout = () => {
+  sessionStorage.clear();
+  window.location.href = "/";
+};
+
 const Routes = () => {
   return (
     <Router>
@@ -60,6 +65,12 @@ const Routes = () => {
                 Add document
               </Menu.Item>
             </Link>
+          ) : null}
+
+          {isLoggedIn() ? (
+            <Menu.Item active={true} position="right" onClick={logout}>
+              Logout
+            </Menu.Item>
           ) : null}
         </Menu>
         <div>
