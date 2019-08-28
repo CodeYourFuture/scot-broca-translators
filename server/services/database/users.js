@@ -42,7 +42,7 @@ const createUser = ({ email, password, name, role }) => {
         }
       });
     })
-    .then(x => {
+    .then(() => {
       return new Promise((resolve, reject) => {
         pool.query(
           "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
