@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Grid, Select, Header, Message } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
-
+const role = "Interpreter";
 class InterpreterSignUpForm extends Component {
   constructor(props) {
     super(props);
