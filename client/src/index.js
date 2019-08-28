@@ -55,10 +55,11 @@ const Routes = () => {
             </Menu.Item>
           </Link>
 
-          {/* Menu button to call 'logout' function */}
-          <Menu.Item active={true} position="right" onClick={logout}>
-            Logout
-          </Menu.Item>
+          {isLoggedIn() ? (
+            <Menu.Item active={true} position="right" onClick={logout}>
+              Logout
+            </Menu.Item>
+          ) : null}
         </Menu>
 
           <Link className="nav-link" to="/sign-up-interpreter">
