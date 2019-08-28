@@ -13,12 +13,10 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 
-/////Function called to delete the authentification token///
 const logout = () => {
   sessionStorage.clear();
   window.location.href = "/";
 };
-///////////////////////////////////////////////////////////
 
 const Routes = () => {
   return (
@@ -55,13 +53,6 @@ const Routes = () => {
             </Menu.Item>
           </Link>
 
-          {isLoggedIn() ? (
-            <Menu.Item active={true} position="right" onClick={logout}>
-              Logout
-            </Menu.Item>
-          ) : null}
-        </Menu>
-
           <Link className="nav-link" to="/sign-up-interpreter">
             <Menu.Item name="editorials" active={true}>
               Become Interpreter
@@ -74,6 +65,12 @@ const Routes = () => {
                 Add document
               </Menu.Item>
             </Link>
+          ) : null}
+
+          {isLoggedIn() ? (
+            <Menu.Item active={true} position="right" onClick={logout}>
+              Logout
+            </Menu.Item>
           ) : null}
         </Menu>
         <div>
