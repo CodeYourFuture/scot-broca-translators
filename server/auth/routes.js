@@ -45,30 +45,46 @@ router.post("/register", async (req, res, next) => {
     role
   };
 
-  if (
-    emailValidate(email) &&
-    nameValidate(name) &&
-    passwordValidate(password) &&
-    roleValidate(role)
-  ) {
-    db.createUser(user)
-      .then(() => {
-        res.send({
-          success: true,
-          message: "Account created"
-        });
-      })
-      .catch(err => {
-        res.status(400).send({
-          success: false,
-          message: err
-        });
-        console.log(err);
-        next(err);
-      });
-  } else {
-    res.send(err);
+  let errorMessages = [];
+
+  if (!emailValidate(email)) {
+    errorMessages.push("The email format is incorrect");
   }
+
+  if (!nameValidate(name)) {
+    errorMessages.push("name is required");
+  }
+
+  if (!passwordValidate(password)) {
+    errorMessages.push("The password must have at least 8 characters");
+  }
+
+  if (!roleValidate(role)) {
+    errorMessages.push("role  is required");
+  }
+
+  if (errorMessages.length != 0) {
+    return res.status(400).send({
+      success: false,
+      message: errorMessages.join(", ")
+    });
+  }
+
+  db.createUser(user)
+    .then(() => {
+      res.send({
+        success: true,
+        message: "Account created"
+      });
+    })
+    .catch(err => {
+      res.status(400).send({
+        success: false,
+        message: err
+      });
+      console.log(err);
+      next(err);
+    });
 });
 
 module.exports = router;

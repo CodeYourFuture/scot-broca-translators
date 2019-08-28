@@ -50,7 +50,7 @@ const createUser = ({ email, password, name, role }) => {
           (error, result) => {
             if (error) {
               console.log(error);
-              reject(error);
+              reject("An unexpected error occured, please try again later.");
             }
 
             resolve(result.rows);
