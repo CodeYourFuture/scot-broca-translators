@@ -109,7 +109,12 @@ class AddDocumentForm extends Component {
                 </Button>
               )}
 
-              <Button color="black">Cancel</Button>
+              <Button
+                color="black"
+                onClick={() => this.props.history.push("/dashboard")}
+              >
+                Cancel
+              </Button>
             </Form.Group>
           </Form>
         </Segment>

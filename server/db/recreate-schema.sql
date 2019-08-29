@@ -28,6 +28,7 @@ CREATE TABLE languages (
 
 CREATE TABLE documents (
   id               SERIAL PRIMARY KEY,
+  name               VARCHAR(60) NOT NULL,
   from_language_code   VARCHAR(6) REFERENCES languages(code) NOT NULL,
   to_language_code     VARCHAR(6) REFERENCES languages(code) NOT NULL,
   status           document_status,

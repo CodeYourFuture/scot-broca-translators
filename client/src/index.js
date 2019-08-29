@@ -8,6 +8,7 @@ import Status from "./components/Status";
 import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
 import AddDocumentForm from "./components/AddDocumentForm";
+import Dashboard from "./components/Dashboard";
 import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
@@ -41,23 +42,28 @@ const Routes = () => {
             </Menu.Item>
           </Link>
 
-          <Link className="nav-link" to="/sign-up-user">
-            <Menu.Item name="editorials" active={true}>
-              User Sign Up
-            </Menu.Item>
-          </Link>
+          {isLoggedIn() ? null : (
+            <Link className="nav-link" to="/sign-up-user">
+              <Menu.Item name="editorials" active={true}>
+                User Sign Up
+              </Menu.Item>
+            </Link>
+          )}
+          {isLoggedIn() ? null : (
+            <Link className="nav-link" to="/login">
+              <Menu.Item name="editorials" active={true}>
+                Login
+              </Menu.Item>
+            </Link>
+          )}
 
-          <Link className="nav-link" to="/login">
-            <Menu.Item name="editorials" active={true}>
-              Login
-            </Menu.Item>
-          </Link>
-
-          <Link className="nav-link" to="/sign-up-interpreter">
-            <Menu.Item name="editorials" active={true}>
-              Become Interpreter
-            </Menu.Item>
-          </Link>
+          {isLoggedIn() ? null : (
+            <Link className="nav-link" to="/sign-up-interpreter">
+              <Menu.Item name="editorials" active={true}>
+                Become Interpreter
+              </Menu.Item>
+            </Link>
+          )}
 
           {isLoggedIn() ? (
             <Link className="nav-link" to="/add-document/">
@@ -86,6 +92,8 @@ const Routes = () => {
           {isLoggedIn() ? (
             <Route path="/add-document/" component={AddDocumentForm} />
           ) : null}
+
+          <Route path="/dashboard" component={Dashboard} />
         </div>
       </div>
     </Router>
