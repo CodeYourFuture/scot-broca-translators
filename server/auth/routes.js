@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const db = require("../services/database/users");
-var MyMethods = require("./validator.js");
-var emailValidate = MyMethods.emailValidate;
-var nameValidate = MyMethods.nameValidate;
-var passwordValidate = MyMethods.passwordValidate;
-var roleValidate = MyMethods.roleValidate;
+const {
+  emailValidate,
+  nameValidate,
+  passwordValidate,
+  roleValidate
+} = require("./validator.js");
 
 /**
  * Users Login
@@ -45,14 +46,14 @@ router.post("/register", async (req, res, next) => {
     role
   };
 
-  let errorMessages = [];
+  const errorMessages = [];
 
   if (!emailValidate(email)) {
     errorMessages.push("The email format is incorrect");
   }
 
   if (!nameValidate(name)) {
-    errorMessages.push("name is required");
+    errorMessages.push("Name is required");
   }
 
   if (!passwordValidate(password)) {
@@ -60,7 +61,7 @@ router.post("/register", async (req, res, next) => {
   }
 
   if (!roleValidate(role)) {
-    errorMessages.push("role  is required");
+    errorMessages.push("Role  is required");
   }
 
   if (errorMessages.length != 0) {

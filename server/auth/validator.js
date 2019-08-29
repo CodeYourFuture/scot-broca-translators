@@ -1,14 +1,14 @@
 const { INTERPRETER, USER } = require("./roles");
-function validateEmailAddress(email) {
+function emailValidate(email) {
   var expression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (expression.test(String(email).toLowerCase())) {
+  if (expression.test(email.toLowerCase())) {
     return true;
   } else {
     return false;
   }
 }
 
-function validateName(name) {
+function nameValidate(name) {
   if (name == null || name.length == 0) {
     return false;
   } else {
@@ -16,17 +16,15 @@ function validateName(name) {
   }
 }
 
-// password is invalid...
-
-function validatePassword(password) {
+function passwordValidate(password) {
   return password.length > 8;
 }
-function validateRole(role) {
+function roleValidate(role) {
   return role === INTERPRETER || role === USER;
 }
 module.exports = {
-  emailValidate: validateEmailAddress,
-  nameValidate: validateName,
-  passwordValidate: validatePassword,
-  roleValidate: validateRole
+  emailValidate: emailValidate,
+  nameValidate: nameValidate,
+  passwordValidate: passwordValidate,
+  roleValidate: roleValidate
 };
