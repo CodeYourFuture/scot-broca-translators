@@ -7,16 +7,36 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    docsDb
-      .getAllDocuments()
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        console.error(err);
-        res.send(500);
-      });
+    let user = req.user;
+    console.log(user);
+    if (isInterpreter) {
+      getIterpreterDocuments();
+    } else {
+      getUserDocuments();
+    }
   }
 );
 
+function getIterpreterDocuments() {
+  docsDb
+    .getAllDocuments()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.send(500);
+    });
+}
+function getUserDocuments() {
+  docsDb
+    .getUserDocuments()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      console.error(err);
+      res.send(500);
+    });
+}
 module.exports = router;
