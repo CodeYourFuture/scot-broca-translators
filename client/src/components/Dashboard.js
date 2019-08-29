@@ -1,18 +1,17 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { Header, Container, Table, Button } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 
 export class Dashboard extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       documents: []
     };
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
     getDocuments()
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
@@ -46,15 +45,29 @@ export class Dashboard extends Component {
           <Table.Body>
             {documents &&
               documents.map(document => {
+                const {
+                  id,
+                  name,
+                  from_language_name,
+                  to_language_name,
+                  status
+                } = document;
+                const dueDate = moment(document.due_date).format("L");
                 return (
-                  <Table.Row key={document.id}>
-                    {console.log(document)}
-                    <Table.Cell>{document.name}</Table.Cell>
-                    <Table.Cell>{document.due_date}</Table.Cell>
-                    <Table.Cell>{document.from_language_name}</Table.Cell>
-                    <Table.Cell>{document.to_language_name}</Table.Cell>
-                    <Table.Cell>{document.status}</Table.Cell>
-                    <Table.Cell>No</Table.Cell>
+                  <Table.Row key={id}>
+                    <Table.Cell>{name}</Table.Cell>
+                    <Table.Cell>{dueDate}</Table.Cell>
+                    <Table.Cell>{from_language_name}</Table.Cell>
+                    <Table.Cell>{to_language_name}</Table.Cell>
+                    <Table.Cell>{status}</Table.Cell>
+                    <Table.Cell>
+                      <span>View</span> \
+                      {userRole === "User" ? (
+                        <span>Delete</span>
+                      ) : (
+                        <span>Pick Translation</span>
+                      )}
+                    </Table.Cell>
                   </Table.Row>
                 );
               })}
