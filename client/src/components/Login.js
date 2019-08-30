@@ -21,8 +21,14 @@ export class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
+
     getToken(email, password)
-      .then(res => sessionStorage.setItem("token", res.token))
+      .then(res => {
+        sessionStorage.setItem("token", res.token);
+        sessionStorage.setItem("userName", res.user.name);
+        sessionStorage.setItem("userRole", res.user.role);
+        window.location.href = "/dashboard";
+      })
       .catch(err => {
         this.setState({ loginErr: true });
       });
