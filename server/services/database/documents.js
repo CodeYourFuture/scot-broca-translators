@@ -6,7 +6,7 @@ const getAllDocuments = () => {
   return new Promise((resolve, reject) => {
     const sqlQuery =
       "select\
-          d.id, d.format,\
+          d.id, d.format, d.name,\
           d.status, d.submission_date, d.due_date,\
           lf.name as from_language_name,\
           lt.name as to_language_name,\

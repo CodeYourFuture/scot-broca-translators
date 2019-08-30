@@ -14,5 +14,6 @@
     "server/node_modules"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }
