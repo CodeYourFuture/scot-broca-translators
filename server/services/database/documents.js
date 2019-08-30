@@ -2,11 +2,27 @@ const { Pool } = require("pg");
 const config = require("../../config");
 const pool = new Pool(config);
 
-const createDocument = ({ uid, userSignUp, interpreterSignUp }) => {
+const createDocument = ({
+  from_language_code,
+  to_language_code,
+  status,
+  submission_date,
+  due_date,
+  owner_id,
+  format
+}) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO documents (uid,userSignUp,intepreterSignUp) values ($1, $2,$3)",
-      [uid, userSignUp, interpreterSignUp],
+      "INSERT INTO documents (from_language_code,to_language_code,status,submission_date,due_date,owner_id,format) values ($1, $2,$3,$4,$5,$6,$7)",
+      [
+        from_language_code,
+        to_language_code,
+        status,
+        submission_date,
+        due_date,
+        owner_id,
+        format
+      ],
       (error, result) => {
         if (error) {
           reject(error);

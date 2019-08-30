@@ -3,7 +3,7 @@ const router = express.Router();
 
 const users = require("./users");
 const status = require("./status");
-const documents = require("/documents");
+const documents = require("./documents");
 
 router.use("/users", users);
 router.use("/status", status);
