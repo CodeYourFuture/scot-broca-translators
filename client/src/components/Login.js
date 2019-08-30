@@ -24,7 +24,6 @@ export class Login extends Component {
 
     getToken(email, password)
       .then(res => {
-        console.log(res);
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("userName", res.user.name);
         sessionStorage.setItem("userRole", res.user.role);

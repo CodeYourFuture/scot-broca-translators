@@ -42,42 +42,39 @@ const Routes = () => {
             </Menu.Item>
           </Link>
 
-          {isLoggedIn() ? null : (
-            <Link className="nav-link" to="/sign-up-user">
-              <Menu.Item name="editorials" active={true}>
-                User Sign Up
-              </Menu.Item>
-            </Link>
-          )}
-          {isLoggedIn() ? null : (
-            <Link className="nav-link" to="/login">
-              <Menu.Item name="editorials" active={true}>
-                Login
-              </Menu.Item>
-            </Link>
-          )}
-
-          {isLoggedIn() ? null : (
-            <Link className="nav-link" to="/sign-up-interpreter">
-              <Menu.Item name="editorials" active={true}>
-                Become Interpreter
-              </Menu.Item>
-            </Link>
-          )}
-
           {isLoggedIn() ? (
-            <Link className="nav-link" to="/add-document/">
-              <Menu.Item name="editorials" active={true}>
-                Add document
-              </Menu.Item>
-            </Link>
-          ) : null}
+            <Menu.Menu position="right">
+              <Link className="nav-link" to="/add-document/">
+                <Menu.Item name="editorials" active={true}>
+                  Add document
+                </Menu.Item>
+              </Link>
 
-          {isLoggedIn() ? (
-            <Menu.Item active={true} position="right" onClick={logout}>
-              Logout
-            </Menu.Item>
-          ) : null}
+              <Menu.Item active={true} onClick={logout}>
+                Logout
+              </Menu.Item>
+            </Menu.Menu>
+          ) : (
+            <Menu.Menu>
+              <Link className="nav-link" to="/sign-up-user">
+                <Menu.Item name="editorials" active={true}>
+                  User Sign Up
+                </Menu.Item>
+              </Link>
+
+              <Link className="nav-link" to="/login">
+                <Menu.Item name="editorials" active={true}>
+                  Login
+                </Menu.Item>
+              </Link>
+
+              <Link className="nav-link" to="/sign-up-interpreter">
+                <Menu.Item name="editorials" active={true}>
+                  Become Interpreter
+                </Menu.Item>
+              </Link>
+            </Menu.Menu>
+          )}
         </Menu>
         <div>
           <Route path="/" exact component={Home} />
@@ -90,10 +87,11 @@ const Routes = () => {
             component={InterpreterSignUpForm}
           />
           {isLoggedIn() ? (
-            <Route path="/add-document/" component={AddDocumentForm} />
+            <div>
+              <Route path="/add-document/" component={AddDocumentForm} />
+              <Route path="/dashboard" component={Dashboard} />
+            </div>
           ) : null}
-
-          <Route path="/dashboard" component={Dashboard} />
         </div>
       </div>
     </Router>
