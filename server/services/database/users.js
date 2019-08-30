@@ -8,60 +8,73 @@ const pool = new Pool(config);
  * security risk to expose all users
  */
 const getAllUsers = () => {
-	return new Promise((resolve, reject) => {
-		pool.query("SELECT id, email FROM users", (error, result) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(result.rows);
-			}
-		});
-	});
+  return new Promise((resolve, reject) => {
+    pool.query("SELECT id, email FROM users", (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result.rows);
+      }
+    });
+  });
 };
 
-const getUserByEmail = (email) => {
-	return new Promise((resolve) => {
-		pool.query(
-			"SELECT * FROM users where email = $1",
-			[email],
-			(error, result) => {
-				resolve(result.rows[0]);
-			}
-		);
-	});
+const getUserByEmail = email => {
+  return new Promise(resolve => {
+    pool.query(
+      "SELECT * FROM users where email = $1",
+      [email],
+      (error, result) => {
+        resolve(result.rows[0]);
+      }
+    );
+  });
 };
 
-const createUser = ({ email, password }) => {
-	return new Promise((resolve, reject) => {
-		pool.query(
-			"INSERT INTO users (email, password) values ($1, $2)",
-			[email, password],
-			(error, result) => {
-				if (error) {
-					reject(error);
-				}
-				console.log(result);
-				resolve(result.rows);
-			}
-		);
-	});
+const createUser = ({ email, password, name, role }) => {
+  return getUserByEmail(email)
+    .then(users => {
+      return new Promise((resolve, reject) => {
+        if (users) {
+          reject("An account with the same email address already exists");
+        } else {
+          resolve();
+        }
+      });
+    })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        pool.query(
+          "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
+          [email, password, name, role],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              reject("An unexpected error occured, please try again later.");
+            }
+
+            resolve(result.rows);
+          }
+        );
+      });
+    });
 };
 
-const getUserById = (id) => {
-	return new Promise((resolve, reject) => {
-		pool.query("SELECT * FROM users where id = $1", [id], (error, result) => {
-			if (error) {
-				console.error(error);
-				return reject(error);
-			}
-			resolve(result.rows[0]);
-		});
-	});
+const getUserById = id => {
+  return new Promise((resolve, reject) => {
+    pool.query("SELECT * FROM users where id = $1", [id], (error, result) => {
+      if (error) {
+        console.error(error);
+        return reject(error);
+      }
+      resolve(result.rows[0]);
+    });
+  });
 };
 
 module.exports = {
-	getUserByEmail,
-	createUser,
-	getUserById,
-	getAllUsers,
+  getUserByEmail,
+  createUser,
+  getUserById,
+  getAllUsers
 };
