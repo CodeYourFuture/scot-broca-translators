@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Home.css";
 import { Header, Button } from "semantic-ui-react";
 
-const Home = () => {
+const Home = props => {
   return (
     <div>
       <Header
@@ -10,11 +10,13 @@ const Home = () => {
         textAlign="center"
         content="Broca Translation"
         image="http://www.24hourtranslation.com/wp-content/uploads/2010/04/global-translation.jpg"
+        alt="site logo"
       />
 
       <img
         src="https://blogsensebybarb.files.wordpress.com/2014/03/happiness9-aristotle.jpg"
         className="homePageImg"
+        alt="Lake with Aristotle's quote"
       />
       <div className="information">
         <div className="parag-one">
@@ -25,7 +27,13 @@ const Home = () => {
             part of a real organisation) can upload chosen archival pieces to
             the app and requests translation.
           </p>
-          <Button primary content="Sign Up" />
+          <Button
+            primary
+            content="Sign Up"
+            onClick={() => {
+              props.history.push(`/sign-up-user/`);
+            }}
+          />
         </div>
         <div className="parag-two">
           <p>
@@ -35,7 +43,13 @@ const Home = () => {
             they do not understand, including what we commonly nickname
             “legalese”.
           </p>
-          <Button primary content="Become an Interprter" />
+          <Button
+            primary
+            content="Become an Interprter"
+            onClick={() => {
+              props.history.push(`/sign-up-interpreter/`);
+            }}
+          />
         </div>
       </div>
     </div>
