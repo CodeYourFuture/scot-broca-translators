@@ -4,7 +4,7 @@ const passport = require("passport");
 const docsDb = require("../services/database/documents");
 
 router.get(
-  "/",
+  "/auth/api/documents",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     let user = req.user;
