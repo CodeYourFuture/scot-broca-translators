@@ -7,13 +7,12 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let user = req.user.role;
-    console.log(user);
+    const role = req.user.role;
 
-    if (user) {
+    if (role == "Interpreter") {
       getIterpreterDocuments(res);
     } else {
-      getUserDocuments();
+      getUserDocuments(res);
     }
   }
 );
@@ -25,7 +24,6 @@ function getIterpreterDocuments(res) {
       res.send(data);
     })
     .catch(err => {
-      console.error(err);
       res.send(500);
     });
 }
@@ -36,7 +34,6 @@ function getUserDocuments(res) {
       res.send(data);
     })
     .catch(err => {
-      console.error(err);
       res.send(500);
     });
 }
