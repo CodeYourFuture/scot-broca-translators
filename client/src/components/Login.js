@@ -27,7 +27,7 @@ export class Login extends Component {
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("userName", res.user.name);
         sessionStorage.setItem("userRole", res.user.role);
-        this.props.history.push("/dashboard");
+        window.location.href = "/dashboard";
       })
       .catch(err => {
         this.setState({ loginErr: true });
