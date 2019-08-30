@@ -4,20 +4,21 @@ const passport = require("passport");
 const docsDb = require("../services/database/documents");
 
 router.get(
-  "/auth/api/documents",
+  "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let user = req.user;
+    let user = req.user.role;
     console.log(user);
-    if (isInterpreter) {
-      getIterpreterDocuments();
+
+    if (user) {
+      getIterpreterDocuments(res);
     } else {
       getUserDocuments();
     }
   }
 );
 
-function getIterpreterDocuments() {
+function getIterpreterDocuments(res) {
   docsDb
     .getAllDocuments()
     .then(data => {
@@ -28,7 +29,7 @@ function getIterpreterDocuments() {
       res.send(500);
     });
 }
-function getUserDocuments() {
+function getUserDocuments(res) {
   docsDb
     .getUserDocuments()
     .then(data => {
