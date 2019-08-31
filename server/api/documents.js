@@ -11,7 +11,7 @@ router.get(
     const role = req.user.role;
 
     let getDocumentFunction;
-    if (role === "Interpreter") {
+    if (role === INTERPRETER) {
       getDocumentFunction = docsDb.getAllDocuments;
     } else {
       getDocumentFunction = docsDb.getUserDocuments;
