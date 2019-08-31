@@ -31,20 +31,33 @@ const getUserByEmail = email => {
   });
 };
 
-const createUser = ({ email, password }) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "INSERT INTO users (email, password) values ($1, $2)",
-      [email, password],
-      (error, result) => {
-        if (error) {
-          reject(error);
+const createUser = ({ email, password, name, role }) => {
+  return getUserByEmail(email)
+    .then(users => {
+      return new Promise((resolve, reject) => {
+        if (users) {
+          reject("An account with the same email address already exists");
+        } else {
+          resolve();
         }
-        console.log(result);
-        resolve(result.rows);
-      }
-    );
-  });
+      });
+    })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        pool.query(
+          "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
+          [email, password, name, role],
+          (error, result) => {
+            if (error) {
+              console.log(error);
+              reject("An unexpected error occured, please try again later.");
+            }
+
+            resolve(result.rows);
+          }
+        );
+      });
+    });
 };
 
 const getUserById = id => {
@@ -70,5 +83,6 @@ module.exports = {
   createUser,
   getUserById,
   getAllUsers,
-  createDocument
+  createDocument,
+  getAllUsers
 };

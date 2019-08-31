@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const db = require("../services/database/users");
+const {
+  emailValidate,
+  nameValidate,
+  passwordValidate,
+  roleValidate
+} = require("./validator.js");
 
 /**
  * Users Login
@@ -31,12 +37,39 @@ router.post("/login", async (req, res, next) => {
  * Users Registration
  */
 router.post("/register", async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, name, role } = req.body;
 
   const user = {
     email,
-    password
+    password,
+    name,
+    role
   };
+
+  const errorMessages = [];
+
+  if (!emailValidate(email)) {
+    errorMessages.push("The email format is incorrect");
+  }
+
+  if (!nameValidate(name)) {
+    errorMessages.push("Name is required");
+  }
+
+  if (!passwordValidate(password)) {
+    errorMessages.push("The password must have at least 8 characters");
+  }
+
+  if (!roleValidate(role)) {
+    errorMessages.push("Role  is required");
+  }
+
+  if (errorMessages.length != 0) {
+    return res.status(400).send({
+      success: false,
+      message: errorMessages.join(", ")
+    });
+  }
 
   db.createUser(user)
     .then(() => {
@@ -46,6 +79,10 @@ router.post("/register", async (req, res, next) => {
       });
     })
     .catch(err => {
+      res.status(400).send({
+        success: false,
+        message: err
+      });
       console.log(err);
       next(err);
     });
