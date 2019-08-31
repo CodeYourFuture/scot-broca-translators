@@ -52,14 +52,16 @@ export class UserSignUpForm extends Component {
     }
   };
   resetForm = () => {
-    this.setState({
-      name: "",
-      email: "",
-      password: "",
-      confirmationPassword: "",
-      role: "User",
-      userSignUp: true
-    });
+    if (this.state.name && this.state.email && this.state.password) {
+      this.setState({
+        name: "",
+        email: "",
+        password: "",
+        confirmationPassword: "",
+        role: "User",
+        userSignUp: true
+      });
+    }
   };
   clickLogin = () => {
     window.location.href = "/login";
