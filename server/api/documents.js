@@ -1,23 +1,39 @@
 const express = require("express");
 const passport = require("passport");
 const docsDb = require("../services/database/documents");
+
 const router = express.Router();
 
-router.post("/", async (req, res) => {
-  const { fromLanguage, toLanguage, dueDate, text, user } = req.body;
-  const document = {
-    fromLanguage,
-    toLanguage,
-    dueDate,
-    text,
-    user
-  };
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const {
+      from_language_code,
+      to_language_code,
+      name,
+      due_date,
+      content
+    } = req.body;
+    const submission_date = new Date();
+    const owner_id = req.user.id;
+    const format = "Text";
+    const document = {
+      from_language_code,
+      to_language_code,
+      submission_date,
+      due_date,
+      owner_id,
+      name,
+      format,
+      content
+    };
+    console.log(document);
+    docsDb.createDocument(document);
 
-  console.log(document.fromLanguage);
-  console.log(document.text);
-
-  return res.send("Saved");
-});
+    return res.send("Saved");
+  }
+);
 
 router.get(
   "/",
