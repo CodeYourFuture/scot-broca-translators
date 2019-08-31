@@ -83,7 +83,7 @@ router.post("/register", async (req, res, next) => {
         success: false,
         message: err
       });
-      console.log(err);
+
       next(err);
     });
 });
