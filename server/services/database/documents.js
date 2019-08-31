@@ -36,7 +36,7 @@ const getUserDocuments = userId => {
       if (error) {
         reject(error);
       }
-      console.log(result);
+
       resolve(result.rows);
     });
   });
