@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const docsDb = require("../services/database/documents");
+const { INTERPRETER } = require("../auth/roles");
 
 router.get(
   "/",
@@ -9,32 +10,21 @@ router.get(
   (req, res) => {
     const role = req.user.role;
 
-    if (role == "Interpreter") {
-      getIterpreterDocuments(res);
+    let getDocumentFunction;
+    if (role === "Interpreter") {
+      getDocumentFunction = docsDb.getAllDocuments;
     } else {
-      getUserDocuments(res);
+      getDocumentFunction = docsDb.getUserDocuments;
     }
+
+    getDocumentFunction()
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500);
+      });
   }
 );
 
-function getIterpreterDocuments(res) {
-  docsDb
-    .getAllDocuments()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.send(500);
-    });
-}
-function getUserDocuments(res) {
-  docsDb
-    .getUserDocuments()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.send(500);
-    });
-}
 module.exports = router;
