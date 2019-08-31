@@ -10,7 +10,7 @@ export class UserSignUpForm extends Component {
       name: "",
       password: "",
       confirmationPassword: "",
-      role: "",
+      role: "User",
       userSignUp: false
     };
   }
@@ -20,11 +20,24 @@ export class UserSignUpForm extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleErrors(response) {
+    console.log(response);
+    return response.json().then(json => {
+      if (!response.ok) {
+        console.log(json);
+        throw json.message;
+      } else {
+        return json;
+      }
+    });
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     const { password, confirmationPassword } = this.state;
     if (password !== confirmationPassword) {
-      alert("passwords dont match");
+      alert("passwords don't match");
     } else {
       const userRequest = {
         method: "POST",
@@ -39,29 +52,27 @@ export class UserSignUpForm extends Component {
         }
       };
       fetch("http://localhost:4000/auth/register", userRequest)
-        .then(res => res.json())
+        .then(this.handleErrors)
         .then(this.resetForm)
-        .catch(error => (
-          <Message negative>
-            <Message.Header>
-              We're sorry, we can't create your account
-            </Message.Header>
-            <p>{error}</p>
-          </Message>
-        ));
+        .catch(error => {
+          console.log("Error: " + error);
+          this.setState({
+            hasErrors: true,
+            errorMessage: error
+          });
+        });
     }
   };
   resetForm = () => {
-    if (this.state.name && this.state.email && this.state.password) {
-      this.setState({
-        name: "",
-        email: "",
-        password: "",
-        confirmationPassword: "",
-        role: "User",
-        userSignUp: true
-      });
-    }
+    this.setState({
+      userSignUp: true,
+      name: "",
+      email: "",
+      password: "",
+      confirmationPassword: "",
+      role: "User",
+      hasErrors: false
+    });
   };
   clickLogin = () => {
     window.location.href = "/login";
@@ -126,7 +137,7 @@ export class UserSignUpForm extends Component {
                   type="password"
                   icon="lock"
                   iconPosition="left"
-                  label="Password"
+                  label="Password Confirmation"
                   value={confirmationPassword}
                   onChange={this.handleChange}
                   placeholder="Password confirmation"
@@ -135,10 +146,22 @@ export class UserSignUpForm extends Component {
                 />
               </Form.Field>
               <Form.Field />
-
+              {this.state.hasErrors ? (
+                <div>
+                  <Message negative>
+                    <Message.Header>
+                      We're sorry, we can't create your account
+                    </Message.Header>
+                    <p>{this.state.errorMessage}</p>
+                  </Message>
+                </div>
+              ) : (
+                ""
+              )}
               <Button primary type="submit">
                 Submit
               </Button>
+
               <Button secondary>
                 <Link to="/">Cancel</Link>
               </Button>
