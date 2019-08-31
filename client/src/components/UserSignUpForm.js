@@ -10,6 +10,7 @@ export class UserSignUpForm extends Component {
       name: "",
       password: "",
       confirmationPassword: "",
+      role: "",
       userSignUp: false
     };
   }
@@ -31,7 +32,7 @@ export class UserSignUpForm extends Component {
           email: this.state.email,
           name: this.state.name,
           password: this.state.password,
-          confirmationPassword: this.state.confirmationPassword
+          role: this.state.role
         }),
         headers: {
           "Content-Type": "application/json"
@@ -39,7 +40,15 @@ export class UserSignUpForm extends Component {
       };
       fetch("http://localhost:4000/auth/register", userRequest)
         .then(res => res.json())
-        .then(this.resetForm);
+        .then(this.resetForm)
+        .catch(error => (
+          <Message negative>
+            <Message.Header>
+              We're sorry, we can't create your account
+            </Message.Header>
+            <p>{error}</p>
+          </Message>
+        ));
     }
   };
   resetForm = () => {
@@ -48,6 +57,7 @@ export class UserSignUpForm extends Component {
       email: "",
       password: "",
       confirmationPassword: "",
+      role: "User",
       userSignUp: true
     });
   };
@@ -55,6 +65,7 @@ export class UserSignUpForm extends Component {
     window.location.href = "/login";
   };
   render() {
+    const { email, name, password, confirmationPassword } = this.state;
     return (
       <Grid centered column={16}>
         <Grid.Column width={6}>
@@ -73,37 +84,48 @@ export class UserSignUpForm extends Component {
           ) : (
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
-                <label>Name</label>
-                <input
+                <Form.Input
+                  icon="user"
+                  iconPosition="left"
                   onChange={this.handleChange}
-                  value={this.state.name}
+                  value={name}
                   placeholder="Name"
                   name="name"
+                  label="Name"
                   required
                 />
-                <label>Email</label>
-                <input
+
+                <Form.Input
+                  icon="envelope"
+                  iconPosition="left"
                   onChange={this.handleChange}
-                  value={this.state.email}
+                  value={email}
+                  label="Email"
                   placeholder="Email"
                   name="email"
                   required
                 />
               </Form.Field>
               <Form.Field>
-                <label>Password</label>
-                <input
+                <Form.Input
+                  type="password"
+                  icon="lock"
+                  iconPosition="left"
                   onChange={this.handleChange}
                   placeholder="Password"
+                  label="Password"
                   name="password"
-                  value={this.state.password}
+                  value={password}
                   required
                 />
               </Form.Field>
               <Form.Field>
-                <label> Password Confirmation</label>
-                <input
-                  value={this.state.confirmationPassword}
+                <Form.Input
+                  type="password"
+                  icon="lock"
+                  iconPosition="left"
+                  label="Password"
+                  value={confirmationPassword}
                   onChange={this.handleChange}
                   placeholder="Password confirmation"
                   name="confirmationPassword"

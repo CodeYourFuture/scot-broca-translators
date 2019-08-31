@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Grid, Select, Header, Message } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 
 class InterpreterSignUpForm extends Component {
@@ -162,7 +162,7 @@ class InterpreterSignUpForm extends Component {
                   Submit
                 </Button>
                 <Button onClick={this.handleClick} secondary>
-                  Cancel
+                  <Link to="/">Cancel</Link>
                 </Button>
               </Form>
             )}

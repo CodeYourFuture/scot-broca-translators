@@ -15,6 +15,7 @@ const Home = () => {
       <img
         src="https://blogsensebybarb.files.wordpress.com/2014/03/happiness9-aristotle.jpg"
         className="homePageImg"
+        alt="Lake with an Aristotle's quote"
       />
       <div className="information">
         <div className="parag-one">
