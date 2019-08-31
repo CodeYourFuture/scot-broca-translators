@@ -52,7 +52,13 @@ class InterpreterSignUpForm extends Component {
       };
       fetch("http://localhost:4000/auth/register", interpreterRequest)
         .then(res => res.json())
-        .then(this.resetForm);
+        .then(this.resetForm)
+        .catch(error => (
+          <Message negative>
+            <Message.Header>Sorry, the server doesn't respond</Message.Header>
+            <p>{error}</p>
+          </Message>
+        ));
     }
   };
   resetForm = () => {
