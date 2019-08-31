@@ -64,7 +64,24 @@ const getAllDocuments = () => {
   });
 };
 
+const getUserDocuments = userId => {
+  const documents = "SELECT * FROM documents WHERE owner_id=$1";
+  return new Promise((resolve, reject) => {
+    pool.query(documents, [userId], (error, result) => {
+      if (error) {
+        reject(error);
+      }
+
+      resolve(result.rows);
+    });
+  });
+};
+
 module.exports = {
   getAllDocuments,
+api-endpoint
   createDocument
+
+  getUserDocuments
+ master
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const docsDb = require("../services/database/documents");
+const { INTERPRETER } = require("../auth/roles");
 
 const router = express.Router();
 
@@ -39,13 +40,20 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    docsDb
-      .getAllDocuments()
+    const role = req.user.role;
+
+    let getDocumentFunction;
+    if (role === INTERPRETER) {
+      getDocumentFunction = docsDb.getAllDocuments;
+    } else {
+      getDocumentFunction = docsDb.getUserDocuments;
+    }
+
+    getDocumentFunction()
       .then(data => {
         res.send(data);
       })
       .catch(err => {
-        console.error(err);
         res.send(500);
       });
   }
