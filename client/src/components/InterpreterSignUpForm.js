@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
-
+const role = "Interpreter";
 class InterpreterSignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      username: "",
+      name: "",
       password: "",
       confirmationPassword: "",
       languages: [],
@@ -28,7 +28,7 @@ class InterpreterSignUpForm extends Component {
       password,
       confirmationPassword,
       email,
-      username,
+      name,
       languages
     } = this.state;
     // perform all neccassary validations
@@ -40,9 +40,10 @@ class InterpreterSignUpForm extends Component {
         method: "POST",
         body: JSON.stringify({
           email,
-          username,
+          name,
           password,
           confirmationPassword,
+          role,
           languages
         }),
         headers: {
@@ -57,7 +58,7 @@ class InterpreterSignUpForm extends Component {
   resetForm = () => {
     this.setState({
       email: "",
-      username: "",
+      name: "",
       password: "",
       confirmationPassword: "",
       languages: [],
@@ -109,11 +110,11 @@ class InterpreterSignUpForm extends Component {
                   <Form.Input
                     icon="user"
                     iconPosition="left"
-                    label="Username"
-                    value={this.state.username}
+                    label="name"
+                    value={this.state.name}
                     onChange={this.handleChange}
                     placeholder="Username"
-                    name="username"
+                    name="name"
                     required
                   />
                 </Form.Field>
