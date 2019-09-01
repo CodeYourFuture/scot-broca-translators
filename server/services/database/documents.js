@@ -42,7 +42,16 @@ const getUserDocuments = userId => {
   });
 };
 
+const getDocumentById = documentId => {
+  const sqlQuery = "SELECT * FROM documents WHERE id=$1";
+  return pool
+    .query(sqlQuery, [documentId])
+    .then(result => result.rows)
+    .catch(e => console.error(e));
+};
+
 module.exports = {
   getAllDocuments,
-  getUserDocuments
+  getUserDocuments,
+  getDocumentById
 };
