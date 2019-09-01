@@ -10,7 +10,6 @@ export class UserSignUpForm extends Component {
       name: "",
       password: "",
       confirmationPassword: "",
-      role: "User",
       userSignUp: false
     };
   }
@@ -22,10 +21,8 @@ export class UserSignUpForm extends Component {
   };
 
   handleErrors(response) {
-    console.log(response);
     return response.json().then(json => {
       if (!response.ok) {
-        console.log(json);
         throw json.message;
       } else {
         return json;
@@ -45,7 +42,7 @@ export class UserSignUpForm extends Component {
           email: this.state.email,
           name: this.state.name,
           password: this.state.password,
-          role: this.state.role
+          role: "User"
         }),
         headers: {
           "Content-Type": "application/json"
@@ -55,7 +52,6 @@ export class UserSignUpForm extends Component {
         .then(this.handleErrors)
         .then(this.resetForm)
         .catch(error => {
-          console.log("Error: " + error);
           this.setState({
             hasErrors: true,
             errorMessage: error
@@ -70,7 +66,6 @@ export class UserSignUpForm extends Component {
       email: "",
       password: "",
       confirmationPassword: "",
-      role: "User",
       hasErrors: false
     });
   };
@@ -85,12 +80,18 @@ export class UserSignUpForm extends Component {
           <Header as="h1" textAlign="center">
             User Registration
           </Header>
+          {this.state.hasErrors ? (
+            <Message negative>
+              <Message.Header>An error occurred</Message.Header>
+              <p>{this.state.errorMessage}</p>
+            </Message>
+          ) : null}
           {this.state.userSignUp ? (
             <div>
               <Message
                 success
                 header="Your user registration was successful"
-                content="You may now log-in with the username you have chosen"
+                content="You may now log-in with the email you have chosen"
               />
               <Button onClick={this.clickLogin}>Login</Button>
             </div>
@@ -145,23 +146,9 @@ export class UserSignUpForm extends Component {
                   required
                 />
               </Form.Field>
-              <Form.Field />
-              {this.state.hasErrors ? (
-                <div>
-                  <Message negative>
-                    <Message.Header>
-                      We're sorry, we can't create your account
-                    </Message.Header>
-                    <p>{this.state.errorMessage}</p>
-                  </Message>
-                </div>
-              ) : (
-                ""
-              )}
               <Button primary type="submit">
                 Submit
               </Button>
-
               <Button secondary>
                 <Link to="/">Cancel</Link>
               </Button>
