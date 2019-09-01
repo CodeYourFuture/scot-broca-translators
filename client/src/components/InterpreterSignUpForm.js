@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 const role = "Interpreter";
@@ -65,7 +64,7 @@ class InterpreterSignUpForm extends Component {
       userCreated: true
     });
   };
-  handleClick = () => {
+  handleCancelClick = () => {
     window.location.href = "/";
   };
   clickLogin = () => {
@@ -162,8 +161,8 @@ class InterpreterSignUpForm extends Component {
                 <Button primary type="submit">
                   Submit
                 </Button>
-                <Button onClick={this.handleClick} secondary>
-                  <Link to="/">Cancel</Link>
+                <Button onClick={this.handleCancelClick} secondary>
+                  Cancel
                 </Button>
               </Form>
             )}
