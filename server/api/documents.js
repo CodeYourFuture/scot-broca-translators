@@ -59,4 +59,21 @@ router.get(
   }
 );
 
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const documentId = req.params.id;
+
+    docsDb
+      .getDocumentById(documentId)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500);
+      });
+  }
+);
+
 module.exports = router;
