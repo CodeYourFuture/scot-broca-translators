@@ -29,7 +29,6 @@ router.post(
       format,
       content
     };
-    console.log(document);
     docsDb.createDocument(document);
 
     return res.send("Saved");

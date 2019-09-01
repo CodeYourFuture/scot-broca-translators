@@ -88,26 +88,4 @@ router.post("/register", async (req, res, next) => {
     });
 });
 
-//Documents created
-
-router.post("/", async (req, res, next) => {
-  const { status, submission_date, format, owner_id } = req.body;
-  const document = {
-    status,
-    submission_date,
-    format,
-    owner_id
-  };
-  db.createDocument(document)
-    .then(() => {
-      res.send({
-        success: true,
-        message: "Document created"
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      next(err);
-    });
-});
 module.exports = router;
