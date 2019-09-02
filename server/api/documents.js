@@ -14,10 +14,10 @@ router.get(
     if (role === INTERPRETER) {
       getDocumentFunction = docsDb.getAllDocuments;
     } else {
-      getDocumentFunction = docsDb.getUserDocuments;
+      getDocumentFunction = () => docsDb.getUserDocuments(id);
     }
 
-    getDocumentFunction(id)
+    getDocumentFunction()
       .then(data => {
         res.send(data);
       })
