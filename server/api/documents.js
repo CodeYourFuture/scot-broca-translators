@@ -8,7 +8,7 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const role = req.user.role;
+    const { id, role } = req.user;
 
     let getDocumentFunction;
     if (role === INTERPRETER) {
@@ -17,7 +17,7 @@ router.get(
       getDocumentFunction = docsDb.getUserDocuments;
     }
 
-    getDocumentFunction()
+    getDocumentFunction(id)
       .then(data => {
         res.send(data);
       })

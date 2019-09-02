@@ -30,9 +30,23 @@ const getAllDocuments = () => {
 };
 
 const getUserDocuments = userId => {
-  const documents = "SELECT * FROM documents WHERE owner_id=$1";
+  const sqlQuery =
+    "select\
+          d.id, d.format, d.name,\
+          d.status, d.submission_date, d.due_date,\
+          lf.name as from_language_name,\
+          lt.name as to_language_name,\
+          u.name as owner_name\
+      from documents as d\
+      inner join languages as lf\
+      on  lf.code = d.from_language_code\
+      inner join languages as lt\
+      on lt.code = d.to_language_code\
+      inner join users as u\
+      on u.id = d.owner_id\
+      where d.owner_id=$1;";
   return new Promise((resolve, reject) => {
-    pool.query(documents, [userId], (error, result) => {
+    pool.query(sqlQuery, [userId], (error, result) => {
       if (error) {
         reject(error);
       }
