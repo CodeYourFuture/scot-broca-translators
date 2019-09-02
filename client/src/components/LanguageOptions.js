@@ -1,13 +1,13 @@
 const languageOptions = [
-  { key: "zh-cn", text: " MandarinChinese", value: "Mandarin Chinese" },
-  { key: "ar", text: "Arabic", value: "Arabic" },
-  { key: "es", text: "Spanish", value: "Spanish" },
-  { key: "ml", text: "Danish", value: "Malaysian" },
+  { text: " MandarinChinese", value: "zh-cn" },
+  { text: "Arabic", value: "ar" },
+  { text: "Spanish", value: "es" },
+  { text: "Danish", value: "ml" },
 
-  { key: "en", text: "English", value: "English" },
-  { key: "ru", text: "Russian", value: "Russian" },
-  { key: "be", text: "Russian", value: "Bengali" },
-  { key: "Fr", text: "French", value: "French" }
+  { text: "English", value: "en" },
+  { text: "Russian", value: "ru" },
+  { text: "Russian", value: "be" },
+  { text: "French", value: "fr" }
 ];
 
 export default languageOptions;
