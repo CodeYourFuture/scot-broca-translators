@@ -3,9 +3,8 @@ const config = require("../../config");
 const pool = new Pool(config);
 
 const getAllDocuments = () => {
-  return new Promise((resolve, reject) => {
-    const sqlQuery =
-      "select\
+  const sqlQuery =
+    "select\
           d.id, d.format, d.name,\
           d.status, d.submission_date, d.due_date,\
           lf.name as from_language_name,\
@@ -19,14 +18,10 @@ const getAllDocuments = () => {
       inner join users as u\
       on u.id = d.owner_id;";
 
-    pool.query(sqlQuery, (error, result) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result.rows);
-      }
-    });
-  });
+  return pool
+    .query(sqlQuery)
+    .then(result => result.rows)
+    .catch(e => console.error(e));
 };
 
 const getUserDocuments = userId => {
@@ -45,15 +40,11 @@ const getUserDocuments = userId => {
       inner join users as u\
       on u.id = d.owner_id\
       where d.owner_id=$1;";
-  return new Promise((resolve, reject) => {
-    pool.query(sqlQuery, [userId], (error, result) => {
-      if (error) {
-        reject(error);
-      }
 
-      resolve(result.rows);
-    });
-  });
+  return pool
+    .query(sqlQuery, [userId])
+    .then(result => result.rows)
+    .catch(e => console.error(e));
 };
 
 const getDocumentById = documentId => {
