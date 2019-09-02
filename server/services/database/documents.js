@@ -2,9 +2,8 @@ const { Pool } = require("pg");
 const config = require("../../config");
 const pool = new Pool(config);
 
-const getAllDocuments = () => {
-  const sqlQuery =
-    "select\
+const query =
+  "select\
           d.id, d.format, d.name,\
           d.status, d.submission_date, d.due_date,\
           lf.name as from_language_name,\
@@ -16,7 +15,10 @@ const getAllDocuments = () => {
       inner join languages as lt\
       on lt.code = d.to_language_code\
       inner join users as u\
-      on u.id = d.owner_id;";
+      on u.id = d.owner_id";
+
+const getAllDocuments = () => {
+  const sqlQuery = query + ";";
 
   return pool
     .query(sqlQuery)
@@ -25,21 +27,7 @@ const getAllDocuments = () => {
 };
 
 const getUserDocuments = userId => {
-  const sqlQuery =
-    "select\
-          d.id, d.format, d.name,\
-          d.status, d.submission_date, d.due_date,\
-          lf.name as from_language_name,\
-          lt.name as to_language_name,\
-          u.name as owner_name\
-      from documents as d\
-      inner join languages as lf\
-      on  lf.code = d.from_language_code\
-      inner join languages as lt\
-      on lt.code = d.to_language_code\
-      inner join users as u\
-      on u.id = d.owner_id\
-      where d.owner_id=$1;";
+  const sqlQuery = query + " where d.owner_id=$1;";
 
   return pool
     .query(sqlQuery, [userId])
