@@ -19,11 +19,22 @@ export class UserSignUpForm extends Component {
       [event.target.name]: event.target.value
     });
   };
+
+  handleErrors(response) {
+    return response.json().then(json => {
+      if (!response.ok) {
+        throw json.message;
+      } else {
+        return json;
+      }
+    });
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     const { password, confirmationPassword } = this.state;
     if (password !== confirmationPassword) {
-      alert("passwords dont match");
+      alert("passwords don't match");
     } else {
       const userRequest = {
         method: "POST",
@@ -31,87 +42,110 @@ export class UserSignUpForm extends Component {
           email: this.state.email,
           name: this.state.name,
           password: this.state.password,
-          confirmationPassword: this.state.confirmationPassword
+          role: "User"
         }),
         headers: {
           "Content-Type": "application/json"
         }
       };
       fetch("http://localhost:4000/auth/register", userRequest)
-        .then(res => res.json())
-        .then(this.resetForm);
+        .then(this.handleErrors)
+        .then(this.resetForm)
+        .catch(error => {
+          this.setState({
+            hasErrors: true,
+            errorMessage: error
+          });
+        });
     }
   };
   resetForm = () => {
     this.setState({
+      userSignUp: true,
       name: "",
       email: "",
       password: "",
       confirmationPassword: "",
-      userSignUp: true
+      hasErrors: false
     });
   };
   clickLogin = () => {
     window.location.href = "/login";
   };
   render() {
+    const { email, name, password, confirmationPassword } = this.state;
     return (
       <Grid centered column={16}>
         <Grid.Column width={6}>
           <Header as="h1" textAlign="center">
             User Registration
           </Header>
+          {this.state.hasErrors ? (
+            <Message negative>
+              <Message.Header>An error occurred</Message.Header>
+              <p>{this.state.errorMessage}</p>
+            </Message>
+          ) : null}
           {this.state.userSignUp ? (
             <div>
               <Message
                 success
                 header="Your user registration was successful"
-                content="You may now log-in with the username you have chosen"
+                content="You may now log-in with the email you have chosen"
               />
               <Button onClick={this.clickLogin}>Login</Button>
             </div>
           ) : (
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
-                <label>Name</label>
-                <input
+                <Form.Input
+                  icon="user"
+                  iconPosition="left"
                   onChange={this.handleChange}
-                  value={this.state.name}
+                  value={name}
                   placeholder="Name"
                   name="name"
+                  label="Name"
                   required
                 />
-                <label>Email</label>
-                <input
+
+                <Form.Input
+                  icon="envelope"
+                  iconPosition="left"
                   onChange={this.handleChange}
-                  value={this.state.email}
+                  value={email}
+                  label="Email"
                   placeholder="Email"
                   name="email"
                   required
                 />
               </Form.Field>
               <Form.Field>
-                <label>Password</label>
-                <input
+                <Form.Input
+                  type="password"
+                  icon="lock"
+                  iconPosition="left"
                   onChange={this.handleChange}
                   placeholder="Password"
+                  label="Password"
                   name="password"
-                  value={this.state.password}
+                  value={password}
                   required
                 />
               </Form.Field>
               <Form.Field>
-                <label> Password Confirmation</label>
-                <input
-                  value={this.state.confirmationPassword}
+                <Form.Input
+                  type="password"
+                  icon="lock"
+                  iconPosition="left"
+                  label="Password Confirmation"
+                  value={confirmationPassword}
                   onChange={this.handleChange}
                   placeholder="Password confirmation"
                   name="confirmationPassword"
                   required
                 />
               </Form.Field>
-              <Form.Field />
-
               <Button primary type="submit">
                 Submit
               </Button>
