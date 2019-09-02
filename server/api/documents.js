@@ -8,13 +8,13 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const role = req.user.role;
+    const { id, role } = req.user;
 
     let getDocumentFunction;
     if (role === INTERPRETER) {
       getDocumentFunction = docsDb.getAllDocuments;
     } else {
-      getDocumentFunction = docsDb.getUserDocuments;
+      getDocumentFunction = () => docsDb.getUserDocuments(id);
     }
 
     getDocumentFunction()
