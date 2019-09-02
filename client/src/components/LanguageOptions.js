@@ -1,5 +1,5 @@
 const languageOptions = [
-  { text: " MandarinChinese", value: "zh-cn" },
+  { text: " Mandarin Chinese", value: "zh-cn" },
   { text: "Arabic", value: "ar" },
   { text: "Spanish", value: "es" },
   { text: "Malaysian", value: "ml" },
