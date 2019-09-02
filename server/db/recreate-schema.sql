@@ -1,3 +1,4 @@
+DROP TABLE if exists translations;
 DROP TABLE if exists documents;
 DROP TABLE if exists languages;
 DROP TABLE if exists users;
