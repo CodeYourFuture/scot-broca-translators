@@ -72,17 +72,9 @@ const getUserById = id => {
   });
 };
 
-const createDocument = ({ status, current_date, text, current_user_id }) => {
-  return createDocument(status, current_date, text, current_user_id).then(
-    document => {}
-  );
-};
-
 module.exports = {
   getUserByEmail,
   createUser,
   getUserById,
-  getAllUsers,
-  createDocument,
   getAllUsers
 };
