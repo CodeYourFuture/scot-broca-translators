@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Header, Segment, Container, Button, Form } from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
+import { postDocument } from "../api/documents";
 
 class AddDocumentForm extends Component {
   constructor(props) {
@@ -9,30 +10,37 @@ class AddDocumentForm extends Component {
     this.state = {
       fromLanguage: "",
       toLanguage: "",
-      haveAllFielsValue: false,
+      haveAllFieldsValue: false,
       dueDate: "",
-      text: ""
+      text: "",
+      name: ""
     };
   }
 
   handleSubmit = () => {
-    console.log(this.state);
+    postDocument();
     this.setState({
       fromLanguage: "",
       toLanguage: "",
       dueDate: "",
       text: "",
-      haveAllFielsValue: false
+      name: "",
+      haveAllFieldsValue: false
     });
     console.log(this.state);
   };
 
   checkAllFields = () => {
-    let haveAllFielsValue = false;
-    if (this.state.fromLanguage && this.state.toLanguage && this.state.text) {
-      haveAllFielsValue = true;
+    let haveAllFieldsValue = false;
+    if (
+      this.state.fromLanguage &&
+      this.state.toLanguage &&
+      this.state.text &&
+      this.state.name
+    ) {
+      haveAllFieldsValue = true;
     }
-    this.setState({ haveAllFielsValue: haveAllFielsValue });
+    this.setState({ haveAllFieldsValue });
   };
 
   handleChange = (e, { value, name }) => {
@@ -45,7 +53,8 @@ class AddDocumentForm extends Component {
       toLanguage,
       dueDate,
       text,
-      haveAllFielsValue
+      name,
+      haveAllFieldsValue
     } = this.state;
 
     return (
@@ -88,7 +97,16 @@ class AddDocumentForm extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-
+            <Form.Input
+              fluid
+              label="Document Name"
+              type="text"
+              name="name"
+              placeholder="Please enter text name"
+              value={name}
+              required
+              onChange={this.handleChange}
+            />
             <Form.TextArea
               required
               label="Text to be translated"
@@ -99,7 +117,7 @@ class AddDocumentForm extends Component {
             />
 
             <Form.Group>
-              {haveAllFielsValue ? (
+              {haveAllFieldsValue ? (
                 <Form.Button color="blue" onClick={this.handleSubmit}>
                   Submit
                 </Form.Button>
