@@ -22,8 +22,7 @@ class InterpreterSignUpForm extends Component {
       languages: [],
       userCreated: false,
       error: false,
-      errorEmail: "sorry the email is wrong",
-      errorName: "the name is required "
+      errorMessage: false
     };
   }
 
@@ -31,7 +30,6 @@ class InterpreterSignUpForm extends Component {
     this.setState({
       [name]: value
     });
-    console.log(value);
   };
 
   handleErrors(response) {
@@ -59,7 +57,6 @@ class InterpreterSignUpForm extends Component {
       this.setState({
         error: true
       });
-      console.log("name error", this.state);
     } else {
       // make API call
       const interpreterRequest = {
@@ -212,8 +209,6 @@ class InterpreterSignUpForm extends Component {
                 </Button>
               </Form>
             )}
-
-            {this.state.error ? <div>error</div> : <div>success</div>}
           </Grid.Column>
         </Grid>
       </div>
