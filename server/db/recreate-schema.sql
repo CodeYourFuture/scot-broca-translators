@@ -32,12 +32,12 @@ CREATE TABLE documents (
   name                 VARCHAR(60) NOT NULL,
   from_language_code   VARCHAR(6) REFERENCES languages(code) NOT NULL,
   to_language_code     VARCHAR(6) REFERENCES languages(code) NOT NULL,
-  status               document_status,
-  submission_date      DATE NOT NULL,
-  due_date             DATE NOT NULL,
-  owner_id             uuid REFERENCES users(id) NOT NULL,
-  format               format_types,
-  content              TEXT NOT NULL
+  status           document_status NOT NULL DEFAULT 'Waiting',
+  submission_date  DATE NOT NULL,
+  due_date         DATE NOT NULL,
+  owner_id         uuid REFERENCES users(id) NOT NULL,
+  format           format_types,
+  content          TEXT NOT NULL
 );
 
 CREATE TABLE translations (
