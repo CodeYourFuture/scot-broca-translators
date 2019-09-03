@@ -30,11 +30,4 @@ export const postDocument = (
       "content-type": "application/json"
     }
   };
-  return fetch("/api/documents", postParams).then(res => {
-    if (res.getDocuments >= 200 && res.getDocuments < 300) {
-      return res.json();
-    } else {
-      throw res;
-    }
-  });
 };
