@@ -1,3 +1,4 @@
+DROP TABLE if exists translations;
 DROP TABLE if exists documents;
 DROP TABLE if exists languages;
 DROP TABLE if exists users;
@@ -27,8 +28,8 @@ CREATE TABLE languages (
 );
 
 CREATE TABLE documents (
-  id               SERIAL PRIMARY KEY,
-  name               VARCHAR(60) NOT NULL,
+  id                   SERIAL PRIMARY KEY,
+  name                 VARCHAR(60) NOT NULL,
   from_language_code   VARCHAR(6) REFERENCES languages(code) NOT NULL,
   to_language_code     VARCHAR(6) REFERENCES languages(code) NOT NULL,
   status           document_status NOT NULL DEFAULT 'Waiting',
@@ -38,3 +39,13 @@ CREATE TABLE documents (
   format           format_types,
   content          TEXT NOT NULL
 );
+
+CREATE TABLE translations (
+
+  id               SERIAL PRIMARY KEY,
+  user_id          uuid REFERENCES users(id) NOT NULL,
+  document_id      INT REFERENCES documents(id) NOT NULL,
+  start_date       DATE NOT NULL,
+  submission_date  DATE,
+  content          TEXT
+)
