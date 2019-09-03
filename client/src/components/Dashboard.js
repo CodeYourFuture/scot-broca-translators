@@ -60,7 +60,7 @@ export class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    {status === "Processing" ? (
+                    {status !== "Waiting" ? (
                       <Table.Cell>
                         {status} by {translator_name}
                       </Table.Cell>
