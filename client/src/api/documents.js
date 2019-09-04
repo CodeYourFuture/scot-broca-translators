@@ -24,10 +24,6 @@ export const postDocument = (
       text,
       name,
       haveAllFieldsValue
-    }),
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    }
+    })
   };
 };
