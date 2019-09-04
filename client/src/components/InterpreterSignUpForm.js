@@ -52,13 +52,12 @@ class InterpreterSignUpForm extends Component {
       name,
       languages
     } = this.state;
-    // perform all neccassary validations
+
     if (0 === name.length) {
       this.setState({
         error: true
       });
     } else {
-      // make API call
       const interpreterRequest = {
         method: "POST",
         body: JSON.stringify({
