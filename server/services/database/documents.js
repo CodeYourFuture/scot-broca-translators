@@ -95,5 +95,5 @@ module.exports = {
   createDocument,
   getUserDocuments,
   getDocumentById,
-  createTranslation
+
 };
