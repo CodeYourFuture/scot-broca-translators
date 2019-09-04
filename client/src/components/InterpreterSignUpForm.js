@@ -110,6 +110,18 @@ class InterpreterSignUpForm extends Component {
               <Header.Content style={textStyle}>
                 Interpreter Registration Form
               </Header.Content>
+              {this.state.hasErrors ? (
+                <div>
+                  <Message negative>
+                    <Message.Header>
+                      We're sorry, we can't create your account
+                    </Message.Header>
+                    <p>{this.state.errorMessage}</p>
+                  </Message>
+                </div>
+              ) : (
+                ""
+              )}
             </Header>
             {this.state.userCreated ? (
               <div>
@@ -188,18 +200,7 @@ class InterpreterSignUpForm extends Component {
                     required
                   />
                 </Form.Field>
-                {this.state.hasErrors ? (
-                  <div>
-                    <Message negative>
-                      <Message.Header>
-                        We're sorry, we can't create your account
-                      </Message.Header>
-                      <p>{this.state.errorMessage}</p>
-                    </Message>
-                  </div>
-                ) : (
-                  ""
-                )}
+
                 <Button primary type="submit">
                   Submit
                 </Button>
