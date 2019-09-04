@@ -27,7 +27,6 @@ class AddDocumentForm extends Component {
       name: "",
       haveAllFieldsValue: false
     });
-    console.log(this.state);
   };
 
   checkAllFields = () => {

@@ -15,7 +15,6 @@ export const postDocument = (
   name,
   haveAllFieldsValue
 ) => {
-  console.log("testing");
   const postParams = {
     body: JSON.stringify({
       fromLanguage,
