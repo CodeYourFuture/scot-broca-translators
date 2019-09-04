@@ -9,6 +9,6 @@ const translations = require("./translations");
 router.use("/users", users);
 router.use("/status", status);
 router.use("/documents", documents);
-router.user("/translations", translations);
+router.use("/translations", translations);
 
 module.exports = router;
