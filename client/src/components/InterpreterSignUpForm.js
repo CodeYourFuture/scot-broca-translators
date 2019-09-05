@@ -33,7 +33,6 @@ class InterpreterSignUpForm extends Component {
   };
 
   handleErrors(response) {
-    console.log(response);
     return response.json().then(json => {
       if (!response.ok) {
         throw json.message;
@@ -110,19 +109,16 @@ class InterpreterSignUpForm extends Component {
               <Header.Content style={textStyle}>
                 Interpreter Registration Form
               </Header.Content>
-              {this.state.hasErrors ? (
-                <div>
-                  <Message negative>
-                    <Message.Header>
-                      We're sorry, we can't create your account
-                    </Message.Header>
-                    <p>{this.state.errorMessage}</p>
-                  </Message>
-                </div>
-              ) : (
-                ""
-              )}
             </Header>
+            {this.state.hasErrors ? (
+              <div>
+                <Message negative>
+                  <Message.Header>An error occured</Message.Header>
+                  <p>{this.state.errorMessage}</p>
+                </Message>
+              </div>
+            ) : null}
+
             {this.state.userCreated ? (
               <div>
                 <Message
