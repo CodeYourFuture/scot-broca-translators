@@ -7,3 +7,22 @@ export const getDocuments = () => {
     }
   }).then(res => res.json());
 };
+export const postDocument = (
+  fromLanguage,
+  toLanguage,
+  dueDate,
+  text,
+  name,
+  haveAllFieldsValue
+) => {
+  const postParams = {
+    body: JSON.stringify({
+      fromLanguage,
+      toLanguage,
+      dueDate,
+      text,
+      name,
+      haveAllFieldsValue
+    })
+  };
+};
