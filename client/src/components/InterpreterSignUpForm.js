@@ -94,7 +94,7 @@ class InterpreterSignUpForm extends Component {
       hasErrors: false
     });
   };
-  handleClick = () => {
+  handleCancelClick = () => {
     window.location.href = "/";
   };
   clickLogin = () => {
@@ -204,7 +204,7 @@ class InterpreterSignUpForm extends Component {
                 <Button primary type="submit">
                   Submit
                 </Button>
-                <Button onClick={this.handleClick} secondary>
+                <Button onClick={this.handleCancelClick} secondary>
                   Cancel
                 </Button>
               </Form>
