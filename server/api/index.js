@@ -11,4 +11,4 @@ router.use("/status", status);
 router.use("/documents", documents);
 router.use("/translations", translations);
 
-module.exports = router;
+module.exports = { router };

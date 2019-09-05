@@ -14,8 +14,9 @@ router.post(
       const start_date = new Date();
       const user_id = req.user.id;
       const document_id = req.document.id;
+      const role = req.user;
   
-      const translation = {
+      const newTranslation = {
         id,
         user_id,
         document_id,
@@ -23,13 +24,13 @@ router.post(
         status = "Processing"
       };
        
-      const translationId = docsDb.getTranslationByDocumentId(document_id)
-      if(role !== INTERPRETER || (translationId == null && translationId.length == 0)) {
+      const translation = docsDb.getTranslationByDocumentId(document_id)
+      if(role !== INTERPRETER || translation.length == 0) {
         res.status(400).send("error") 
   
       } else
        {
-        docsDb.createTranslation(translation)
+        docsDb.createTranslation(newTranslation)
         res.send("Selected");
       };
       

@@ -94,6 +94,5 @@ module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
-  getDocumentById,
-
+  getDocumentById
 };
