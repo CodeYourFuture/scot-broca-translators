@@ -8,6 +8,16 @@ export const getDocuments = () => {
   }).then(res => res.json());
 };
 
+export const getDocumentById = documentId => {
+  return fetch(`/api/documents/${documentId}`, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());
+};
+
 export const postDocument = (
   fromLanguage,
   toLanguage,

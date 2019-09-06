@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getDocumentById } from "../api/documents";
 
 export class AddTranslationForm extends Component {
   constructor(props) {
@@ -9,15 +10,17 @@ export class AddTranslationForm extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
     let documentId = this.props.match.params.documentId;
-
-    this.setState({
-      document
-    });
+    getDocumentById(documentId)
+      .then(document => this.setState({ document: document }))
+      .catch(err => console.log(err));
   }
 
   render() {
+    const document = this.state;
+    {
+      console.log(document);
+    }
     return <div>Document</div>;
   }
 }
