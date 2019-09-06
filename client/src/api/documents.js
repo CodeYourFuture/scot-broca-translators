@@ -7,6 +7,7 @@ export const getDocuments = () => {
     }
   }).then(res => res.json());
 };
+
 export const postDocument = (
   fromLanguage,
   toLanguage,

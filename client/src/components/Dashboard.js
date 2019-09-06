@@ -2,6 +2,19 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
+import { Link } from "react-router-dom";
+
+function actionColumn(id, userName, translator_name, status, goToSubmitPage) {
+  if (userName === translator_name && status === "Processing") {
+    return (
+      <Link to={"/add-document-translation/" + id}>
+        <span>Submit Translation</span>
+      </Link>
+    );
+  } else {
+    return <span>Pick Translation</span>;
+  }
+}
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -21,6 +34,8 @@ export class Dashboard extends Component {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+    // const actionColumn =
+    //   userName === name ? null : <span>Pick Translation</span>;
     return (
       <Container>
         <Header as="h2">Hello {userName}!</Header>
@@ -72,7 +87,13 @@ export class Dashboard extends Component {
                       {userRole === "User" ? (
                         <span>Delete</span>
                       ) : (
-                        <span>Pick Translation</span>
+                        actionColumn(
+                          id,
+                          userName,
+                          translator_name,
+                          status,
+                          this.goToSubmitPage
+                        )
                       )}
                     </Table.Cell>
                   </Table.Row>

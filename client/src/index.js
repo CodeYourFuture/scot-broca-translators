@@ -9,6 +9,7 @@ import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
 import AddDocumentForm from "./components/AddDocumentForm";
 import Dashboard from "./components/Dashboard";
+import AddTranslationForm from "./components/AddTranslationForm";
 import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
@@ -90,6 +91,10 @@ const Routes = () => {
             <div>
               <Route path="/add-document/" component={AddDocumentForm} />
               <Route path="/dashboard" component={Dashboard} />
+              <Route
+                path="/add-document-translation/:documentId"
+                component={AddTranslationForm}
+              />
             </div>
           ) : null}
         </div>
