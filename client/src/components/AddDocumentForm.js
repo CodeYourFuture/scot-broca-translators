@@ -16,9 +16,14 @@ class AddDocumentForm extends Component {
       name: ""
     };
   }
-
   handleSubmit = () => {
-    postDocument();
+    postDocument(
+      this.state.fromLanguage,
+      this.state.toLanguage,
+      this.state.name,
+      this.state.due_date,
+      this.state.text
+    );
     this.setState({
       fromLanguage: "",
       toLanguage: "",
@@ -139,5 +144,22 @@ class AddDocumentForm extends Component {
     );
   }
 }
-
+// export const postDocument = (
+//   fromLanguage,
+//   toLanguage,
+//   dueDate,
+//   text,
+//   name,
+//   haveAllFieldsValue
+// ) => {
+//   const postParams = {
+//     body: JSON.stringify({
+//       fromLanguage,
+//       toLanguage,
+//       dueDate,
+//       text,
+//       name,
+//       haveAllFieldsValue
+//     })
+//   };
 export default AddDocumentForm;
