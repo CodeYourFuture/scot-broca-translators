@@ -90,9 +90,17 @@ const getDocumentById = documentId => {
     .catch(e => console.error(e));
 };
 
+const updateDocumentStatusById = (status,documentId) => {
+  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
+  return pool
+    .query(sqlQuery, [status,documentId])
+    .then(result => result.rows);
+};
+
 module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
-  getDocumentById
+  getDocumentById,
+  updateDocumentStatusById
 };
