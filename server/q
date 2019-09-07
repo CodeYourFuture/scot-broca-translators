@@ -1,0 +1,20 @@
+                                         Table "public.documents"
+       Column       |         Type          | Collation | Nullable |                Default                
+--------------------+-----------------------+-----------+----------+---------------------------------------
+ id                 | integer               |           | not null | nextval('documents_id_seq'::regclass)
+ name               | character varying(60) |           | not null | 
+ from_language_code | character varying(6)  |           | not null | 
+ to_language_code   | character varying(6)  |           | not null | 
+ status             | document_status       |           |          | 
+ submission_date    | date                  |           | not null | 
+ due_date           | date                  |           | not null | 
+ owner_id           | uuid                  |           | not null | 
+ format             | format_types          |           |          | 
+ content            | text                  |           | not null | 
+Indexes:
+    "documents_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "documents_from_language_code_fkey" FOREIGN KEY (from_language_code) REFERENCES languages(code)
+    "documents_owner_id_fkey" FOREIGN KEY (owner_id) REFERENCES users(id)
+    "documents_to_language_code_fkey" FOREIGN KEY (to_language_code) REFERENCES languages(code)
+

@@ -57,8 +57,22 @@ const getDocumentById = documentId => {
     .catch(e => console.error(e));
 };
 
+const updateTranslation = (content, translationId) => {
+  console.log(translationId);
+  const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2`;
+
+  return pool
+    .query(query, [content, translationId])
+    .then(result => result.rows)
+    .catch(e => {
+      console.log("this is new error !!!");
+      console.error(e);
+    });
+};
+
 module.exports = {
   getAllDocuments,
   getUserDocuments,
-  getDocumentById
+  getDocumentById,
+  updateTranslation
 };

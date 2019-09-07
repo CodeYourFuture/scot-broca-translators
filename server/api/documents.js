@@ -44,4 +44,23 @@ router.get(
   }
 );
 
+router.put(
+  `/:id/translations`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const translationId = req.params.id;
+
+    const content = req.body.content;
+
+    docsDb
+      .updateTranslation(content, translationId)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500);
+      });
+  }
+);
+
 module.exports = router;
