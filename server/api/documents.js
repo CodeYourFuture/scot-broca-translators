@@ -86,6 +86,10 @@ router.put(
     docsDb
       .updateTranslation(content, translationId)
       .then(data => {
+        getDocumentIdByTranslationId(translationId).then(data => {
+          const documentId = data;
+          updateDocumentStatusById(documentId, "Completed");
+        });
         res.send(data);
       })
       .catch(err => {
@@ -93,5 +97,15 @@ router.put(
       });
   }
 );
+
+const updateDocumentStatusById = documentId => {
+  docsDb.updateDocumentStatusById(documentId, "Completed");
+};
+
+const getDocumentIdByTranslationId = translationId => {
+  return docsDb.getDocumentIdByTranslationId(translationId).then(data => {
+    return data[0].document_id;
+  });
+};
 
 module.exports = router;

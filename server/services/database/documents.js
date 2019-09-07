@@ -108,10 +108,27 @@ const updateTranslation = (content, translationId) => {
     });
 };
 
+const getDocumentIdByTranslationId = translationId => {
+  const query = "select document_id from translations where id =$1";
+  return pool
+    .query(query, [translationId])
+    .then(result => result.rows)
+    .catch(e => {
+      console.log("this is new error !!!");
+      console.error(e);
+    });
+};
+
+const updateDocumentStatusById = (documentId, status) => {
+  const query = "update documents set status = $2 where documents.id = $1";
+  return pool.query(query, [documentId, status]).then(result => result.rows);
+};
 module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
   getDocumentById,
-  updateTranslation
+  updateTranslation,
+  getDocumentIdByTranslationId,
+  updateDocumentStatusById
 };
