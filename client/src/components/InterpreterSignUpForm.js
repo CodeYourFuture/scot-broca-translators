@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import {
+  Button,
+  Form,
+  Grid,
+  Select,
+  Header,
+  Message,
+  MessageHeader
+} from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 const role = "Interpreter";
 class InterpreterSignUpForm extends Component {
@@ -11,15 +20,27 @@ class InterpreterSignUpForm extends Component {
       password: "",
       confirmationPassword: "",
       languages: [],
-      userCreated: false
+      userCreated: false,
+      error: false,
+      errorMessage: false
     };
   }
+
   handleChange = (event, { value, name }) => {
     this.setState({
       [name]: value
     });
-    console.log(value);
   };
+
+  handleErrors(response) {
+    return response.json().then(json => {
+      if (!response.ok) {
+        throw json.message;
+      } else {
+        return json;
+      }
+    });
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -30,11 +51,12 @@ class InterpreterSignUpForm extends Component {
       name,
       languages
     } = this.state;
-    // perform all neccassary validations
-    if (password !== confirmationPassword) {
-      alert("Passwords don't match");
+
+    if (0 === name.length) {
+      this.setState({
+        error: true
+      });
     } else {
-      // make API call
       const interpreterRequest = {
         method: "POST",
         body: JSON.stringify({
@@ -50,8 +72,14 @@ class InterpreterSignUpForm extends Component {
         }
       };
       fetch("http://localhost:4000/auth/register", interpreterRequest)
-        .then(res => res.json())
-        .then(this.resetForm);
+        .then(this.handleErrors)
+        .then(this.resetForm)
+        .catch(error => {
+          this.setState({
+            hasErrors: true,
+            errorMessage: error
+          });
+        });
     }
   };
   resetForm = () => {
@@ -61,7 +89,8 @@ class InterpreterSignUpForm extends Component {
       password: "",
       confirmationPassword: "",
       languages: [],
-      userCreated: true
+      userCreated: true,
+      hasErrors: false
     });
   };
   handleCancelClick = () => {
@@ -70,6 +99,7 @@ class InterpreterSignUpForm extends Component {
   clickLogin = () => {
     window.location.href = "/login";
   };
+
   render() {
     return (
       <div>
@@ -80,6 +110,15 @@ class InterpreterSignUpForm extends Component {
                 Interpreter Registration Form
               </Header.Content>
             </Header>
+            {this.state.hasErrors ? (
+              <div>
+                <Message negative>
+                  <Message.Header>An error occured</Message.Header>
+                  <p>{this.state.errorMessage}</p>
+                </Message>
+              </div>
+            ) : null}
+
             {this.state.userCreated ? (
               <div>
                 <Message
