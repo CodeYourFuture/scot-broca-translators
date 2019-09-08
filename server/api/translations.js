@@ -9,11 +9,9 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.body);
     const start_date = new Date();
     const user_id = req.user.id;
     const document_id = req.body.document_id;
-
     const role = req.user.role;
 
     const newTranslation = {
@@ -21,7 +19,6 @@ router.post(
       document_id,
       start_date
     };
-  
 
     if (role !== INTERPRETER) {
       res.status(400).send("error");
@@ -33,9 +30,13 @@ router.post(
         if (translations.length !== 0) {
           res.status(400).send("error");
         } else {
-          translationDb.createTranslation(newTranslation);
-          documentDb.updateDocumentStatusById("Processing", document_id);
-          res.send("The translation record has been created");
+          translationDb
+            .createTranslation(newTranslation)
+            .then(() =>
+              documentDb.updateDocumentStatusById("Processing", document_id)
+            )
+            .then(() => res.send("The translation record has been created"))
+            .catch(error => res.status(400).send("An error ocurred " + error));
         }
       });
     }
