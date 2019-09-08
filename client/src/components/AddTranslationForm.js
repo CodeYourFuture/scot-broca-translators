@@ -8,7 +8,7 @@ export class AddTranslationForm extends Component {
     super(props);
     this.state = {
       document: [],
-      translation: ""
+      content: ""
     };
   }
 
@@ -31,7 +31,7 @@ export class AddTranslationForm extends Component {
   };
 
   render() {
-    const { translation } = this.state;
+    const { content } = this.state;
     return (
       <Container>
         <Header as="h2">
@@ -47,15 +47,16 @@ export class AddTranslationForm extends Component {
             </Form.Group>
 
             <Form.TextArea
+              rows={20}
               required
               placeholder="Please, enter the translation here..."
-              name="translation"
-              value={translation}
+              name="content"
+              value={content}
               onChange={this.handleChange}
             />
 
             <Form.Group>
-              {translation.length ? (
+              {content.length ? (
                 <Form.Button color="blue" onClick={this.handleSubmit}>
                   Submit
                 </Form.Button>
