@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { Header, Segment, Container, Button, Form } from "semantic-ui-react";
-import { getDocumentById } from "../api/documents";
+import { Link } from "react-router-dom";
+import {
+  Header,
+  Segment,
+  Container,
+  Button,
+  Form,
+  Message
+} from "semantic-ui-react";
+import { getDocumentById, putTranslation } from "../api/documents";
 import documentInformationBar from "./DocumentInformationBar";
 
 export class AddTranslationForm extends Component {
@@ -8,7 +16,9 @@ export class AddTranslationForm extends Component {
     super(props);
     this.state = {
       document: [],
-      content: ""
+      content: "",
+      submitErr: false,
+      isSend: false
     };
   }
 
@@ -22,12 +32,20 @@ export class AddTranslationForm extends Component {
   }
 
   handleChange = (e, { value, name }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, isSend: false, submitErr: false });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("submit was clicked");
+    const { translation_id } = this.state.document[0];
+    const { content } = this.state;
+    putTranslation(translation_id, content)
+      .then(res => {
+        this.setState({ isSend: true, content: "" });
+      })
+      .catch(err => {
+        this.setState({ submitErr: true });
+      });
   };
 
   render() {
@@ -45,6 +63,24 @@ export class AddTranslationForm extends Component {
               {this.state.document[0] &&
                 documentInformationBar(this.state.document[0])}
             </Form.Group>
+
+            {this.state.submitErr ? (
+              <Message negative>
+                <Message.Header>An error occurred</Message.Header>
+                <p>Unable to save translation...</p>
+              </Message>
+            ) : null}
+            {this.state.isSend ? (
+              <Message positive>
+                <Message.Header>
+                  {" "}
+                  Your translation is successfully submited.
+                </Message.Header>
+                <Link to={`/dashboard`}>
+                  <p>Go to Dashboard</p>
+                </Link>
+              </Message>
+            ) : null}
 
             <Form.TextArea
               rows={20}

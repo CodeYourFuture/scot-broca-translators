@@ -16,7 +16,7 @@ const DocumentInformationBar = document => {
           <Table.Cell textAlign="center">
             From {document.from_language_name} to {document.to_language_name}
           </Table.Cell>
-          <Table.Cell textAlign="center">Status {document.status}</Table.Cell>
+          <Table.Cell textAlign="center">Status: {document.status}</Table.Cell>
           <Table.Cell textAlign="center">
             Submitted by {document.owner_name}
           </Table.Cell>
