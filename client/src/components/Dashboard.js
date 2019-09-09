@@ -50,7 +50,8 @@ export class Dashboard extends Component {
                   name,
                   from_language_name,
                   to_language_name,
-                  status
+                  status,
+                  translator_name
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
                 return (
@@ -59,7 +60,13 @@ export class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    <Table.Cell>{status}</Table.Cell>
+                    {status !== "Waiting" ? (
+                      <Table.Cell>
+                        {status} by {translator_name}
+                      </Table.Cell>
+                    ) : (
+                      <Table.Cell>{status}</Table.Cell>
+                    )}
                     <Table.Cell>
                       <span>View</span> \
                       {userRole === "User" ? (
