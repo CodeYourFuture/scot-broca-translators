@@ -29,7 +29,13 @@ const Routes = () => {
               Home
             </Menu.Item>
           </Link>
-
+          {isLoggedIn() ? (
+            <Link className="nav-link" to="/Dashboard">
+              <Menu.Item name="editorials" active={true}>
+                Dashboard
+              </Menu.Item>
+            </Link>
+          ) : null}
           <Link className="nav-link" to="/about">
             <Menu.Item name="editorials" active={true}>
               About
