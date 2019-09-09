@@ -86,11 +86,17 @@ router.put(
     docsDb
       .updateTranslation(content, translationId)
       .then(data => {
-        getDocumentIdByTranslationId(translationId).then(data => {
-          const documentId = data;
-          updateDocumentStatusById(documentId, "Completed");
-        });
-        res.send(data);
+        console.log("this is what i am getting fom update" + data);
+        if (data != null && data.length > 0) {
+          getDocumentIdByTranslationId(translationId).then(data => {
+            const documentId = data;
+            updateDocumentStatusById(documentId, "Completed");
+          });
+          res.send(data);
+        } else {
+          // send error
+          res.status(404).send("the document is not found");
+        }
       })
       .catch(err => {
         res.send(500);

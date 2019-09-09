@@ -96,8 +96,7 @@ left join translations t
 };
 
 const updateTranslation = (content, translationId) => {
-  console.log(translationId);
-  const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2`;
+  const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2 RETURNING id`;
 
   return pool
     .query(query, [content, translationId])
