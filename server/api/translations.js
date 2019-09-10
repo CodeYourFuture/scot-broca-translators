@@ -20,15 +20,23 @@ router.post(
       start_date
     };
 
+    const selectedDocument = documentDb.checkDocumentId(document_id);
+    selectedDocument.then(document => {
+      if (document.length == 0) {
+        res.status(400).send("Document does not exist");
+      }
+    });
+
     if (role !== INTERPRETER) {
       res.status(400).send("error");
     } else {
       const getTranslations = translationDb.getTranslationByDocumentId(
         document_id
       );
+
       getTranslations.then(translations => {
         if (translations.length !== 0) {
-          res.status(400).send("error");
+          res.status(400).send("This translation is already picked ");
         } else {
           translationDb
             .createTranslation(newTranslation)
