@@ -80,27 +80,30 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const translationId = req.params.id;
-
     const content = req.body.content;
 
-    docsDb
-      .updateTranslation(content, translationId)
-      .then(data => {
-        console.log("this is what i am getting fom update" + data);
-        if (data != null && data.length > 0) {
-          getDocumentIdByTranslationId(translationId).then(data => {
-            const documentId = data;
-            updateDocumentStatusById(documentId, "Completed");
-          });
-          res.send(data);
-        } else {
-          // send error
-          res.status(404).send("the document is not found");
-        }
-      })
-      .catch(err => {
-        res.send(500);
-      });
+    if (content != null && content.length > 0) {
+      docsDb
+        .updateTranslation(content, translationId)
+        .then(data => {
+          console.log("this is what i am getting fom update" + data);
+          if (data != null && data.length > 0) {
+            getDocumentIdByTranslationId(translationId).then(data => {
+              const documentId = data;
+              updateDocumentStatusById(documentId, "Completed");
+            });
+            res.send(data);
+          } else {
+            // send error
+            res.status(404).send("the document is not found");
+          }
+        })
+        .catch(err => {
+          res.send(500);
+        });
+    } else {
+      res.status(400).send("pleaase inter content to update");
+    }
   }
 );
 
