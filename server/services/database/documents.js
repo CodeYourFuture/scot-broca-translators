@@ -118,9 +118,17 @@ const getDocumentIdByTranslationId = translationId => {
     });
 };
 
-const updateDocumentStatusById = (documentId, status) => {
-  const query = "update documents set status = $2 where documents.id = $1";
-  return pool.query(query, [documentId, status]).then(result => result.rows);
+const updateDocumentStatusById = (status, documentId) => {
+  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
+  return pool.query(sqlQuery, [status, documentId]).then(result => result.rows);
+};
+
+const checkDocumentId = documentId => {
+  const sqlQuery = `select id from documents where documents.id = $1`;
+  return pool
+    .query(sqlQuery, [documentId])
+    .then(result => result.rows)
+    .catch(error => console.error(error));
 };
 module.exports = {
   getAllDocuments,
@@ -129,5 +137,6 @@ module.exports = {
   getDocumentById,
   updateTranslation,
   getDocumentIdByTranslationId,
-  updateDocumentStatusById
+  updateDocumentStatusById,
+  checkDocumentId
 };
