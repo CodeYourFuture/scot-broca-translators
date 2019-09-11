@@ -21,38 +21,31 @@ left join translations t
 left join users u2
   on u2.id = t.user_id`;
 
-const createDocument = ({
+const createDocument = () => {
   from_language_code,
-  to_language_code,
-  submission_date,
-  due_date,
-  owner_id,
-  name,
-  format,
-  content
-}) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "INSERT INTO documents (from_language_code,to_language_code,submission_date,due_date,owner_id,name,format,content) values ($1, $2,$3,$4,$5,$6,$7,$8)",
-      [
-        from_language_code,
-        to_language_code,
-        submission_date,
-        due_date,
-        owner_id,
-        name,
-        format,
-        content
-      ],
-      (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result.rows);
-        }
-      }
-    );
-  });
+    to_language_code,
+    submission_date,
+    due_date,
+    owner_id,
+    name,
+    format,
+    content;
+  const sqlQuery =
+    "INSERT INTO documents (from_language_code,to_language_code,submission_date,due_date,owner_id,name,format,content) values ($1, $2,$3,$4,$5,$6,$7,$8)";
+
+  return pool
+    .query(sqlQuery, [
+      from_language_code,
+      to_language_code,
+      submission_date,
+      due_date,
+      owner_id,
+      name,
+      format,
+      content
+    ])
+    .then(result => result.rows)
+    .catch(e => console.error(e));
 };
 
 const getAllDocuments = () => {
@@ -71,6 +64,7 @@ const getUserDocuments = userId => {
     .then(result => result.rows)
     .catch(e => console.error(e));
 };
+
 const getDocumentById = documentId => {
   const sqlQuery = `select
    d.name, d.id as document_id,

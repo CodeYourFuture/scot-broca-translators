@@ -29,6 +29,14 @@ router.post(
       format,
       content
     };
+    if (document.name === null || document.name === "") {
+      res.status(400).send("Some mandatory field is missing");
+    } else if (document.due_date === null || document.due_date === "") {
+      res.status(400).send("Some mandatory field is missing");
+    } else if (document.due_content === null || document.content === "") {
+      res.status(400).send("Some mandatory field is missing");
+    }
+
     docsDb.createDocument(document);
 
     return res.send("Saved");
