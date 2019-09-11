@@ -16,6 +16,7 @@ export const postDocument = (
   content
 ) => {
   return fetch("/api/documents", {
+    method: "post",
     body: JSON.stringify({
       from_language_code,
       to_language_code,
@@ -23,12 +24,18 @@ export const postDocument = (
       due_date,
       content
     }),
-    method: "post",
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       "Content-Type": "application/json"
     }
-  }).then(res => {
-    return res.json();
-  });
+  })
+    .then(res => res.json())
+    .then(this.handleErrors)
+    .then(this.resetForm)
+    .catch(error => {
+      this.setState({
+        hasErrors: true,
+        errorMessage: error
+      });
+    });
 };

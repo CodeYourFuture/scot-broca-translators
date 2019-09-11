@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Header, Segment, Container, Button, Form } from "semantic-ui-react";
+import {
+  Header,
+  Segment,
+  Container,
+  Button,
+  Form,
+  Message
+} from "semantic-ui-react";
 import languageOptions from "./LanguageOptions";
 import { postDocument } from "../api/documents";
 
@@ -13,15 +20,29 @@ class AddDocumentForm extends Component {
       haveAllFieldsValue: false,
       dueDate: "",
       text: "",
-      name: ""
+      name: "",
+      haveAllFieldsValue: false,
+      documentCreated: false,
+      error: false,
+      errorMessage: false
     };
   }
-  handleSubmit = () => {
+  handleErrors(response) {
+    return response.json().then(json => {
+      if (!response.ok) {
+        throw json.message;
+      } else {
+        return json;
+      }
+    });
+  }
+  handleSubmit = e => {
+    e.preventDefault();
     postDocument(
       this.state.fromLanguage,
       this.state.toLanguage,
       this.state.name,
-      this.state.due_date,
+      this.state.dueDate,
       this.state.text
     );
     this.setState({
@@ -30,8 +51,22 @@ class AddDocumentForm extends Component {
       dueDate: "",
       text: "",
       name: "",
-      haveAllFieldsValue: false
+      haveAllFieldsValue: false,
+      hasErrors: true,
+      errorMessage: false
     });
+  };
+  checkAllFields = () => {
+    let haveAllFieldsValue = true;
+    if (
+      this.state.fromLanguage &&
+      this.state.toLanguage &&
+      this.state.text &&
+      this.state.name
+    ) {
+      haveAllFieldsValue = false;
+    }
+    this.setState({ haveAllFieldsValue });
   };
 
   checkAllFields = () => {
@@ -51,6 +86,22 @@ class AddDocumentForm extends Component {
     this.setState({ [name]: value }, () => this.checkAllFields());
   };
 
+  resetForm = () => {
+    this.setState({
+      fromLanguage: "",
+      dueDate: "",
+      text: "",
+      name: "",
+      haveAllFieldsValue: true,
+      hasErrors: false,
+      documentCreated: ""
+    });
+  };
+
+  clickDashboard = () => {
+    window.location.href = "/Dashboard";
+  };
+
   render() {
     const {
       fromLanguage,
@@ -64,102 +115,102 @@ class AddDocumentForm extends Component {
     return (
       <Container>
         <Header as="h2">Add document</Header>
+        {this.state.hasErrors ? (
+          <div>
+            <Message negative>
+              <Message.Header>An error occured</Message.Header>
+              <p>{this.state.errorMessage}</p>
+            </Message>
+          </div>
+        ) : null}
+        {this.state.documentCreated ? (
+          <div>
+            <Message
+              success
+              header="Your document has been successfully recorded in the system"
+              content="You may go to the dashboard to view the document"
+            />
+          </div>
+        ) : (
+          <Segment>
+            <Form>
+              <Form.Field as="p">
+                To get your text translated, you need to fill in the form
+              </Form.Field>
+              <Form.Group widths="equal">
+                <Form.Dropdown
+                  label="From"
+                  onChange={this.handleChange}
+                  options={languageOptions}
+                  placeholder="Choose an language"
+                  selection
+                  value={fromLanguage}
+                  required
+                  name="fromLanguage"
+                />
+                <Form.Dropdown
+                  label="To"
+                  onChange={this.handleChange}
+                  options={languageOptions}
+                  placeholder="Choose an language"
+                  selection
+                  name="toLanguage"
+                  value={toLanguage}
+                  required
+                />
 
-        <Segment>
-          <Form>
-            <Form.Field as="p">
-              To get your text translated, you need to fill in the form
-            </Form.Field>
-            <Form.Group widths="equal">
-              <Form.Dropdown
-                label="From"
-                onChange={this.handleChange}
-                options={languageOptions}
-                placeholder="Choose an language"
-                selection
-                value={fromLanguage}
-                required
-                name="fromLanguage"
-              />
-              <Form.Dropdown
-                label="To"
-                onChange={this.handleChange}
-                options={languageOptions}
-                placeholder="Choose an language"
-                selection
-                name="toLanguage"
-                value={toLanguage}
-                required
-              />
-
+                <Form.Input
+                  fluid
+                  label="Due date"
+                  type="date"
+                  name="dueDate"
+                  value={dueDate}
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
               <Form.Input
                 fluid
-                label="Due date"
-                type="date"
-                name="dueDate"
-                value={dueDate}
+                label="Document Name"
+                type="text"
+                name="name"
+                placeholder="Please enter text name"
+                value={name}
+                required
                 onChange={this.handleChange}
               />
-            </Form.Group>
-            <Form.Input
-              fluid
-              label="Document Name"
-              type="text"
-              name="name"
-              placeholder="Please enter text name"
-              value={name}
-              required
-              onChange={this.handleChange}
-            />
-            <Form.TextArea
-              required
-              label="Text to be translated"
-              placeholder="Please, put your text here..."
-              name="text"
-              value={text}
-              onChange={this.handleChange}
-            />
+              <Form.TextArea
+                required
+                label="Text to be translated"
+                placeholder="Please, put your text here..."
+                name="text"
+                value={text}
+                onChange={this.handleChange}
+              />
 
-            <Form.Group>
-              {haveAllFieldsValue ? (
-                <Form.Button color="blue" onClick={this.handleSubmit}>
-                  Submit
-                </Form.Button>
-              ) : (
-                <Button color="blue" disabled>
-                  Submit
+              <Form.Group>
+                {haveAllFieldsValue ? (
+                  <Form.Button color="blue" onClick={this.handleSubmit}>
+                    Submit
+                  </Form.Button>
+                ) : (
+                  <Button color="blue" disabled>
+                    Submit
+                  </Button>
+                )}
+
+                <Button
+                  color="black"
+                  onClick={() => this.props.history.push("/dashboard")}
+                >
+                  Cancel
                 </Button>
-              )}
-
-              <Button
-                color="black"
-                onClick={() => this.props.history.push("/dashboard")}
-              >
-                Cancel
-              </Button>
-            </Form.Group>
-          </Form>
-        </Segment>
+              </Form.Group>
+            </Form>
+          </Segment>
+        )}
       </Container>
     );
   }
 }
-// export const postDocument = (
-//   fromLanguage,
-//   toLanguage,
-//   dueDate,
-//   text,
-//   name,
-//   haveAllFieldsValue
-// ) => {
-//   const postParams = {
-//     body: JSON.stringify({
-//       fromLanguage,
-//       toLanguage,
-//       dueDate,
-//       text,
-//       name,
-//       haveAllFieldsValue
-//     })
-//   };
+
 export default AddDocumentForm;
