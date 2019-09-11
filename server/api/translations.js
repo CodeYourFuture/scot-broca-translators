@@ -51,4 +51,49 @@ router.post(
   }
 );
 
+router.put(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const translationId = req.params.id;
+    const content = req.body.content;
+
+    if (req.user == null || req.user == undefined) {
+      res.status(401).send("User Unauthorised");
+      return;
+    }
+
+    if (content == null || content.length === 0) {
+      res.status(400).send("pleaase inter content to update");
+      return;
+    }
+    const userId = req.user.id;
+
+    translationDb
+      .updateTranslation(content, translationId, userId)
+      .then(data => {
+        if (data != null && data.length > 0) {
+          getDocumentIdByTranslationId(translationId).then(documentId => {
+            documentDb.updateDocumentStatusById("Completed", documentId);
+          });
+          res.send(data);
+        } else {
+          // send error
+          res
+            .status(400)
+            .send("the document is not found or not assigned to you");
+        }
+      })
+      .catch(err => {
+        res.send(500, err);
+      });
+  }
+);
+
+const getDocumentIdByTranslationId = translationId => {
+  return documentDb.getDocumentIdByTranslationId(translationId).then(data => {
+    return data[0].document_id;
+  });
+};
+
 module.exports = router;
