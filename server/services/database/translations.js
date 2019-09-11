@@ -16,7 +16,20 @@ const getTranslationByDocumentId = documentId => {
   return pool.query(sqlQuery, [documentId]).then(result => result.rows);
 };
 
+const updateTranslation = (content, translationId, userId) => {
+  const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2 and user_id = $3 RETURNING id`;
+
+  return pool
+    .query(query, [content, translationId, userId])
+    .then(result => result.rows)
+    .catch(e => {
+      console.log("this is new error !!!");
+      console.error(e);
+    });
+};
+
 module.exports = {
   createTranslation,
-  getTranslationByDocumentId
+  getTranslationByDocumentId,
+  updateTranslation
 };

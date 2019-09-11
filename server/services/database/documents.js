@@ -95,16 +95,17 @@ left join translations t
     .catch(e => console.error(e));
 };
 
-const updateTranslation = (content, translationId) => {
-  const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2 RETURNING id`;
+const updateDocumentStatusById = (status, documentId) => {
+  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
+  return pool.query(sqlQuery, [status, documentId]).then(result => result.rows);
+};
 
+const checkDocumentId = documentId => {
+  const sqlQuery = `select id from documents where documents.id = $1`;
   return pool
-    .query(query, [content, translationId])
+    .query(sqlQuery, [documentId])
     .then(result => result.rows)
-    .catch(e => {
-      console.log("this is new error !!!");
-      console.error(e);
-    });
+    .catch(error => console.error(error));
 };
 
 const getDocumentIdByTranslationId = translationId => {
@@ -118,25 +119,12 @@ const getDocumentIdByTranslationId = translationId => {
     });
 };
 
-const updateDocumentStatusById = (status, documentId) => {
-  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
-  return pool.query(sqlQuery, [status, documentId]).then(result => result.rows);
-};
-
-const checkDocumentId = documentId => {
-  const sqlQuery = `select id from documents where documents.id = $1`;
-  return pool
-    .query(sqlQuery, [documentId])
-    .then(result => result.rows)
-    .catch(error => console.error(error));
-};
 module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
   getDocumentById,
-  updateTranslation,
-  getDocumentIdByTranslationId,
   updateDocumentStatusById,
+  getDocumentIdByTranslationId,
   checkDocumentId
 };
