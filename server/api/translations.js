@@ -64,7 +64,7 @@ router.put(
     }
 
     if (content == null || content.length === 0) {
-      res.status(400).send("pleaase enter content to update");
+      res.status(400).send("please enter content to update");
       return;
     }
     const userId = req.user.id;
