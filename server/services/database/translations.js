@@ -21,11 +21,7 @@ const updateTranslation = (content, translationId, userId) => {
 
   return pool
     .query(query, [content, translationId, userId])
-    .then(result => result.rows)
-    .catch(e => {
-      console.log("this is new error !!!");
-      console.error(e);
-    });
+    .then(result => result.rows);
 };
 
 module.exports = {

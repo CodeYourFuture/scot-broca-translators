@@ -64,7 +64,7 @@ router.put(
     }
 
     if (content == null || content.length === 0) {
-      res.status(400).send("pleaase inter content to update");
+      res.status(400).send("pleaase enter content to update");
       return;
     }
     const userId = req.user.id;
@@ -91,9 +91,14 @@ router.put(
 );
 
 const getDocumentIdByTranslationId = translationId => {
-  return documentDb.getDocumentIdByTranslationId(translationId).then(data => {
-    return data[0].document_id;
-  });
+  return documentDb
+    .getDocumentIdByTranslationId(translationId)
+    .then(data => {
+      return data[0].document_id;
+    })
+    .catch(err => {
+      res.send(400, err);
+    });
 };
 
 module.exports = router;

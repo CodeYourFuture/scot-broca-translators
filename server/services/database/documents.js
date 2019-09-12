@@ -110,13 +110,7 @@ const checkDocumentId = documentId => {
 
 const getDocumentIdByTranslationId = translationId => {
   const query = "select document_id from translations where id =$1";
-  return pool
-    .query(query, [translationId])
-    .then(result => result.rows)
-    .catch(e => {
-      console.log("this is new error !!!");
-      console.error(e);
-    });
+  return pool.query(query, [translationId]).then(result => result.rows);
 };
 
 module.exports = {
