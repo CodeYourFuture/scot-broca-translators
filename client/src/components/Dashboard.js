@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
+import { Link } from "react-router-dom";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -68,7 +69,10 @@ export class Dashboard extends Component {
                       <Table.Cell>{status}</Table.Cell>
                     )}
                     <Table.Cell>
-                      <span>View</span> \
+                      <span>
+                        <Link to={`/document/${id}`}>View</Link>
+                      </span>{" "}
+                      \
                       {userRole === "User" ? (
                         <span>Delete</span>
                       ) : (
