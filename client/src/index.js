@@ -13,6 +13,7 @@ import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
+import ViewDocument from "./components/ViewDocument";
 
 const logout = () => {
   sessionStorage.clear();
@@ -96,6 +97,7 @@ const Routes = () => {
             <div>
               <Route path="/add-document/" component={AddDocumentForm} />
               <Route path="/dashboard" component={Dashboard} />
+              <Route path="/document/:id" component={ViewDocument} />
             </div>
           ) : null}
         </div>
