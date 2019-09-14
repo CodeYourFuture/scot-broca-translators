@@ -24,8 +24,14 @@ const updateTranslation = (content, translationId, userId) => {
     .then(result => result.rows);
 };
 
+const deleteTranslation = translationId => {
+  const query = "DELETE from translations WHERE id=$1";
+  return pool.query(query, [translationId]).then(result => result.rows);
+};
+
 module.exports = {
   createTranslation,
   getTranslationByDocumentId,
-  updateTranslation
+  updateTranslation,
+  deleteTranslation
 };
