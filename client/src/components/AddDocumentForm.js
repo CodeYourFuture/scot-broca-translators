@@ -73,6 +73,7 @@ class AddDocumentForm extends Component {
       this.state.fromLanguage &&
       this.state.toLanguage &&
       this.state.text &&
+      this.state.dueDate &&
       this.state.name;
     this.setState({ haveAllFieldsValue });
   };
