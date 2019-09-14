@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import moment from "moment";
 import { Header, Container, Table } from "semantic-ui-react";
 
 export class ViewDocument extends Component {
@@ -47,13 +47,13 @@ export class ViewDocument extends Component {
     const {
       document,
       documentName,
-      submissionDate,
-      dueDate,
       fromLanguageName,
       toLanguageName,
       status,
       ownerName
     } = this.state;
+    const dueDate = moment(this.state.dueDate).format("L");
+    const submissionDate = moment(this.state.submissionDate).format("L");
     return (
       <Container>
         <Header as="h2"> {documentName}</Header>
@@ -61,14 +61,14 @@ export class ViewDocument extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>
-                Submission Date {submissionDate}
+                Submission Date: {submissionDate}
               </Table.HeaderCell>
-              <Table.HeaderCell>Due Date {dueDate}</Table.HeaderCell>
+              <Table.HeaderCell>Due Date: {dueDate}</Table.HeaderCell>
               <Table.HeaderCell>
                 From {fromLanguageName} To {toLanguageName}
               </Table.HeaderCell>
-              <Table.HeaderCell>Status:{status}</Table.HeaderCell>
-              <Table.HeaderCell>Submitted By {ownerName}</Table.HeaderCell>
+              <Table.HeaderCell>Status: {status}</Table.HeaderCell>
+              <Table.HeaderCell>Submitted By: {ownerName}</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
         </Table>
