@@ -124,7 +124,7 @@ const getDocumentIdByTranslationId = translationId => {
   return documentDb
     .getDocumentIdByTranslationId(translationId)
     .then(data => {
-      return data[0].document_id;
+      return data;
     })
     .catch(err => {
       res.send(400, err);
