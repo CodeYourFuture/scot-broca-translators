@@ -21,15 +21,16 @@ left join translations t
 left join users u2
   on u2.id = t.user_id`;
 
-const createDocument = () => {
+const createDocument = ({
   from_language_code,
-    to_language_code,
-    submission_date,
-    due_date,
-    owner_id,
-    name,
-    format,
-    content;
+  to_language_code,
+  submission_date,
+  due_date,
+  owner_id,
+  name,
+  format,
+  content
+}) => {
   const sqlQuery =
     "INSERT INTO documents (from_language_code,to_language_code,submission_date,due_date,owner_id,name,format,content) values ($1, $2,$3,$4,$5,$6,$7,$8)";
 
@@ -44,8 +45,7 @@ const createDocument = () => {
       format,
       content
     ])
-    .then(result => result.rows)
-    .catch(e => console.error(e));
+    .then(result => result.rows);
 };
 
 const getAllDocuments = () => {
