@@ -4,8 +4,6 @@ const docsDb = require("../services/database/documents");
 const { INTERPRETER } = require("../auth/roles");
 const router = express.Router();
 
-
-
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
