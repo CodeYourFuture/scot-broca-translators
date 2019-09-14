@@ -48,7 +48,7 @@ export class UserSignUpForm extends Component {
           "Content-Type": "application/json"
         }
       };
-      fetch("http://localhost:4000/auth/register", userRequest)
+      fetch("/auth/register", userRequest)
         .then(this.handleErrors)
         .then(this.resetForm)
         .catch(error => {
