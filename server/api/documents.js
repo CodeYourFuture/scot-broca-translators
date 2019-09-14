@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const docsDb = require("../services/database/documents");
 const { INTERPRETER } = require("../auth/roles");
+const { dateValidate } = require("../auth/validator.js");
 const router = express.Router();
 
 router.post(
@@ -28,13 +29,27 @@ router.post(
       format,
       content
     };
+
+    if (
+      document.name === null ||
+      document.name === "" ||
+      document.due_date === null ||
+      document.due_date === ""
+    ) {
+      return res.status(400).send("Some mandatory field is missing");
+    } else if (!dateValidate(document.due_date)) {
+      return res.status(400).send("The due_date format is incorrect");
+    } else if (document.content === null || document.content === "") {
+      return res.status(400).send("Some mandatory field is missing");
+    }
+
     docsDb
       .createDocument(document)
-      .then(data => {
-        res.send(data);
+      .then(() => {
+        return res.send("Saved");
       })
-      .catch(error => {
-        res.send(500, error.message);
+      .catch(e => {
+        return res.status(500).send("An error occurred ");
       });
   }
 );

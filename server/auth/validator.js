@@ -22,9 +22,23 @@ function passwordValidate(password) {
 function roleValidate(role) {
   return role === INTERPRETER || role === USER;
 }
+
+function dateValidate(date) {
+  var regex = new RegExp(
+    "([0-9]{4}[-](0[1-9]|1[0-2])[-]([0-2]{1}[0-9]{1}|3[0-1]{1}))"
+  );
+  var dateOk = regex.test(date);
+  if (dateOk) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 module.exports = {
   emailValidate: emailValidate,
   nameValidate: nameValidate,
   passwordValidate: passwordValidate,
-  roleValidate: roleValidate
+  roleValidate: roleValidate,
+  dateValidate: dateValidate
 };
