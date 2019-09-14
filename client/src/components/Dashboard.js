@@ -71,7 +71,7 @@ export class Dashboard extends Component {
                     <Table.Cell>
                       <span>
                         <Link to={`/document/${id}`}>View</Link>
-                      </span>{" "}
+                      </span>
                       \
                       {userRole === "User" ? (
                         <span>Delete</span>

@@ -20,7 +20,7 @@ export class ViewDocument extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    fetch(`http://localhost:4000/api/documents/${id}`, {
+    fetch(`/api/documents/${id}`, {
       method: "get",
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -31,7 +31,6 @@ export class ViewDocument extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
         this.setState({
           document: data[0].content,
           documentName: data[0].name,
@@ -62,12 +61,10 @@ export class ViewDocument extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>
-                {" "}
                 Submission Date {submissionDate}
               </Table.HeaderCell>
               <Table.HeaderCell>Due Date {dueDate}</Table.HeaderCell>
               <Table.HeaderCell>
-                {" "}
                 From {fromLanguageName} To {toLanguageName}
               </Table.HeaderCell>
               <Table.HeaderCell>Status:{status}</Table.HeaderCell>
