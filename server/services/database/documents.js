@@ -89,9 +89,30 @@ left join translations t
     .catch(e => console.error(e));
 };
 
+const updateDocumentStatusById = (status, documentId) => {
+  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
+  return pool.query(sqlQuery, [status, documentId]).then(result => result.rows);
+};
+
+const checkDocumentId = documentId => {
+  const sqlQuery = `select id from documents where documents.id = $1`;
+  return pool
+    .query(sqlQuery, [documentId])
+    .then(result => result.rows)
+    .catch(error => console.error(error));
+};
+
+const getDocumentIdByTranslationId = translationId => {
+  const query = "select document_id from translations where id =$1";
+  return pool.query(query, [translationId]).then(result => result.rows);
+};
+
 module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
-  getDocumentById
+  getDocumentById,
+  updateDocumentStatusById,
+  getDocumentIdByTranslationId,
+  checkDocumentId
 };
