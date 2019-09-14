@@ -4,8 +4,6 @@ const docsDb = require("../services/database/documents");
 const { INTERPRETER } = require("../auth/roles");
 const router = express.Router();
 
-
-
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -30,9 +28,14 @@ router.post(
       format,
       content
     };
-    docsDb.createDocument(document);
-
-    return res.send("Saved");
+    docsDb
+      .createDocument(document)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(error => {
+        res.send(500, error.message);
+      });
   }
 );
 

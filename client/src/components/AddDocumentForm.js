@@ -7,6 +7,7 @@ import {
   Form,
   Message
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import languageOptions from "./LanguageOptions";
 import { postDocument } from "../api/documents";
 
@@ -44,7 +45,18 @@ class AddDocumentForm extends Component {
       this.state.name,
       this.state.dueDate,
       this.state.text
-    );
+    )
+      .then(data => {
+        if (data === 200) {
+          this.setState({ hasErrors: false, documentCreated: true });
+        } else {
+          this.setState({ hasErrors: true });
+        }
+      })
+      .catch(error => {
+        this.state.hasErrors = true;
+      });
+
     this.setState({
       fromLanguage: "",
       toLanguage: "",
@@ -52,33 +64,16 @@ class AddDocumentForm extends Component {
       text: "",
       name: "",
       haveAllFieldsValue: false,
-      hasErrors: true,
       errorMessage: false
     });
   };
-  checkAllFields = () => {
-    let haveAllFieldsValue = true;
-    if (
-      this.state.fromLanguage &&
-      this.state.toLanguage &&
-      this.state.text &&
-      this.state.name
-    ) {
-      haveAllFieldsValue = false;
-    }
-    this.setState({ haveAllFieldsValue });
-  };
 
   checkAllFields = () => {
-    let haveAllFieldsValue = false;
-    if (
+    const haveAllFieldsValue =
       this.state.fromLanguage &&
       this.state.toLanguage &&
       this.state.text &&
-      this.state.name
-    ) {
-      haveAllFieldsValue = true;
-    }
+      this.state.name;
     this.setState({ haveAllFieldsValue });
   };
 
@@ -94,12 +89,12 @@ class AddDocumentForm extends Component {
       name: "",
       haveAllFieldsValue: true,
       hasErrors: false,
-      documentCreated: ""
+      documentCreated: true
     });
   };
 
   clickDashboard = () => {
-    window.location.href = "/Dashboard";
+    window.location.href = "dashboard";
   };
 
   render() {
@@ -130,6 +125,7 @@ class AddDocumentForm extends Component {
               header="Your document has been successfully recorded in the system"
               content="You may go to the dashboard to view the document"
             />
+            <Link to="/Dashboard">Back to dashboard</Link>
           </div>
         ) : (
           <Segment>

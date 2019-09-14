@@ -29,13 +29,6 @@ export const postDocument = (
       "Content-Type": "application/json"
     }
   })
-    .then(res => res.json())
-    .then(this.handleErrors)
-    .then(this.resetForm)
-    .catch(error => {
-      this.setState({
-        hasErrors: true,
-        errorMessage: error
-      });
-    });
+    .then(res => res.status)
+    .catch(error => error.message);
 };
