@@ -161,6 +161,7 @@ class AddDocumentForm extends Component {
                   type="date"
                   name="dueDate"
                   value={dueDate}
+                  required
                   onChange={this.handleChange}
                 />
               </Form.Group>
