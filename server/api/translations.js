@@ -90,6 +90,36 @@ router.put(
   }
 );
 
+router.delete(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const translationId = req.params.id;
+
+    documentDb
+      .getDocumentIdByTranslationId(translationId)
+      .then(documentId => {
+        console.log(documentId);
+        if (documentId != null) {
+          translationDb.deleteTranslation(translationId).then(translations => {
+            if (translations !== null && translations.length === 0) {
+              documentDb.updateDocumentStatusById("Waiting", documentId);
+            }
+          });
+          res.send(data);
+        } else {
+          // send error
+          res
+            .status(400)
+            .send("the document is not found or not assigned to you");
+        }
+      })
+      .catch(err => {
+        res.send(500, err);
+      });
+  }
+);
+
 const getDocumentIdByTranslationId = translationId => {
   return documentDb
     .getDocumentIdByTranslationId(translationId)
