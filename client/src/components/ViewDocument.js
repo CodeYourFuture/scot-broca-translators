@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 
+import { Header, Container, Table } from "semantic-ui-react";
+
 export class ViewDocument extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      document: ""
+      document: "",
+      documentName: "",
+      submissionDate: "",
+      dueDate: "",
+      fromLanguageName: "",
+      toLanguageName: "",
+      status: "",
+      ownerName: ""
     };
   }
 
@@ -22,18 +31,52 @@ export class ViewDocument extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data.content);
+        console.log(data);
         this.setState({
-          document: data.content
+          document: data[0].content,
+          documentName: data[0].name,
+          submissionDate: data[0].submission_date,
+          dueDate: data[0].due_date,
+          fromLanguageName: data[0].from_language_name,
+          toLanguageName: data[0].to_language_name,
+          status: data[0].status,
+          ownerName: data[0].owner_name
         });
       });
   }
   render() {
-    const { document } = this.state;
+    const {
+      document,
+      documentName,
+      submissionDate,
+      dueDate,
+      fromLanguageName,
+      toLanguageName,
+      status,
+      ownerName
+    } = this.state;
     return (
-      <div>
+      <Container>
+        <Header as="h2"> {documentName}</Header>
+        <Table celled unstackable selectable striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>
+                {" "}
+                Submission Date {submissionDate}
+              </Table.HeaderCell>
+              <Table.HeaderCell>Due Date {dueDate}</Table.HeaderCell>
+              <Table.HeaderCell>
+                {" "}
+                From {fromLanguageName} To {toLanguageName}
+              </Table.HeaderCell>
+              <Table.HeaderCell>Status:{status}</Table.HeaderCell>
+              <Table.HeaderCell>Submitted By {ownerName}</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+        </Table>
         <p>{document}</p>
-      </div>
+      </Container>
     );
   }
 }
