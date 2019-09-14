@@ -91,7 +91,7 @@ left join translations t
  where d.id = $1`;
   return pool
     .query(sqlQuery, [documentId])
-    .then(result => result.rows[0])
+    .then(result => result.rows)
     .catch(e => console.error(e));
 };
 
@@ -104,7 +104,7 @@ const checkDocumentId = documentId => {
   const sqlQuery = `select id from documents where documents.id = $1`;
   return pool
     .query(sqlQuery, [documentId])
-    .then(result => result.rows[0])
+    .then(result => result.rows)
     .catch(error => console.error(error));
 };
 
