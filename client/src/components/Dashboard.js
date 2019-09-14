@@ -4,6 +4,7 @@ import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { Header, Container, Table, Button } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
+import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -63,17 +64,24 @@ class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    <StatusColumn
-                      status={status}
-                      translatorName={translator_name}
-                    />
-                    <ActionColumn
-                      translatorName={translator_name}
-                      id={id}
-                      status={status}
-                      userName={userName}
-                      userRole={userRole}
-                    />
+                    {status !== "Waiting" ? (
+                      <Table.Cell>
+                        {status} by {translator_name}
+                      </Table.Cell>
+                    ) : (
+                      <Table.Cell>{status}</Table.Cell>
+                    )}
+                    <Table.Cell>
+                      <span>
+                        <Link to={`/document/${id}`}>View</Link>
+                      </span>
+                      \
+                      {userRole === "User" ? (
+                        <span>Delete</span>
+                      ) : (
+                        <span>Pick Translation</span>
+                      )}
+                    </Table.Cell>
                   </Table.Row>
                 );
               })}

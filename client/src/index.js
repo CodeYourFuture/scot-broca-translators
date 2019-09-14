@@ -14,6 +14,7 @@ import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
+import ViewDocument from "./components/ViewDocument";
 
 const logout = () => {
   sessionStorage.clear();
@@ -30,7 +31,13 @@ const Routes = () => {
               Home
             </Menu.Item>
           </Link>
-
+          {isLoggedIn() ? (
+            <Link className="nav-link" to="/Dashboard">
+              <Menu.Item name="editorials" active={true}>
+                Dashboard
+              </Menu.Item>
+            </Link>
+          ) : null}
           <Link className="nav-link" to="/about">
             <Menu.Item name="editorials" active={true}>
               About
@@ -95,6 +102,7 @@ const Routes = () => {
                 path="/add-document-translation/:documentId"
                 component={AddTranslationForm}
               />
+              <Route path="/document/:id" component={ViewDocument} />
             </div>
           ) : null}
         </div>

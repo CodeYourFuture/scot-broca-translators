@@ -31,28 +31,21 @@ const createDocument = ({
   format,
   content
 }) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "INSERT INTO documents (from_language_code,to_language_code,submission_date,due_date,owner_id,name,format,content) values ($1, $2,$3,$4,$5,$6,$7,$8)",
-      [
-        from_language_code,
-        to_language_code,
-        submission_date,
-        due_date,
-        owner_id,
-        name,
-        format,
-        content
-      ],
-      (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result.rows);
-        }
-      }
-    );
-  });
+  const sqlQuery =
+    "INSERT INTO documents (from_language_code,to_language_code,submission_date,due_date,owner_id,name,format,content) values ($1, $2,$3,$4,$5,$6,$7,$8)";
+
+  return pool
+    .query(sqlQuery, [
+      from_language_code,
+      to_language_code,
+      submission_date,
+      due_date,
+      owner_id,
+      name,
+      format,
+      content
+    ])
+    .then(result => result.rows);
 };
 
 const getAllDocuments = () => {
@@ -71,6 +64,7 @@ const getUserDocuments = userId => {
     .then(result => result.rows)
     .catch(e => console.error(e));
 };
+
 const getDocumentById = documentId => {
   const sqlQuery = `select
    d.name, d.id as document_id,
@@ -95,9 +89,30 @@ left join translations t
     .catch(e => console.error(e));
 };
 
+const updateDocumentStatusById = (status, documentId) => {
+  const sqlQuery = `update documents SET status = $1 WHERE documents.id =$2`;
+  return pool.query(sqlQuery, [status, documentId]).then(result => result.rows);
+};
+
+const checkDocumentId = documentId => {
+  const sqlQuery = `select id from documents where documents.id = $1`;
+  return pool
+    .query(sqlQuery, [documentId])
+    .then(result => result.rows)
+    .catch(error => console.error(error));
+};
+
+const getDocumentIdByTranslationId = translationId => {
+  const query = "select document_id from translations where id =$1";
+  return pool.query(query, [translationId]).then(result => result.rows);
+};
+
 module.exports = {
   getAllDocuments,
   createDocument,
   getUserDocuments,
-  getDocumentById
+  getDocumentById,
+  updateDocumentStatusById,
+  getDocumentIdByTranslationId,
+  checkDocumentId
 };
