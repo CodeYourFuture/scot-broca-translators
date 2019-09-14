@@ -3,7 +3,6 @@ const passport = require("passport");
 const docsDb = require("../services/database/documents");
 const { INTERPRETER } = require("../auth/roles");
 const { dateValidate } = require("../auth/validator.js");
-
 const router = express.Router();
 
 router.post(
@@ -30,6 +29,7 @@ router.post(
       format,
       content
     };
+
     if (
       document.name === null ||
       document.name === "" ||
@@ -49,7 +49,7 @@ router.post(
         return res.send("Saved");
       })
       .catch(e => {
-        return res.status(400).send("The language is not supported");
+        return res.status(500).send("An error occurred ");
       });
   }
 );
