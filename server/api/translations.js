@@ -95,28 +95,50 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const translationId = req.params.id;
-
-    documentDb
-      .getDocumentIdByTranslationId(translationId)
-      .then(documentId => {
-        console.log(documentId);
-        if (documentId != null) {
-          translationDb.deleteTranslation(translationId).then(translations => {
-            if (translations !== null && translations.length === 0) {
-              documentDb.updateDocumentStatusById("Waiting", documentId);
+    const userId = req.user.id;
+    console.log("this is user id " + userId);
+    translationDb.getUserIdByTranslationId(translationId).then(userIdTrans => {
+      console.log("this is trans user id" + userIdTrans);
+      if (userId === userIdTrans) {
+        documentDb
+          .getDocumentIdByTranslationId(translationId)
+          .then(documentId => {
+            if (documentId != null) {
+              documentDb.checkDocumentStatus(documentId).then(status => {
+                if (status == "Processing") {
+                  translationDb
+                    .deleteTranslation(translationId)
+                    .then(translations => {
+                      if (translations !== null && translations.length === 0) {
+                        documentDb.updateDocumentStatusById(
+                          "Waiting",
+                          documentId
+                        );
+                      } else {
+                        res
+                          .status(400)
+                          .send("the document status is not in process");
+                      }
+                    });
+                  res.send("changed status");
+                } else {
+                  res.status(400).send("the document status is not in process");
+                }
+              });
+            } else {
+              // send error
+              res
+                .status(400)
+                .send("the document is not found or not assigned to you");
             }
+          })
+          .catch(err => {
+            res.send(500, err);
           });
-          res.send(data);
-        } else {
-          // send error
-          res
-            .status(400)
-            .send("the document is not found or not assigned to you");
-        }
-      })
-      .catch(err => {
-        res.send(500, err);
-      });
+      } else {
+        res.status(400).send("the user id and translationid not match");
+      }
+    });
   }
 );
 

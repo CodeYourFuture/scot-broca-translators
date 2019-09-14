@@ -115,6 +115,10 @@ const getDocumentIdByTranslationId = translationId => {
     .then(result => result.rows[0].document_id);
 };
 
+const checkDocumentStatus = documentId => {
+  const query = "select status from documents where id=$1";
+  return pool.query(query, [documentId]).then(result => result.rows[0].status);
+};
 module.exports = {
   getAllDocuments,
   createDocument,
@@ -122,5 +126,6 @@ module.exports = {
   getDocumentById,
   updateDocumentStatusById,
   getDocumentIdByTranslationId,
-  checkDocumentId
+  checkDocumentId,
+  checkDocumentStatus
 };
