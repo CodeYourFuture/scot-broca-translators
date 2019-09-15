@@ -1,5 +1,4 @@
 export const putTranslation = (id, content) => {
-  id = 2;
   const putParams = {
     body: JSON.stringify({ content: content }),
     method: "PUT",
