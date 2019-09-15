@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
+import { Link } from "react-router-dom";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -115,7 +116,9 @@ export class Dashboard extends Component {
                       <Table.Cell>{status}</Table.Cell>
                     )}
                     <Table.Cell>
-                      <Button>View</Button>
+                      <Link to={`/document/${id}`}>
+                        <Button>View</Button>
+                      </Link>
                       {userRole === "User" ? <Button>Delete</Button> : null}
                       {userRole === "Interpreter" && status === "Waiting" ? (
                         <Button onClick={() => this.pickDocument(id)}>

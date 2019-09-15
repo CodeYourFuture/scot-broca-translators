@@ -63,7 +63,7 @@ class InterpreterSignUpForm extends Component {
           "Content-Type": "application/json"
         }
       };
-      fetch("http://localhost:4000/auth/register", interpreterRequest)
+      fetch("/auth/register", interpreterRequest)
         .then(this.handleErrors)
         .then(this.resetForm)
         .catch(error => {
