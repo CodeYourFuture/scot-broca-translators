@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Header, Container, Table, Button } from "semantic-ui-react";
+import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 
 export class Dashboard extends Component {
@@ -12,9 +12,50 @@ export class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.setDocuments();
+  }
+
+  setDocuments() {
     getDocuments()
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
+  }
+  handleErrors(response) {
+    return response.json().then(json => {
+      if (!response.ok) {
+        throw json.message;
+      } else {
+        return json;
+      }
+    });
+  }
+
+  pickDocument(id) {
+    const userRequest = {
+      method: "POST",
+      body: JSON.stringify({
+        document_id: id
+      }),
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        "Content-Type": "application/json"
+      }
+    };
+
+    fetch("http://localhost:4000/api/translations", userRequest)
+      .then(data => {
+        if (data.status === 200) {
+          this.setDocuments();
+        } else {
+          return this.handleErrors;
+        }
+      })
+      .catch(error => {
+        this.setState({
+          hasErrors: true,
+          errorMessage: error
+        });
+      });
   }
 
   render() {
@@ -29,6 +70,12 @@ export class Dashboard extends Component {
             {" "}
             Add document
           </Button>
+        ) : null}
+        {this.state.hasErrors ? (
+          <Message negative>
+            <Message.Header>An error occurred</Message.Header>
+            <p>{this.state.errorMessage}</p>
+          </Message>
         ) : null}
         <Table celled unstackable selectable striped>
           <Table.Header>
@@ -68,12 +115,13 @@ export class Dashboard extends Component {
                       <Table.Cell>{status}</Table.Cell>
                     )}
                     <Table.Cell>
-                      <span>View</span> \
-                      {userRole === "User" ? (
-                        <span>Delete</span>
-                      ) : (
-                        <span>Pick Translation</span>
-                      )}
+                      <Button>View</Button>
+                      {userRole === "User" ? <Button>Delete</Button> : null}
+                      {userRole === "Interpreter" && status === "Waiting" ? (
+                        <Button onClick={() => this.pickDocument(id)}>
+                          Pick Document
+                        </Button>
+                      ) : null}
                     </Table.Cell>
                   </Table.Row>
                 );
