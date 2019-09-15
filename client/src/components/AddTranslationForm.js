@@ -8,7 +8,8 @@ import {
   Form,
   Message
 } from "semantic-ui-react";
-import { getDocumentById, putTranslation } from "../api/documents";
+import { getDocumentById } from "../api/documents";
+import { putTranslation } from "../api/translations";
 import documentInformationBar from "./DocumentInformationBar";
 
 export class AddTranslationForm extends Component {
@@ -18,7 +19,8 @@ export class AddTranslationForm extends Component {
       document: [],
       content: "",
       submitErr: false,
-      isSend: false
+      isSend: false,
+      errorMessage: ""
     };
   }
 
@@ -40,16 +42,14 @@ export class AddTranslationForm extends Component {
     const { translation_id } = this.state.document[0];
     const { content } = this.state;
     putTranslation(translation_id, content)
-      .then(res => {
-        this.setState({ isSend: true, content: "" });
-      })
+      .then(res => this.setState({ isSend: true, content: "" }))
       .catch(err => {
-        this.setState({ submitErr: true });
+        err.text().then(errorMessage => this.setState({ errorMessage }));
       });
   };
 
   render() {
-    const { content } = this.state;
+    const { content, errorMessage } = this.state;
     return (
       <Container>
         <Header as="h2">
@@ -64,17 +64,17 @@ export class AddTranslationForm extends Component {
                 documentInformationBar(this.state.document[0])}
             </Form.Group>
 
-            {this.state.submitErr ? (
+            {errorMessage.length ? (
               <Message negative>
                 <Message.Header>An error occurred</Message.Header>
-                <p>Unable to save translation...</p>
+                <p>{errorMessage}</p>
               </Message>
             ) : null}
             {this.state.isSend ? (
               <Message positive>
                 <Message.Header>
                   {" "}
-                  Your translation is successfully submited.
+                  Your translation has been submitted successfully!
                 </Message.Header>
                 <Link to={`/dashboard`}>
                   <p>Go to Dashboard</p>

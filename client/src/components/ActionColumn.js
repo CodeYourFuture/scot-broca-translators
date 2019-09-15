@@ -7,13 +7,19 @@ const ActionColumn = props => {
   if (userRole === "User") {
     return (
       <Table.Cell>
-        <span>View</span> / <span>Delete</span>
+        <span>
+          <Link to={`/document/${id}`}>View</Link>
+        </span>{" "}
+        / <span>Delete</span>
       </Table.Cell>
     );
   } else if (userName === translatorName && status === "Processing") {
     return (
       <Table.Cell>
-        <span>View</span> /{" "}
+        <span>
+          <Link to={`/document/${id}`}>View</Link>
+        </span>{" "}
+        /{" "}
         <Link to={`/add-document-translation/${id}`}>
           <span>Submit Translation</span>
         </Link>
@@ -22,7 +28,10 @@ const ActionColumn = props => {
   } else {
     return (
       <Table.Cell>
-        <span>View</span> / <span>Pick Translation</span>
+        <span>
+          <Link to={`/document/${id}`}>View</Link>
+        </span>{" "}
+        / <span>Pick Translation</span>
       </Table.Cell>
     );
   }
