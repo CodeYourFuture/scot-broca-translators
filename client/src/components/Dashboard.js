@@ -43,7 +43,7 @@ export class Dashboard extends Component {
       }
     };
 
-    fetch("http://localhost:4000/api/translations", userRequest)
+    fetch("/api/translations", userRequest)
       .then(data => {
         if (data.status === 200) {
           this.setDocuments();
