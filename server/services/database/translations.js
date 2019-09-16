@@ -25,7 +25,6 @@ const updateTranslation = (content, translationId, userId) => {
 };
 
 const deleteTranslation = translationId => {
-  console.log("translationId" + translationId);
   const query = "DELETE from translations WHERE id=$1";
   return pool.query(query, [translationId]).then(result => result.rows);
 };
@@ -35,10 +34,7 @@ const getUserIdByTranslationId = translationId => {
   return pool
     .query(query, [translationId])
     .then(result => {
-      result.rows[0].user_id;
-      console.log(
-        " this is user trans id from the database" + result.rows[0].user_id
-      );
+      return result.rows[0].user_id;
     })
     .catch(error => console.error(error));
 };
