@@ -95,14 +95,16 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const translationId = req.params.id;
+    console.log("this is trans id " + translationId);
     const userId = req.user.id;
     console.log("this is user id " + userId);
     translationDb.getUserIdByTranslationId(translationId).then(userIdTrans => {
-      console.log("this is trans user id" + userIdTrans);
+      console.log("this is user id by trans id " + userIdTrans);
       if (userId === userIdTrans) {
         documentDb
           .getDocumentIdByTranslationId(translationId)
           .then(documentId => {
+            console.log("this is doc id " + documentId);
             if (documentId != null) {
               documentDb.checkDocumentStatus(documentId).then(status => {
                 if (status == "Processing") {
