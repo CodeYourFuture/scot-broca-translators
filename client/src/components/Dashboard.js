@@ -29,7 +29,6 @@ class Dashboard extends Component {
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>
-            {" "}
             Add document
           </Button>
         ) : null}

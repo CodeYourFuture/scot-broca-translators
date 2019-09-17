@@ -30,7 +30,9 @@ export class AddTranslationForm extends Component {
       .then(document => {
         this.setState({ document: document });
       })
-      .catch(err => console.log(err));
+      .catch(err =>
+        this.setState({ errorMessage: "Unable to retrieve document data" })
+      );
   }
 
   handleChange = (e, { value, name }) => {
@@ -53,7 +55,7 @@ export class AddTranslationForm extends Component {
     return (
       <Container>
         <Header as="h2">
-          Submit translation for{" "}
+          Submit translation for
           <i> {this.state.document[0] && this.state.document[0].name}</i>
         </Header>
 
@@ -73,7 +75,6 @@ export class AddTranslationForm extends Component {
             {this.state.isSend ? (
               <Message positive>
                 <Message.Header>
-                  {" "}
                   Your translation has been submitted successfully!
                 </Message.Header>
                 <Link to={`/dashboard`}>
