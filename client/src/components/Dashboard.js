@@ -3,6 +3,7 @@ import moment from "moment";
 import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 import { Link } from "react-router-dom";
+import { pickDocument } from "../api/translations";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -21,41 +22,23 @@ export class Dashboard extends Component {
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
   }
-  handleErrors(response) {
-    return response.json().then(json => {
-      if (!response.ok) {
-        throw json.message;
-      } else {
-        return json;
-      }
-    });
-  }
 
-  pickDocument(id) {
-    const userRequest = {
-      method: "POST",
-      body: JSON.stringify({
-        document_id: id
-      }),
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        "Content-Type": "application/json"
-      }
-    };
-
-    fetch("/api/translations", userRequest)
-      .then(data => {
-        if (data.status === 200) {
+  handlePickDocumentClick(id) {
+    pickDocument(id)
+      .then(response => {
+        if (response.status === 200) {
           this.setDocuments();
         } else {
-          return this.handleErrors;
+          throw response;
         }
       })
       .catch(error => {
-        this.setState({
-          hasErrors: true,
-          errorMessage: error
-        });
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
       });
   }
 
@@ -121,7 +104,9 @@ export class Dashboard extends Component {
                       </Link>
                       {userRole === "User" ? <Button>Delete</Button> : null}
                       {userRole === "Interpreter" && status === "Waiting" ? (
-                        <Button onClick={() => this.pickDocument(id)}>
+                        <Button
+                          onClick={() => this.handlePickDocumentClick(id)}
+                        >
                           Pick Document
                         </Button>
                       ) : null}
