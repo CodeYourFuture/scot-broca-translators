@@ -95,40 +95,38 @@ router.delete(
   (req, res) => {
     const translationId = req.params.id;
     const userId = req.user.id;
-    translationDb.getUserIdByTranslationId(translationId).then(userIdTrans => {
-      if (userId === userIdTrans) {
-        documentDb
-          .getDocumentIdByTranslationId(translationId)
-          .then(documentId => {
-            if (documentId != null) {
-              documentDb
-                .checkDocumentStatus(documentId)
-                .then(status => {
-                  if (status == "Processing") {
-                    return translationDb.deleteTranslation(translationId);
-                  } else {
-                    res
-                      .status(400)
-                      .send("the document status is not in process");
-                  }
-                })
-                .then(() =>
-                  documentDb.updateDocumentStatusById("Waiting", documentId)
-                )
-                .then(() => res.send("changed status"));
+    translationDb
+      .getUserIdByTranslationId(translationId)
+      .then(userIdTrans => {
+        if (userId !== userIdTrans) {
+          return res
+            .status(400)
+            .send("the user id and translationid not match");
+        }
+
+        return documentDb.getDocumentIdByTranslationId(translationId);
+      })
+      .then(documentId => {
+        return documentDb
+          .checkDocumentStatus(documentId)
+          .then(status => {
+            if (status == "Processing") {
+              return translationDb.deleteTranslation(translationId);
             } else {
-              res
+              return res
                 .status(400)
-                .send("the document is not found or not assigned to you");
+                .send("the document status is not in process");
             }
           })
-          .catch(err => {
-            res.send(500, err);
-          });
-      } else {
-        res.status(400).send("the user id and translationid not match");
-      }
-    });
+          .then(() =>
+            documentDb.updateDocumentStatusById("Waiting", documentId)
+          )
+          .then(() => res.send("changed status"));
+      })
+
+      .catch(err => {
+        res.send(500, err);
+      });
   }
 );
 
