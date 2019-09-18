@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import moment from "moment";
+import ActionColumn from "./ActionColumn";
+import StatusColumn from "./StatusColumn";
 import { Header, Container, Table, Button } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
-import { Link } from "react-router-dom";
 
-export class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,12 +23,12 @@ export class Dashboard extends Component {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+
     return (
       <Container>
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>
-            {" "}
             Add document
           </Button>
         ) : null}
@@ -61,24 +62,17 @@ export class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    {status !== "Waiting" ? (
-                      <Table.Cell>
-                        {status} by {translator_name}
-                      </Table.Cell>
-                    ) : (
-                      <Table.Cell>{status}</Table.Cell>
-                    )}
-                    <Table.Cell>
-                      <span>
-                        <Link to={`/document/${id}`}>View</Link>
-                      </span>
-                      \
-                      {userRole === "User" ? (
-                        <span>Delete</span>
-                      ) : (
-                        <span>Pick Translation</span>
-                      )}
-                    </Table.Cell>
+                    <StatusColumn
+                      status={status}
+                      translatorName={translator_name}
+                    />
+                    <ActionColumn
+                      translatorName={translator_name}
+                      id={id}
+                      status={status}
+                      userName={userName}
+                      userRole={userRole}
+                    />
                   </Table.Row>
                 );
               })}
