@@ -95,34 +95,27 @@ router.delete(
   (req, res) => {
     const translationId = req.params.id;
     const userId = req.user.id;
-
     translationDb.getUserIdByTranslationId(translationId).then(userIdTrans => {
       if (userId === userIdTrans) {
         documentDb
           .getDocumentIdByTranslationId(translationId)
           .then(documentId => {
             if (documentId != null) {
-              documentDb.checkDocumentStatus(documentId).then(status => {
-                if (status == "Processing") {
-                  translationDb
-                    .deleteTranslation(translationId)
-                    .then(translations => {
-                      if (translations !== null && translations.length === 0) {
-                        documentDb.updateDocumentStatusById(
-                          "Waiting",
-                          documentId
-                        );
-                      } else {
-                        res
-                          .status(400)
-                          .send("the document status is not in process");
-                      }
-                    });
-                  res.send("changed status");
-                } else {
-                  res.status(400).send("the document status is not in process");
-                }
-              });
+              documentDb
+                .checkDocumentStatus(documentId)
+                .then(status => {
+                  if (status == "Processing") {
+                    return translationDb.deleteTranslation(translationId);
+                  } else {
+                    res
+                      .status(400)
+                      .send("the document status is not in process");
+                  }
+                })
+                .then(() =>
+                  documentDb.updateDocumentStatusById("Waiting", documentId)
+                )
+                .then(() => res.send("changed status"));
             } else {
               res
                 .status(400)
