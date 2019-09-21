@@ -16,6 +16,11 @@ const getTranslationByDocumentId = documentId => {
   return pool.query(sqlQuery, [documentId]).then(result => result.rows);
 };
 
+const getTranslationByTranslationtId = translationId => {
+  const sqlQuery = "select * from translations where id = $1";
+  return pool.query(sqlQuery, [translationId]).then(result => result.rows);
+};
+
 const updateTranslation = (content, translationId, userId) => {
   const query = `UPDATE translations SET submission_date=NOW(), content=$1 WHERE id=$2 and user_id = $3 RETURNING id`;
 
@@ -27,5 +32,6 @@ const updateTranslation = (content, translationId, userId) => {
 module.exports = {
   createTranslation,
   getTranslationByDocumentId,
-  updateTranslation
+  updateTranslation,
+  getTranslationByTranslationtId
 };
