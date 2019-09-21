@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
-import { Link } from "react-router-dom";
 import { pickDocument } from "../api/translations";
+import ActionColumn from "./ActionColumn";
+import StatusColumn from "./StatusColumn";
 
-export class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,13 +18,13 @@ export class Dashboard extends Component {
     this.setDocuments();
   }
 
-  setDocuments() {
+  setDocuments = () => {
     getDocuments()
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
-  }
+  };
 
-  handlePickDocumentClick(id) {
+  handlePickDocumentClick = id => {
     pickDocument(id)
       .then(response => {
         if (response.status === 200) {
@@ -40,18 +41,18 @@ export class Dashboard extends Component {
           })
         );
       });
-  }
+  };
 
   render() {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+
     return (
       <Container>
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>
-            {" "}
             Add document
           </Button>
         ) : null}
@@ -91,26 +92,18 @@ export class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    {status !== "Waiting" ? (
-                      <Table.Cell>
-                        {status} by {translator_name}
-                      </Table.Cell>
-                    ) : (
-                      <Table.Cell>{status}</Table.Cell>
-                    )}
-                    <Table.Cell>
-                      <Link to={`/document/${id}`}>
-                        <Button>View</Button>
-                      </Link>
-                      {userRole === "User" ? <Button>Delete</Button> : null}
-                      {userRole === "Interpreter" && status === "Waiting" ? (
-                        <Button
-                          onClick={() => this.handlePickDocumentClick(id)}
-                        >
-                          Pick Document
-                        </Button>
-                      ) : null}
-                    </Table.Cell>
+                    <StatusColumn
+                      status={status}
+                      translatorName={translator_name}
+                    />
+                    <ActionColumn
+                      translatorName={translator_name}
+                      id={id}
+                      status={status}
+                      userName={userName}
+                      userRole={userRole}
+                      handlePickDocumentClick={this.handlePickDocumentClick}
+                    />
                   </Table.Row>
                 );
               })}

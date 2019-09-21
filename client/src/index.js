@@ -9,10 +9,12 @@ import UserSignUpForm from "./components/UserSignUpForm";
 import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
 import AddDocumentForm from "./components/AddDocumentForm";
 import Dashboard from "./components/Dashboard";
+import AddTranslationForm from "./components/AddTranslationForm";
 import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
+import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
 
 const logout = () => {
@@ -97,6 +99,13 @@ const Routes = () => {
             <div>
               <Route path="/add-document/" component={AddDocumentForm} />
               <Route path="/dashboard" component={Dashboard} />
+              {isUser() ? null : (
+                <Route
+                  path="/add-document-translation/:documentId"
+                  component={AddTranslationForm}
+                />
+              )}
+
               <Route path="/document/:id" component={ViewDocument} />
             </div>
           ) : null}
