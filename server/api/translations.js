@@ -51,6 +51,28 @@ router.post(
   }
 );
 
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const translationId = req.params.id;
+
+    if (req.user === false) {
+      return res.send("Unauthorised");
+    } else {
+      return translationDb
+        .getTranslationByTranslationtId(translationId)
+        .then(data => {
+          if (data.length === 0) {
+            return res.status(400).send("No translation available");
+          } else {
+            res.send(data);
+          }
+        });
+    }
+  }
+);
+
 router.put(
   `/:id`,
   passport.authenticate("jwt", { session: false }),
