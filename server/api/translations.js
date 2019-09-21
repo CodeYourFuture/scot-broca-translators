@@ -121,9 +121,10 @@ router.delete(
       .getUserIdByTranslationId(translationId)
       .then(userIdTrans => {
         if (userId !== userIdTrans) {
-          return res
-            .status(400)
-            .send("the user id and translationid not match");
+          throw {
+            errorCode: 401,
+            errorMessage: "the user id and translationid do not match"
+          };
         }
 
         return documentDb.getDocumentIdByTranslationId(translationId);
@@ -135,9 +136,10 @@ router.delete(
             if (status == "Processing") {
               return translationDb.deleteTranslation(translationId);
             } else {
-              return res
-                .status(400)
-                .send("the document status is not in process");
+              throw {
+                errorCode: 400,
+                errorMessage: "the document status is not in process"
+              };
             }
           })
           .then(() =>
@@ -147,7 +149,11 @@ router.delete(
       })
 
       .catch(err => {
-        res.send(500, err);
+        if (err.errorCode) {
+          res.status(err.errorCode).send(err.errorMessage);
+        } else {
+          res.status(500).send("un expected error");
+        }
       });
   }
 );
