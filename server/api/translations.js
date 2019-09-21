@@ -66,7 +66,7 @@ router.get(
           if (data.length === 0) {
             return res.status(400).send("No translation available");
           } else {
-            res.send(data);
+            res.send(data[0]);
           }
         });
     }
