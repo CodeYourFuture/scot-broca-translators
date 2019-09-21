@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const View = props => {
@@ -17,7 +17,7 @@ const ActionColumn = props => {
   if (userRole === "User") {
     return (
       <Table.Cell>
-        <View id={id} />/ <span>Delete</span>
+        <View id={id} />/ <span> Delete </span>
       </Table.Cell>
     );
   } else if (userName === translatorName && status === "Processing") {
@@ -33,7 +33,11 @@ const ActionColumn = props => {
     return (
       <Table.Cell>
         <View id={id} />
-        {status === "Waiting" ? <span>/ Pick Translation</span> : null}
+        {status === "Waiting" ? (
+          <Button onClick={() => props.handlePickDocumentClick(id)}>
+            Pick Document
+          </Button>
+        ) : null}
       </Table.Cell>
     );
   }

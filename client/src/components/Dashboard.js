@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import moment from "moment";
+import { Header, Container, Table, Button, Message } from "semantic-ui-react";
+import { getDocuments } from "../api/documents";
+import { pickDocument } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
-import { Header, Container, Table, Button } from "semantic-ui-react";
-import { getDocuments } from "../api/documents";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -14,10 +15,33 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.setDocuments();
+  }
+
+  setDocuments = () => {
     getDocuments()
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
-  }
+  };
+
+  handlePickDocumentClick = id => {
+    pickDocument(id)
+      .then(response => {
+        if (response.status === 200) {
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
 
   render() {
     const { documents } = this.state;
@@ -31,6 +55,12 @@ class Dashboard extends Component {
           <Button onClick={() => this.props.history.push("/add-document")}>
             Add document
           </Button>
+        ) : null}
+        {this.state.hasErrors ? (
+          <Message negative>
+            <Message.Header>An error occurred</Message.Header>
+            <p>{this.state.errorMessage}</p>
+          </Message>
         ) : null}
         <Table celled unstackable selectable striped>
           <Table.Header>
@@ -72,6 +102,7 @@ class Dashboard extends Component {
                       status={status}
                       userName={userName}
                       userRole={userRole}
+                      handlePickDocumentClick={this.handlePickDocumentClick}
                     />
                   </Table.Row>
                 );
