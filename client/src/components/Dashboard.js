@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Header, Container, Table, Button } from "semantic-ui-react";
+import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
+import { pickDocument } from "../api/translations";
+import ActionColumn from "./ActionColumn";
+import StatusColumn from "./StatusColumn";
 
-export class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,23 +15,52 @@ export class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this.setDocuments();
+  }
+
+  setDocuments = () => {
     getDocuments()
       .then(documents => this.setState({ documents }))
       .catch(err => console.log(err));
-  }
+  };
+
+  handlePickDocumentClick = id => {
+    pickDocument(id)
+      .then(response => {
+        if (response.status === 200) {
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
 
   render() {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+
     return (
       <Container>
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>
-            {" "}
             Add document
           </Button>
+        ) : null}
+        {this.state.hasErrors ? (
+          <Message negative>
+            <Message.Header>An error occurred</Message.Header>
+            <p>{this.state.errorMessage}</p>
+          </Message>
         ) : null}
         <Table celled unstackable selectable striped>
           <Table.Header>
@@ -60,21 +92,18 @@ export class Dashboard extends Component {
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
-                    {status !== "Waiting" ? (
-                      <Table.Cell>
-                        {status} by {translator_name}
-                      </Table.Cell>
-                    ) : (
-                      <Table.Cell>{status}</Table.Cell>
-                    )}
-                    <Table.Cell>
-                      <span>View</span> \
-                      {userRole === "User" ? (
-                        <span>Delete</span>
-                      ) : (
-                        <span>Pick Translation</span>
-                      )}
-                    </Table.Cell>
+                    <StatusColumn
+                      status={status}
+                      translatorName={translator_name}
+                    />
+                    <ActionColumn
+                      translatorName={translator_name}
+                      id={id}
+                      status={status}
+                      userName={userName}
+                      userRole={userRole}
+                      handlePickDocumentClick={this.handlePickDocumentClick}
+                    />
                   </Table.Row>
                 );
               })}
