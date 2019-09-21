@@ -5,6 +5,7 @@ import { getDocuments } from "../api/documents";
 import { pickDocument } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
+import { cancelDocument } from "../api/translations";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -26,6 +27,24 @@ class Dashboard extends Component {
 
   handlePickDocumentClick = id => {
     pickDocument(id)
+      .then(response => {
+        if (response.status === 200) {
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
+  handleCancelDocumentClick = id => {
+    cancelDocument(id)
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
@@ -103,6 +122,7 @@ class Dashboard extends Component {
                       userName={userName}
                       userRole={userRole}
                       handlePickDocumentClick={this.handlePickDocumentClick}
+                      handleCancelDocumentClick={this.handleCancelDocumentClick}
                     />
                   </Table.Row>
                 );
