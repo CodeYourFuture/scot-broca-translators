@@ -100,7 +100,6 @@ router.put(
           });
           res.send(data);
         } else {
-          // send error
           res
             .status(400)
             .send("the document is not found or not assigned to you");
@@ -112,11 +111,58 @@ router.put(
   }
 );
 
+router.delete(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const translationId = req.params.id;
+    const userId = req.user.id;
+    translationDb
+      .getUserIdByTranslationId(translationId)
+      .then(userIdTrans => {
+        if (userId !== userIdTrans) {
+          throw {
+            errorCode: 401,
+            errorMessage: "the user id and translationid do not match"
+          };
+        }
+
+        return documentDb.getDocumentIdByTranslationId(translationId);
+      })
+      .then(documentId => {
+        return documentDb
+          .checkDocumentStatus(documentId)
+          .then(status => {
+            if (status == "Processing") {
+              return translationDb.deleteTranslation(translationId);
+            } else {
+              throw {
+                errorCode: 400,
+                errorMessage: "the document status is not in process"
+              };
+            }
+          })
+          .then(() =>
+            documentDb.updateDocumentStatusById("Waiting", documentId)
+          )
+          .then(() => res.send("changed status"));
+      })
+
+      .catch(err => {
+        if (err.errorCode) {
+          res.status(err.errorCode).send(err.errorMessage);
+        } else {
+          res.status(500).send("un expected error");
+        }
+      });
+  }
+);
+
 const getDocumentIdByTranslationId = translationId => {
   return documentDb
     .getDocumentIdByTranslationId(translationId)
     .then(data => {
-      return data[0].document_id;
+      return data;
     })
     .catch(err => {
       res.send(400, err);

@@ -29,9 +29,22 @@ const updateTranslation = (content, translationId, userId) => {
     .then(result => result.rows);
 };
 
+const deleteTranslation = translationId => {
+  const query = "DELETE from translations WHERE id=$1";
+  return pool.query(query, [translationId]).then(result => result.rows);
+};
+
+const getUserIdByTranslationId = translationId => {
+  const query = "select user_id from translations where id=$1";
+  return pool.query(query, [translationId]).then(result => {
+    return result.rows[0].user_id;
+  });
+};
 module.exports = {
   createTranslation,
   getTranslationByDocumentId,
   updateTranslation,
+  deleteTranslation,
+  getUserIdByTranslationId,
   getTranslationByTranslationtId
 };
