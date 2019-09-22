@@ -68,6 +68,7 @@ export class ViewDocument extends Component {
                       submitTranslationDate={
                         this.state.translation.submission_date
                       }
+                      translatorName={this.state.translation.translator_name}
                     />
                   )}
                 </Table.Header>

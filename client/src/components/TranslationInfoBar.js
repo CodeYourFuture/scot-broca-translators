@@ -4,7 +4,8 @@ import { parseDate } from "./helpers/parseDate";
 
 const TranslationInfoBar = ({
   startTranslationDate,
-  submitTranslationDate
+  submitTranslationDate,
+  translatorName
 }) => {
   const parsSubmitTranslationDate = parseDate(submitTranslationDate);
   const parsStartTranslationDate = parseDate(startTranslationDate);
@@ -16,7 +17,7 @@ const TranslationInfoBar = ({
         {parsSubmitTranslationDate}
       </Table.HeaderCell>
       <Table.HeaderCell textAlign="center" colSpan="2">
-        Translation done by
+        Translation done by {translatorName}
       </Table.HeaderCell>
     </Table.Row>
   );
