@@ -13,8 +13,7 @@ const TranslationInfoBar = ({
   return (
     <Table.Row>
       <Table.HeaderCell textAlign="center" colSpan="3">
-        Translation started on {parsStartTranslationDate} and submitted on{" "}
-        {parsSubmitTranslationDate}
+        Translation started on {parsStartTranslationDate} and submitted on {parsSubmitTranslationDate}
       </Table.HeaderCell>
       <Table.HeaderCell textAlign="center" colSpan="2">
         Translation done by {translatorName}
