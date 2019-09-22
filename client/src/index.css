@@ -6,3 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.site {
+  display: flex;
+  min-height: 75vh;
+  flex-direction: column;
+}
+.site-content {
+  flex: 1;
+}

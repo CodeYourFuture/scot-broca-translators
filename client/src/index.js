@@ -32,9 +32,9 @@ class Routes extends Component {
     const { activeItem } = this.state;
     return (
       <Router>
-        <div>
+        <div className="site">
           <Menu borderless inverted>
-            <Container>
+            <Container className="site-content">
               <Menu.Item
                 as={Link}
                 to="/"
