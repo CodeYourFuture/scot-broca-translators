@@ -12,6 +12,7 @@ export const pickDocument = id => {
 
   return fetch("/api/translations", userRequest);
 };
+
 export const cancelDocument = id => {
   const userRequest = {
     method: "DELETE",
@@ -24,8 +25,9 @@ export const cancelDocument = id => {
     }
   };
 
-  return fetch("/api/translations", userRequest);
+  return fetch(`/api/translations/${id}`, userRequest);
 };
+
 export const putTranslation = (id, content) => {
   const putParams = {
     body: JSON.stringify({ content: content }),
