@@ -12,24 +12,23 @@ const DocumentInformationBar = ({
 }) => {
   const parsedSubmissionDate = parseDate(submissionDate);
   const parsedDueDate = parseDate(dueDate);
+  const fieldsContent = [
+    `Requested date: ${parsedSubmissionDate}`,
+    `Due date: ${parsedDueDate}`,
+    `From ${fromLanguageName} to ${toLanguageName}`,
+    `Status: ${status}`,
+    `Submitted by ${ownerName}`
+  ];
 
   return (
     <Table.Row>
-      <Table.HeaderCell textAlign="center" colSpan="1">
-        Requested date: {parsedSubmissionDate}
-      </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center" colSpan="1">
-        Due date: {parsedDueDate}
-      </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center" colSpan="1">
-        From {fromLanguageName} to {toLanguageName}
-      </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center" colSpan="1">
-        Status: {status}
-      </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center" colSpan="1">
-        Submitted by {ownerName}
-      </Table.HeaderCell>
+      {fieldsContent.map((fieldContent, index) => {
+        return (
+          <Table.HeaderCell textAlign="center" colSpan="1" key={index}>
+            {fieldContent}
+          </Table.HeaderCell>
+        );
+      })}
     </Table.Row>
   );
 };

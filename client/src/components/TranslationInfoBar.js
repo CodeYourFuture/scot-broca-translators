@@ -9,7 +9,7 @@ const TranslationInfoBar = ({
 }) => {
   const parsSubmitTranslationDate = parseDate(submitTranslationDate);
   const parsStartTranslationDate = parseDate(startTranslationDate);
-  console.log(startTranslationDate);
+
   return (
     <Table.Row>
       <Table.HeaderCell textAlign="center" colSpan="3">

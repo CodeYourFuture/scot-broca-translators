@@ -1,9 +1,24 @@
 import React, { Component } from "react";
-import { Header, Container, Segment, Table } from "semantic-ui-react";
+import { Header, Container, Segment, Table, Grid } from "semantic-ui-react";
 import DocumentInformationBar from "./DocumentInformationBar";
 import { getDocumentById } from "../api/documents";
 import { getTranslationById } from "../api/translations";
 import TranslationInfoBar from "./TranslationInfoBar";
+
+const DocumentTranslationContent = ({ document, translation }) => {
+  return (
+    <Container>
+      {translation ? (
+        <Grid stackable columns={2} divided>
+          <Grid.Column as="p">{document}</Grid.Column>
+          <Grid.Column as="p">{translation}</Grid.Column>
+        </Grid>
+      ) : (
+        <p>{document}</p>
+      )}
+    </Container>
+  );
+};
 
 export class ViewDocument extends Component {
   constructor(props) {
@@ -14,11 +29,8 @@ export class ViewDocument extends Component {
     };
   }
   getTranslationData = (documentStatus, translationId) => {
-    console.log(documentStatus, translationId);
-    console.log(documentStatus === "Completed");
     if (documentStatus === "Completed") {
       getTranslationById(translationId).then(translation => {
-        console.log(translation);
         this.setState({ translation });
       });
     }
@@ -43,38 +55,44 @@ export class ViewDocument extends Component {
   }
 
   render() {
-    console.log(this.state);
+    let translationContent;
+    this.state.translation
+      ? (translationContent = this.state.translation.content)
+      : (translationContent = "");
+
     return (
       <Container>
-        <Header as="h2">
-          {this.state.document && this.state.document.name}
-        </Header>
         {this.state.document && (
           <Segment>
+            <Header as="h2">
+              {this.state.document && this.state.document.name}
+            </Header>
+
             <Table celled unstackable structured>
-              <Table.Body>
-                <Table.Header fullWidth>
-                  <DocumentInformationBar
-                    fromLanguageName={this.state.document.from_language_name}
-                    toLanguageName={this.state.document.to_language_name}
-                    status={this.state.document.status}
-                    ownerName={this.state.document.owner_name}
-                    submissionDate={this.state.document.submission_date}
-                    dueDate={this.state.document.due_date}
+              <Table.Header fullWidth>
+                <DocumentInformationBar
+                  fromLanguageName={this.state.document.from_language_name}
+                  toLanguageName={this.state.document.to_language_name}
+                  status={this.state.document.status}
+                  ownerName={this.state.document.owner_name}
+                  submissionDate={this.state.document.submission_date}
+                  dueDate={this.state.document.due_date}
+                />
+                {this.state.translation && (
+                  <TranslationInfoBar
+                    startTranslationDate={this.state.translation.start_date}
+                    submitTranslationDate={
+                      this.state.translation.submission_date
+                    }
+                    translatorName={this.state.translation.translator_name}
                   />
-                  {this.state.translation && (
-                    <TranslationInfoBar
-                      startTranslationDate={this.state.translation.start_date}
-                      submitTranslationDate={
-                        this.state.translation.submission_date
-                      }
-                      translatorName={this.state.translation.translator_name}
-                    />
-                  )}
-                </Table.Header>
-              </Table.Body>
+                )}
+              </Table.Header>
             </Table>
-            <p>{this.state.document.content}</p>
+            <DocumentTranslationContent
+              document={this.state.document.content}
+              translation={translationContent}
+            />
           </Segment>
         )}
       </Container>
