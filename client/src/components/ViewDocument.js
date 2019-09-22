@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Header, Container, Segment } from "semantic-ui-react";
+import { Header, Container, Segment, Table } from "semantic-ui-react";
 import DocumentInformationBar from "./DocumentInformationBar";
 import { getDocumentById } from "../api/documents";
 import { getTranslationById } from "../api/translations";
+import TranslationInfoBar from "./TranslationInfoBar";
 
 export class ViewDocument extends Component {
   constructor(props) {
@@ -49,15 +50,26 @@ export class ViewDocument extends Component {
         </Header>
         {this.state.document && (
           <Segment>
-            <DocumentInformationBar
-              fromLanguageName={this.state.document.from_language_name}
-              toLanguageName={this.state.document.to_language_name}
-              status={this.state.document.status}
-              ownerName={this.state.document.owner_name}
-              submissionDate={this.state.document.submission_date}
-              dueDate={this.state.document.due_date}
-            />
-
+            <Table celled unstackable>
+              <Table.Body>
+                <Table.Header>
+                  <DocumentInformationBar
+                    fromLanguageName={this.state.document.from_language_name}
+                    toLanguageName={this.state.document.to_language_name}
+                    status={this.state.document.status}
+                    ownerName={this.state.document.owner_name}
+                    submissionDate={this.state.document.submission_date}
+                    dueDate={this.state.document.due_date}
+                  />
+                  <TranslationInfoBar
+                    startTranslationDate={this.state.translation.start_date}
+                    submitTranslationDate={
+                      this.state.translation.submission_date
+                    }
+                  />
+                </Table.Header>
+              </Table.Body>
+            </Table>
             <p>{this.state.document.content}</p>
           </Segment>
         )}

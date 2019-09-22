@@ -14,29 +14,21 @@ const DocumentInformationBar = ({
   const parsedDueDate = parseDate(dueDate);
 
   return (
-    <Table celled unstackable>
-      <Table.Body>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell textAlign="center">
-              Requested date: {parsedSubmissionDate}
-            </Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">
-              Due date: {parsedDueDate}
-            </Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">
-              From {fromLanguageName} to {toLanguageName}
-            </Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">
-              Status: {status}
-            </Table.HeaderCell>
-            <Table.HeaderCell textAlign="center">
-              Submitted by {ownerName}
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-      </Table.Body>
-    </Table>
+    <Table.Row>
+      <Table.HeaderCell textAlign="center">
+        Requested date: {parsedSubmissionDate}
+      </Table.HeaderCell>
+      <Table.HeaderCell textAlign="center">
+        Due date: {parsedDueDate}
+      </Table.HeaderCell>
+      <Table.HeaderCell textAlign="center">
+        From {fromLanguageName} to {toLanguageName}
+      </Table.HeaderCell>
+      <Table.HeaderCell textAlign="center">Status: {status}</Table.HeaderCell>
+      <Table.HeaderCell textAlign="center">
+        Submitted by {ownerName}
+      </Table.HeaderCell>
+    </Table.Row>
   );
 };
 
