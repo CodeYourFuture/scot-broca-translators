@@ -6,7 +6,8 @@ import {
   Container,
   Button,
   Form,
-  Message
+  Message,
+  Table
 } from "semantic-ui-react";
 import { getDocumentById } from "../api/documents";
 import { putTranslation } from "../api/translations";
@@ -62,16 +63,22 @@ export class AddTranslationForm extends Component {
         <Segment>
           <Form>
             <Form.Group>
-              {this.state.document[0] && (
-                <DocumentInformationBar
-                  fromLanguageName={this.state.document[0].from_language_name}
-                  toLanguageName={this.state.document[0].to_language_name}
-                  status={this.state.document[0].status}
-                  ownerName={this.state.document[0].owner_name}
-                  submissionDate={this.state.document[0].submission_date}
-                  dueDate={this.state.document[0].due_date}
-                />
-              )}
+              <Table celled unstackable structured>
+                <Table.Header fullWidth>
+                  {this.state.document[0] && (
+                    <DocumentInformationBar
+                      fromLanguageName={
+                        this.state.document[0].from_language_name
+                      }
+                      toLanguageName={this.state.document[0].to_language_name}
+                      status={this.state.document[0].status}
+                      ownerName={this.state.document[0].owner_name}
+                      submissionDate={this.state.document[0].submission_date}
+                      dueDate={this.state.document[0].due_date}
+                    />
+                  )}
+                </Table.Header>
+              </Table>
             </Form.Group>
 
             {errorMessage.length ? (
