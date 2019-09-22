@@ -10,11 +10,12 @@ export class ViewDocument extends Component {
     super(props);
     this.state = {
       document: [],
-      translation: []
+      translation: null
     };
   }
   getTranslationData = (documentStatus, translationId) => {
     console.log(documentStatus, translationId);
+    console.log(documentStatus === "Completed");
     if (documentStatus === "Completed") {
       getTranslationById(translationId).then(translation => {
         console.log(translation);
@@ -50,9 +51,9 @@ export class ViewDocument extends Component {
         </Header>
         {this.state.document && (
           <Segment>
-            <Table celled unstackable>
+            <Table celled unstackable structured>
               <Table.Body>
-                <Table.Header>
+                <Table.Header fullWidth>
                   <DocumentInformationBar
                     fromLanguageName={this.state.document.from_language_name}
                     toLanguageName={this.state.document.to_language_name}
@@ -61,12 +62,14 @@ export class ViewDocument extends Component {
                     submissionDate={this.state.document.submission_date}
                     dueDate={this.state.document.due_date}
                   />
-                  <TranslationInfoBar
-                    startTranslationDate={this.state.translation.start_date}
-                    submitTranslationDate={
-                      this.state.translation.submission_date
-                    }
-                  />
+                  {this.state.translation && (
+                    <TranslationInfoBar
+                      startTranslationDate={this.state.translation.start_date}
+                      submitTranslationDate={
+                        this.state.translation.submission_date
+                      }
+                    />
+                  )}
                 </Table.Header>
               </Table.Body>
             </Table>

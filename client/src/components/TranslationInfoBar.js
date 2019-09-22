@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Container, Table, Segment } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 import { parseDate } from "./helpers/parseDate";
 
 const TranslationInfoBar = ({
@@ -8,13 +8,14 @@ const TranslationInfoBar = ({
 }) => {
   const parsSubmitTranslationDate = parseDate(submitTranslationDate);
   const parsStartTranslationDate = parseDate(startTranslationDate);
+  console.log(startTranslationDate);
   return (
     <Table.Row>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="3">
         Translation started on {parsStartTranslationDate} and submitted on{" "}
         {parsSubmitTranslationDate}
       </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="2">
         Translation done by
       </Table.HeaderCell>
     </Table.Row>

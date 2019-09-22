@@ -15,17 +15,19 @@ const DocumentInformationBar = ({
 
   return (
     <Table.Row>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="1">
         Requested date: {parsedSubmissionDate}
       </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="1">
         Due date: {parsedDueDate}
       </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="1">
         From {fromLanguageName} to {toLanguageName}
       </Table.HeaderCell>
-      <Table.HeaderCell textAlign="center">Status: {status}</Table.HeaderCell>
-      <Table.HeaderCell textAlign="center">
+      <Table.HeaderCell textAlign="center" colSpan="1">
+        Status: {status}
+      </Table.HeaderCell>
+      <Table.HeaderCell textAlign="center" colSpan="1">
         Submitted by {ownerName}
       </Table.HeaderCell>
     </Table.Row>
