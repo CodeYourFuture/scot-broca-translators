@@ -31,3 +31,13 @@ export const putTranslation = (id, content) => {
     }
   });
 };
+
+export const getTranslationById = translationId => {
+  return fetch(`/api/translations/${translationId}`, {
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json());
+};

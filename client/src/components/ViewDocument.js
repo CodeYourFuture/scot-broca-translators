@@ -2,24 +2,41 @@ import React, { Component } from "react";
 import { Header, Container, Segment } from "semantic-ui-react";
 import DocumentInformationBar from "./DocumentInformationBar";
 import { getDocumentById } from "../api/documents";
-import { putTranslation } from "../api/translations";
+import { getTranslationById } from "../api/translations";
 
 export class ViewDocument extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      document: []
+      document: [],
+      translation: []
     };
   }
+  getTranslationData = (documentStatus, translationId) => {
+    console.log(documentStatus, translationId);
+    if (documentStatus === "Completed") {
+      getTranslationById(translationId).then(translation => {
+        console.log(translation);
+        this.setState({ translation });
+      });
+    }
+  };
 
   componentDidMount() {
     const { id } = this.props.match.params;
 
     getDocumentById(id).then(data => {
-      this.setState({
-        document: data[0]
-      });
+      this.setState(
+        {
+          document: data[0]
+        },
+        () => {
+          this.getTranslationData(
+            this.state.document.status,
+            this.state.document.translation_id
+          );
+        }
+      );
     });
   }
 
