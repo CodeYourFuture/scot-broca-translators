@@ -32,7 +32,7 @@ class Routes extends Component {
     return (
       <Router>
         <div>
-          <Menu borderless inverted color="grey">
+          <Menu borderless inverted>
             <Container>
               <Menu.Item
                 as={Link}
