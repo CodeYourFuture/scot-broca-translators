@@ -17,7 +17,7 @@ function nameValidate(name) {
 }
 
 function passwordValidate(password) {
-  return password.length > 8;
+  return password.length >= 8;
 }
 function roleValidate(role) {
   return role === INTERPRETER || role === USER;
