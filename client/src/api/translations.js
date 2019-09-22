@@ -13,7 +13,7 @@ export const pickDocument = id => {
   return fetch("/api/translations", userRequest);
 };
 
-export const cancelDocument = id => {
+export const cancelTranslation = id => {
   const userRequest = {
     method: "DELETE",
     body: JSON.stringify({

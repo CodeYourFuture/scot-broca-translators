@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
-import { pickDocument } from "../api/translations";
+import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
-import { cancelDocument } from "../api/translations";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -43,8 +42,9 @@ class Dashboard extends Component {
         );
       });
   };
-  handleCancelDocumentClick = id => {
-    cancelDocument(id)
+
+  handleCancelTranslationClick = id => {
+    cancelTranslation(id)
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
@@ -122,7 +122,9 @@ class Dashboard extends Component {
                       userName={userName}
                       userRole={userRole}
                       handlePickDocumentClick={this.handlePickDocumentClick}
-                      handleCancelDocumentClick={this.handleCancelDocumentClick}
+                      handleCancelTranslationClick={
+                        this.handleCancelTranslationClick
+                      }
                     />
                   </Table.Row>
                 );

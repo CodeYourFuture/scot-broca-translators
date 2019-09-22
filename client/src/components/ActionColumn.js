@@ -27,7 +27,8 @@ const ActionColumn = props => {
         <Link to={`/add-document-translation/${id}`}>
           <span>Submit Translation</span>
         </Link>
-        <Button onClick={() => props.handleCancelDocumentClick(id)}>
+        /
+        <Button onClick={() => props.handleCancelTranslationClick(id)}>
           Cancel
         </Button>
       </Table.Cell>
