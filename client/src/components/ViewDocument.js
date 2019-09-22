@@ -1,78 +1,49 @@
 import React, { Component } from "react";
-import moment from "moment";
-import { Header, Container, Table } from "semantic-ui-react";
+import { Header, Container, Segment } from "semantic-ui-react";
+import DocumentInformationBar from "./DocumentInformationBar";
+import { getDocumentById } from "../api/documents";
+import { putTranslation } from "../api/translations";
 
 export class ViewDocument extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      document: "",
-      documentName: "",
-      submissionDate: "",
-      dueDate: "",
-      fromLanguageName: "",
-      toLanguageName: "",
-      status: "",
-      ownerName: ""
+      document: []
     };
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
 
-    fetch(`/api/documents/${id}`, {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        this.setState({
-          document: data[0].content,
-          documentName: data[0].name,
-          submissionDate: data[0].submission_date,
-          dueDate: data[0].due_date,
-          fromLanguageName: data[0].from_language_name,
-          toLanguageName: data[0].to_language_name,
-          status: data[0].status,
-          ownerName: data[0].owner_name
-        });
+    getDocumentById(id).then(data => {
+      this.setState({
+        document: data[0]
       });
+    });
   }
+
   render() {
-    const {
-      document,
-      documentName,
-      fromLanguageName,
-      toLanguageName,
-      status,
-      ownerName
-    } = this.state;
-    const dueDate = moment(this.state.dueDate).format("L");
-    const submissionDate = moment(this.state.submissionDate).format("L");
+    console.log(this.state);
     return (
       <Container>
-        <Header as="h2"> {documentName}</Header>
-        <Table celled unstackable selectable striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>
-                Submission Date: {submissionDate}
-              </Table.HeaderCell>
-              <Table.HeaderCell>Due Date: {dueDate}</Table.HeaderCell>
-              <Table.HeaderCell>
-                From {fromLanguageName} To {toLanguageName}
-              </Table.HeaderCell>
-              <Table.HeaderCell>Status: {status}</Table.HeaderCell>
-              <Table.HeaderCell>Submitted By: {ownerName}</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-        </Table>
-        <p>{document}</p>
+        <Header as="h2">
+          {this.state.document && this.state.document.name}
+        </Header>
+        {this.state.document && (
+          <Segment>
+            <DocumentInformationBar
+              fromLanguageName={this.state.document.from_language_name}
+              toLanguageName={this.state.document.to_language_name}
+              status={this.state.document.status}
+              ownerName={this.state.document.owner_name}
+              submissionDate={this.state.document.submission_date}
+              dueDate={this.state.document.due_date}
+            />
+
+            <p>{this.state.document.content}</p>
+          </Segment>
+        )}
       </Container>
     );
   }
