@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react";
 
 export const Footer = () => (
-  <Segment inverted vertical style={{ padding: "1em 0em", marginTop: "6em" }}>
+  <Segment inverted vertical style={{ marginTop: "5em" }}>
     <Container>
       <Grid divided inverted stackable>
         <Grid.Row>
@@ -29,13 +29,13 @@ export const Footer = () => (
             </Header>
             <p>
               Broca Translation is an open source project hosted on
+              {""} <Icon name="github" />
               <a
                 href="https://github.com/CodeYourFuture/scot-broca-translators"
                 style={{ textDecoration: "underline", color: "white" }}
               >
                 Github.
               </a>
-              <Icon name="github" />
             </p>
           </Grid.Column>
         </Grid.Row>

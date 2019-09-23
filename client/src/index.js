@@ -34,7 +34,7 @@ class Routes extends Component {
       <Router>
         <div className="site">
           <Menu borderless inverted>
-            <Container className="site-content">
+            <Container>
               <Menu.Item
                 as={Link}
                 to="/"
