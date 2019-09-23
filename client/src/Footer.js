@@ -1,5 +1,12 @@
 import React from "react";
-import { Container, Header, List, Grid, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Header,
+  List,
+  Grid,
+  Segment,
+  Icon
+} from "semantic-ui-react";
 
 export const Footer = () => (
   <Segment inverted vertical style={{ padding: "1em 0em", marginTop: "6em" }}>
@@ -21,10 +28,14 @@ export const Footer = () => (
               Broca Translation
             </Header>
             <p>
-              Broca Translation is an open source project hosted on{" "}
-              <a href="https://github.com/CodeYourFuture/scot-broca-translators">
+              Broca Translation is an open source project hosted on
+              <a
+                href="https://github.com/CodeYourFuture/scot-broca-translators"
+                style={{ textDecoration: "underline", color: "white" }}
+              >
                 Github.
               </a>
+              <Icon name="github" />
             </p>
           </Grid.Column>
         </Grid.Row>

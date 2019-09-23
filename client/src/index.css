@@ -11,6 +11,3 @@ body {
   min-height: 75vh;
   flex-direction: column;
 }
-.site-content {
-  flex: 1;
-}
