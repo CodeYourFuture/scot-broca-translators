@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
+import { Footer } from "./Footer";
 
 class Routes extends Component {
   state = {};
@@ -31,7 +32,7 @@ class Routes extends Component {
     const { activeItem } = this.state;
     return (
       <Router>
-        <div>
+        <div className="site">
           <Menu borderless inverted>
             <Container>
               <Menu.Item
@@ -147,6 +148,7 @@ class Routes extends Component {
             ) : null}
           </div>
         </div>
+        <Footer />
       </Router>
     );
   }

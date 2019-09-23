@@ -45,7 +45,7 @@ const Home = props => {
           </p>
           <Button
             primary
-            content="Become an Interprter"
+            content="Become an Interpreter"
             onClick={() => {
               props.history.push(`/sign-up-interpreter/`);
             }}
