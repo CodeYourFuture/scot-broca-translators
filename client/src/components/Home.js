@@ -34,7 +34,7 @@ const Home = props => {
           </Card.Content>
           <Card.Content extra>
             <Card.Meta>
-              already have account?
+              already have an account?
               <Link to={`/login`} style={{ textDecoration: "underline" }}>
                 login
               </Link>
@@ -65,7 +65,7 @@ const Home = props => {
           </Card.Content>
           <Card.Content extra>
             <Card.Meta>
-              already have account?
+              already have an account?
               <Link to={`/login`} style={{ textDecoration: "underline" }}>
                 login
               </Link>
