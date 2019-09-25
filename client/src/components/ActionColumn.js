@@ -12,12 +12,19 @@ const View = props => {
 };
 
 const ActionColumn = props => {
-  const { id, status, translatorName, userName, userRole } = props;
+  const {
+    id,
+    status,
+    translatorName,
+    userName,
+    userRole,
+    translationId
+  } = props;
 
   if (userRole === "User") {
     return (
       <Table.Cell>
-        <View id={id} />/ <span> Delete </span>
+        <View id={id} />
       </Table.Cell>
     );
   } else if (userName === translatorName && status === "Processing") {
@@ -27,6 +34,11 @@ const ActionColumn = props => {
         <Link to={`/add-document-translation/${id}`}>
           <span>Submit Translation</span>
         </Link>
+        <Button
+          onClick={() => props.handleCancelTranslationClick(translationId)}
+        >
+          Cancel
+        </Button>
       </Table.Cell>
     );
   } else {

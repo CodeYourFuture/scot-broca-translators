@@ -25,7 +25,9 @@ class Routes extends Component {
   render() {
     return (
       <Router>
+
         <NavBar>
+    
           <div>
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />

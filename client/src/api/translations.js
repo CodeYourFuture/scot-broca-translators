@@ -13,6 +13,21 @@ export const pickDocument = id => {
   return fetch("/api/translations", userRequest);
 };
 
+export const cancelTranslation = id => {
+  const userRequest = {
+    method: "DELETE",
+    body: JSON.stringify({
+      translationId: id
+    }),
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return fetch(`/api/translations/${id}`, userRequest);
+};
+
 export const putTranslation = (id, content) => {
   const putParams = {
     body: JSON.stringify({ content: content }),
