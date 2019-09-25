@@ -25,34 +25,34 @@ class Routes extends Component {
   render() {
     return (
       <Router>
-
-        <NavBar>
-    
-          <div>
-            <Route path="/" exact component={Home} />
-            <Route path="/about/" component={About} />
-            <Route path="/status/" component={Status} />
-            <Route path="/sign-up-user/" component={UserSignUpForm} />
-            <Route path="/login/" component={Login} />
-            <Route
-              path="/sign-up-interpreter/"
-              component={InterpreterSignUpForm}
-            />
-            {isLoggedIn() ? (
-              <div>
-                <Route path="/add-document/" component={AddDocumentForm} />
-                <Route path="/dashboard" component={Dashboard} />
-                {isUser() ? null : (
-                  <Route
-                    path="/add-document-translation/:documentId"
-                    component={AddTranslationForm}
-                  />
-                )}
-                <Route path="/document/:id" component={ViewDocument} />
-              </div>
-            ) : null}
-          </div>
-        </NavBar>
+        <div className="site">
+          <NavBar>
+            <div>
+              <Route path="/" exact component={Home} />
+              <Route path="/about/" component={About} />
+              <Route path="/status/" component={Status} />
+              <Route path="/sign-up-user/" component={UserSignUpForm} />
+              <Route path="/login/" component={Login} />
+              <Route
+                path="/sign-up-interpreter/"
+                component={InterpreterSignUpForm}
+              />
+              {isLoggedIn() ? (
+                <div>
+                  <Route path="/add-document/" component={AddDocumentForm} />
+                  <Route path="/dashboard" component={Dashboard} />
+                  {isUser() ? null : (
+                    <Route
+                      path="/add-document-translation/:documentId"
+                      component={AddTranslationForm}
+                    />
+                  )}
+                  <Route path="/document/:id" component={ViewDocument} />
+                </div>
+              ) : null}
+            </div>
+          </NavBar>
+        </div>
         <Footer />
       </Router>
     );
