@@ -85,7 +85,7 @@ export class Login extends Component {
                 <p>Something went wrong! Please check email or password!</p>
               ) : null}
               <Button
-                size="massive"
+                size="huge"
                 fluid="true"
                 type="submit"
                 content="Login"
@@ -93,7 +93,7 @@ export class Login extends Component {
               />
             </Form>
           </Segment>
-          <Segment size="huge" secondary textAlign="center">
+          <Segment size="medium" secondary textAlign="center">
             New to us ?
             <Link to={`/sign-up-user/`}>
               <span> Sign up </span>
