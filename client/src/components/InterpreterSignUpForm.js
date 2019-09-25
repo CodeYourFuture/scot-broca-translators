@@ -99,7 +99,7 @@ class InterpreterSignUpForm extends Component {
           <Grid.Column width={6}>
             <Header as="h2" icon textAlign="center">
               <Header.Content style={textStyle}>
-                Interpreter Registration Form
+                Translator Registration Form
               </Header.Content>
             </Header>
             {this.state.hasErrors ? (

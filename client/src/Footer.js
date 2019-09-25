@@ -20,7 +20,7 @@ export const Footer = () => (
               <List.Item as="a">Blaise Lubuma</List.Item>
               <List.Item as="a">Mariama Sillah</List.Item>
               <List.Item as="a">Mohammed Lafiteh</List.Item>
-              <List.Item as="a">Victoria Kosenko</List.Item>
+              <List.Item as="a">Viktoriia Kosenko</List.Item>
             </List>
           </Grid.Column>
           <Grid.Column width={7}>
