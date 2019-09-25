@@ -11,7 +11,7 @@ import AddDocumentForm from "./components/AddDocumentForm";
 import Dashboard from "./components/Dashboard";
 import AddTranslationForm from "./components/AddTranslationForm";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
