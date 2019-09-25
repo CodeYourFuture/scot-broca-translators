@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Image } from "semantic-ui-react";
-import NavBarMenuItems from "./ NavBarMenuItems";
+import NavBarMenuItems from "./NavBarMenuItems";
 
 const NavBarDesktop = () => (
   <Menu inverted>
