@@ -47,8 +47,8 @@ export class Login extends Component {
   render() {
     const { email, password, loginErr } = this.state;
     return (
-      <Grid centered columns={2}>
-        <Grid.Column>
+      <Grid padded="horizontally" centered columns={2}>
+        <Grid.Column largeScreen="8" mobile="16" tablet="8">
           <Header as="h2" textAlign="center">
             Log-in to your account
           </Header>
