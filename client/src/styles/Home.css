@@ -1,6 +1,10 @@
-.img {
-  max-width: 100%;
+.mainImage img {
+  width: 100%;
 }
+.myHeader {
+  margin-bottom: 90px !important;
+}
+
 .mainImage {
   max-width: 100%;
   margin: auto;
@@ -23,4 +27,8 @@
 
 .myIcon {
   float: right;
+}
+.loginPage{
+  text-align:center;
+  margin-top:20px;
 }
