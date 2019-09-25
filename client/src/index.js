@@ -22,11 +22,6 @@ import NavBar from "./components/navbar/NavBar";
 import { Footer } from "./Footer";
 
 class Routes extends Component {
-  logout = () => {
-    sessionStorage.clear();
-    window.location.href = "/";
-  };
-
   render() {
     return (
       <Router>

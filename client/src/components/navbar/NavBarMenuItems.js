@@ -5,6 +5,10 @@ import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
 class NavBarMenuItems extends React.Component {
   state = {};
+  logout = () => {
+    sessionStorage.clear();
+    window.location.href = "/";
+  };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
