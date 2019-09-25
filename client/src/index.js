@@ -23,7 +23,10 @@ import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
+
 import NavBar from "./components/NavBar";
+
+import { Footer } from "./Footer";
 
 class Routes extends Component {
   logout = () => {
@@ -60,6 +63,7 @@ class Routes extends Component {
             ) : null}
           </div>
         </NavBar>
+        <Footer />
       </Router>
     );
   }
