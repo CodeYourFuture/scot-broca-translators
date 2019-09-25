@@ -1,6 +1,16 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Segment, Grid, Header } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Button,
+  Segment,
+  Grid,
+  Header,
+  GridColumn,
+  GridRow
+} from "semantic-ui-react";
 import { getToken } from "../api/status";
+import { Link } from "react-router-dom";
 
 export class Login extends Component {
   constructor(props) {
@@ -40,56 +50,58 @@ export class Login extends Component {
       <Grid centered columns={2}>
         <Grid.Column>
           <Header as="h2" textAlign="center">
-            Login
+            Log-in to your account
           </Header>
-          <Segment>
+
+          <Segment secondary>
             <Form size="large" onSubmit={this.handleSubmit}>
               <Form.Field inline>
-                <Grid>
-                  <Grid.Column textAlign="center">
-                    <label>Email</label>
-                    <Input
-                      placeholder="nnn@nn.com"
-                      onChange={this.handleChange}
-                      name="email"
-                      value={email}
-                      type="email"
-                    />
-                  </Grid.Column>
-                </Grid>
+                <Input
+                  fluid="true"
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="E-mail Address"
+                  onChange={this.handleChange}
+                  name="email"
+                  value={email}
+                  type="email"
+                />
               </Form.Field>
 
               <Form.Field inline>
-                <Grid>
-                  <Grid.Column textAlign="center">
-                    <label>Password</label>
-                    <Input
-                      placeholder="******"
-                      onChange={this.handleChange}
-                      name="password"
-                      value={password}
-                      type="password"
-                    />
-                  </Grid.Column>
-                </Grid>
+                <Input
+                  fluid="true"
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  onChange={this.handleChange}
+                  name="password"
+                  value={password}
+                  type="password"
+                />
               </Form.Field>
 
-              <Grid>
-                <Grid.Column textAlign="center">
-                  {loginErr ? (
-                    <p>Something went wrong! Please check email or password!</p>
-                  ) : null}
-                  <Button type="submit" content="Submit" primary />
-                  <Button
-                    content="Cancel"
-                    secondary
-                    onClick={() => {
-                      this.props.history.push(`/`);
-                    }}
-                  />
-                </Grid.Column>
-              </Grid>
+              {loginErr ? (
+                <p>Something went wrong! Please check email or password!</p>
+              ) : null}
+              <Button
+                size="massive"
+                fluid="true"
+                type="submit"
+                content="Login"
+                primary
+              />
             </Form>
+          </Segment>
+          <Segment size="huge" secondary textAlign="center">
+            New to us ?
+            <Link to={`/sign-up-user/`}>
+              <span> Sign up </span>
+            </Link>{" "}
+            or
+            <Link to={`/sign-up-interpreter/`}>
+              <span> become an Interpretor</span>
+            </Link>
           </Segment>
         </Grid.Column>
       </Grid>
