@@ -10,21 +10,14 @@ import InterpreterSignUpForm from "./components/InterpreterSignUpForm";
 import AddDocumentForm from "./components/AddDocumentForm";
 import Dashboard from "./components/Dashboard";
 import AddTranslationForm from "./components/AddTranslationForm";
-import {
-  Menu,
-  Image,
-  Container,
-  Responsive,
-  Sidebar,
-  Icon
-} from "semantic-ui-react";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
 
-import NavBar from "./components/NavBar";
+import NavBar from "./components/navbarComponents/NavBar";
 
 import { Footer } from "./Footer";
 

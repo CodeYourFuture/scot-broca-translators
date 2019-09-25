@@ -1,14 +1,7 @@
 import React from "react";
 import NavBarDesktop from "./NavBarDesktop";
 import NavBarMobile from "./NavBarMobile";
-import {
-  Menu,
-  Image,
-  Container,
-  Responsive,
-  Sidebar,
-  Icon
-} from "semantic-ui-react";
+import { Container, Responsive } from "semantic-ui-react";
 
 class NavBar extends React.Component {
   state = {

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Menu,
-  Image,
-  Container,
-  Responsive,
-  Sidebar,
-  Icon
-} from "semantic-ui-react";
+import { Menu, Image } from "semantic-ui-react";
 import NavBarMenuItems from "./ NavBarMenuItems";
 
 const NavBarDesktop = () => (

@@ -1,15 +1,8 @@
 import React from "react";
-import {
-  Menu,
-  Image,
-  Container,
-  Responsive,
-  Sidebar,
-  Icon
-} from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { isLoggedIn } from "./helpers/isLoggedIn";
-import { isUser } from "./helpers/isUser";
+import { isLoggedIn } from "../helpers/isLoggedIn";
+import { isUser } from "../helpers/isUser";
 class NavBarMenuItems extends React.Component {
   state = {};
 

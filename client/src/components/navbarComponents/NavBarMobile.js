@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Menu,
-  Image,
-  Container,
-  Responsive,
-  Sidebar,
-  Icon
-} from "semantic-ui-react";
+import { Menu, Image, Sidebar, Icon } from "semantic-ui-react";
 import NavBarMenuItems from "./ NavBarMenuItems";
 
 const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => (
