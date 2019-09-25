@@ -17,7 +17,7 @@ import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
 
-import NavBar from "./components/navbarComponents/NavBar";
+import NavBar from "./components/navbar/NavBar";
 
 import { Footer } from "./Footer";
 
