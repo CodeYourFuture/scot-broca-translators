@@ -20,7 +20,9 @@ class Dashboard extends Component {
 
   setDocuments = () => {
     getDocuments()
-      .then(documents => this.setState({ documents }))
+      .then(documents => {
+        this.setState({ documents });
+      })
       .catch(err => console.log(err));
   };
 
@@ -42,7 +44,6 @@ class Dashboard extends Component {
         );
       });
   };
-
   handleCancelTranslationClick = id => {
     cancelTranslation(id)
       .then(response => {
@@ -102,7 +103,8 @@ class Dashboard extends Component {
                   from_language_name,
                   to_language_name,
                   status,
-                  translator_name
+                  translator_name,
+                  translation_id
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
                 return (
@@ -121,6 +123,7 @@ class Dashboard extends Component {
                       status={status}
                       userName={userName}
                       userRole={userRole}
+                      translationId={translation_id}
                       handlePickDocumentClick={this.handlePickDocumentClick}
                       handleCancelTranslationClick={
                         this.handleCancelTranslationClick

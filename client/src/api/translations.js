@@ -17,7 +17,7 @@ export const cancelTranslation = id => {
   const userRequest = {
     method: "DELETE",
     body: JSON.stringify({
-      document_id: id
+      translationId: id
     }),
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,

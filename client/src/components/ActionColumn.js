@@ -12,7 +12,14 @@ const View = props => {
 };
 
 const ActionColumn = props => {
-  const { id, status, translatorName, userName, userRole } = props;
+  const {
+    id,
+    status,
+    translatorName,
+    userName,
+    userRole,
+    translationId
+  } = props;
 
   if (userRole === "User") {
     return (
@@ -27,8 +34,9 @@ const ActionColumn = props => {
         <Link to={`/add-document-translation/${id}`}>
           <span>Submit Translation</span>
         </Link>
-        /
-        <Button onClick={() => props.handleCancelTranslationClick(id)}>
+        <Button
+          onClick={() => props.handleCancelTranslationClick(translationId)}
+        >
           Cancel
         </Button>
       </Table.Cell>
