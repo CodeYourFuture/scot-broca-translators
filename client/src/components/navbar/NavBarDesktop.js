@@ -4,14 +4,16 @@ import NavBarMenuItems from "./NavBarMenuItems";
 
 const NavBarDesktop = () => (
   <Menu inverted>
-    <Menu.Item>
-      <Image
-        size="mini"
-        src="https://image.flaticon.com/icons/svg/2014/2014350.svg"
-      />
-    </Menu.Item>
+    <Container>
+      <Menu.Item>
+        <Image
+          size="mini"
+          src="https://image.flaticon.com/icons/svg/2014/2014350.svg"
+        />
+      </Menu.Item>
 
-    <NavBarMenuItems />
+      <NavBarMenuItems />
+    </Container>
   </Menu>
 );
 
