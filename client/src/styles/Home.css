@@ -33,7 +33,11 @@
   margin-top: 20px;
 }
 
-.footerStyle {
+.footerStyle:hover {
   text-decoration: underline;
   color: white;
+}
+
+a{
+  color:white
 }
