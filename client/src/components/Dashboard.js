@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import moment from "moment";
-import {
-  Header,
-  Container,
-  Table,
-  Button,
-  Message,
-  Icon
-} from "semantic-ui-react";
+import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 import { pickDocument } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
-import { sortDocuments } from "./helpers/sortArray";
+import { sortDocuments } from "./helpers/sortDocuments";
+import SortableHeaderCell from "./SortableHeaderCell";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: [],
-      sorted: true
+      documents: []
     };
   }
 
@@ -54,17 +47,17 @@ class Dashboard extends Component {
       });
   };
 
-  sortOnClick = sortKey => {
+  sortOnClick = (sortKey, isSorted) => {
     const documentsToSort = this.state.documents;
+    console.log(documentsToSort);
     const sortedDocuments = sortDocuments(documentsToSort, sortKey);
-    this.state.sorted
+    console.log(sortedDocuments);
+    isSorted
       ? this.setState({
-          documents: sortedDocuments,
-          sorted: !this.state.sorted
+          documents: sortedDocuments
         })
       : this.setState({
-          data: sortedDocuments.reverse(),
-          sorted: !this.state.sorted
+          documents: sortedDocuments.reverse()
         });
   };
 
@@ -72,6 +65,13 @@ class Dashboard extends Component {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+    const headerCells = [
+      { header: "Document", sortKey: "name" },
+      { header: "Due Date", sortKey: "due_date" },
+      { header: "From Language", sortKey: "from_language_name" },
+      { header: "To Language", sortKey: "to_language_name" },
+      { header: "Status", sortKey: "status" }
+    ];
 
     return (
       <Container>
@@ -90,30 +90,15 @@ class Dashboard extends Component {
         <Table celled unstackable selectable striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell onClick={() => this.sortOnClick("name")}>
-                <Icon fitted name="sort" />
-                Document
-              </Table.HeaderCell>
-              <Table.HeaderCell onClick={() => this.sortOnClick("due_date")}>
-                <Icon fitted name="sort" />
-                Due Date
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                onClick={() => this.sortOnClick("from_language_name")}
-              >
-                <Icon fitted name="sort" />
-                From Language
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                onClick={() => this.sortOnClick("to_language_name")}
-              >
-                <Icon fitted name="sort" />
-                To Language
-              </Table.HeaderCell>
-              <Table.HeaderCell onClick={() => this.sortOnClick("status")}>
-                <Icon fitted name="sort" />
-                Status
-              </Table.HeaderCell>
+              {headerCells.map((headerCell, index) => {
+                return (
+                  <SortableHeaderCell
+                    key={index}
+                    headerCell={headerCell}
+                    sortOnClick={this.sortOnClick}
+                  />
+                );
+              })}
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
