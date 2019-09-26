@@ -78,7 +78,13 @@ export class UserSignUpForm extends Component {
     const { email, name, password, confirmationPassword } = this.state;
     return (
       <Grid padded="horizontally" centered column={16}>
-        <Grid.Column computer="8" mobile="16" tablet="8" width={6}>
+        <Grid.Column
+          largeScreen="6"
+          computer="10"
+          mobile="16"
+          tablet="10"
+          width={6}
+        >
           <Header as="h1" textAlign="center">
             <Header.Content style={{ marginTop: "20px" }}>
               User Registration
@@ -101,7 +107,7 @@ export class UserSignUpForm extends Component {
                 <Button onClick={this.clickLogin}>Login</Button>
               </div>
             ) : (
-              <Form size="large" onSubmit={this.handleSubmit}>
+              <Form onSubmit={this.handleSubmit}>
                 <Form.Field inline>
                   <Form.Input
                     fluid="true"
