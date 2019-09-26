@@ -84,13 +84,7 @@ export class Login extends Component {
               {loginErr ? (
                 <p>Something went wrong! Please check email or password!</p>
               ) : null}
-              <Button
-                size="huge"
-                fluid="true"
-                type="submit"
-                content="Login"
-                primary
-              />
+              <Button fluid="true" type="submit" content="Login" primary />
             </Form>
           </Segment>
           <Segment size="medium" secondary textAlign="center">
