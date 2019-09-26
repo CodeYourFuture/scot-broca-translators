@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Grid, Header, Message } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Message, Card } from "semantic-ui-react";
 
 export class UserSignUpForm extends Component {
   constructor(props) {
@@ -69,6 +69,9 @@ export class UserSignUpForm extends Component {
       hasErrors: false
     });
   };
+  handleCancelClick = () => {
+    window.location.href = "/";
+  };
   clickLogin = () => {
     window.location.href = "/login";
   };
@@ -78,82 +81,92 @@ export class UserSignUpForm extends Component {
       <Grid centered column={16}>
         <Grid.Column width={6}>
           <Header as="h1" textAlign="center">
-            User Registration
+            <Header.Content style={{ marginTop: "20px" }}>
+              User Registration
+            </Header.Content>
           </Header>
-          {this.state.hasErrors ? (
-            <Message negative>
-              <Message.Header>An error occurred</Message.Header>
-              <p>{this.state.errorMessage}</p>
-            </Message>
-          ) : null}
-          {this.state.userSignUp ? (
-            <div>
-              <Message
-                success
-                header="Your user registration was successful"
-                content="You may now log-in with the email you have chosen"
-              />
-              <Button onClick={this.clickLogin}>Login</Button>
-            </div>
-          ) : (
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Field>
-                <Form.Input
-                  icon="user"
-                  iconPosition="left"
-                  onChange={this.handleChange}
-                  value={name}
-                  placeholder="Name"
-                  name="name"
-                  label="Name"
-                  required
+          <Card
+            centered
+            fluid
+            style={{ marginTop: "4em", padding: "2em", width: "100%" }}
+          >
+            {this.state.hasErrors ? (
+              <Message negative>
+                <Message.Header>An error occurred</Message.Header>
+                <p>{this.state.errorMessage}</p>
+              </Message>
+            ) : null}
+            {this.state.userSignUp ? (
+              <div>
+                <Message
+                  success
+                  header="Your user registration was successful"
+                  content="You may now log-in with the email you have chosen"
                 />
+                <Button onClick={this.clickLogin}>Login</Button>
+              </div>
+            ) : (
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field>
+                  <Form.Input
+                    icon="user"
+                    iconPosition="left"
+                    onChange={this.handleChange}
+                    value={name}
+                    placeholder="Name"
+                    name="name"
+                    label="Name"
+                    required
+                  />
 
-                <Form.Input
-                  icon="envelope"
-                  iconPosition="left"
-                  onChange={this.handleChange}
-                  value={email}
-                  label="Email"
-                  placeholder="Email"
-                  name="email"
-                  required
-                />
-              </Form.Field>
-              <Form.Field>
-                <Form.Input
-                  type="password"
-                  icon="lock"
-                  iconPosition="left"
-                  onChange={this.handleChange}
-                  placeholder="Password"
-                  label="Password"
-                  name="password"
-                  value={password}
-                  required
-                />
-              </Form.Field>
-              <Form.Field>
-                <Form.Input
-                  type="password"
-                  icon="lock"
-                  iconPosition="left"
-                  label="Password Confirmation"
-                  value={confirmationPassword}
-                  onChange={this.handleChange}
-                  placeholder="Password confirmation"
-                  name="confirmationPassword"
-                  required
-                />
-              </Form.Field>
-              <Button primary type="submit">
-                Submit
-              </Button>
-              <Button secondary>
-                <Link to="/">Cancel</Link>
-              </Button>
-            </Form>
-          )}
+                  <Form.Input
+                    icon="envelope"
+                    iconPosition="left"
+                    onChange={this.handleChange}
+                    value={email}
+                    label="Email"
+                    placeholder="Email"
+                    name="email"
+                    required
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    type="password"
+                    icon="lock"
+                    iconPosition="left"
+                    onChange={this.handleChange}
+                    placeholder="Password"
+                    label="Password"
+                    name="password"
+                    value={password}
+                    required
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Form.Input
+                    type="password"
+                    icon="lock"
+                    iconPosition="left"
+                    label="Password Confirmation"
+                    value={confirmationPassword}
+                    onChange={this.handleChange}
+                    placeholder="Password confirmation"
+                    name="confirmationPassword"
+                    required
+                  />
+                </Form.Field>
+                <Button.Group fluid>
+                  <Button onClick={this.handleCancelClick}>Cancel</Button>
+
+                  <Button.Or />
+                  <Button primary type="submit">
+                    Submit
+                  </Button>
+                </Button.Group>
+              </Form>
+            )}
+          </Card>
         </Grid.Column>
       </Grid>
     );
