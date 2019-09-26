@@ -32,3 +32,8 @@
   text-align: center;
   margin-top: 20px;
 }
+
+.footerStyle {
+  text-decoration: underline;
+  color: white;
+}

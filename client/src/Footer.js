@@ -29,29 +29,31 @@ export const Footer = () => (
             </Header>
             <p>
               Broca Translation is an open source project hosted on
-              {""} <Icon name="github" />
+              <Icon name="github" />
               <a
+                title="github"
+                className="footerStyle"
                 href="https://github.com/CodeYourFuture/scot-broca-translators"
-                style={{ textDecoration: "underline", color: "white" }}
               >
-                Github.
+                <title> Github.</title>
               </a>
-              {""}
               <br />
-              Thanks to {""}
+              Thanks to
               <a
-                style={{ textDecoration: "underline", color: "white" }}
+                title="smashicons"
+                className="footerStyle"
                 href="https://www.flaticon.com/authors/smashicons>Smashicons"
               >
                 Smashicons
-              </a>{" "}
-              for the logo and to{" "}
+              </a>
+              for the logo and to
               <a
-                style={{ textDecoration: "underline", color: "white" }}
+                title="unsplash"
+                className="footerStyle"
                 href="https://unsplash.com/"
               >
-                unsplash
-              </a>{" "}
+                Unsplash
+              </a>
               for the free images.
             </p>
           </Grid.Column>
