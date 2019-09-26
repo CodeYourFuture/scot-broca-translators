@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 const View = props => {
   let { id } = props;
   return (
-    <span>
-      <Link to={`/document/${id}`}>View</Link>
-    </span>
+    <Button compact>
+      <Link to={`/document/${id}`}>
+        <i aria-hidden="true" class="file text icon"></i> View
+      </Link>
+    </Button>
   );
 };
 
@@ -30,13 +32,17 @@ const ActionColumn = props => {
   } else if (userName === translatorName && status === "Processing") {
     return (
       <Table.Cell>
-        <View id={id} />/
+        <View id={id} />
         <Link to={`/add-document-translation/${id}`}>
-          <span>Submit Translation</span>
+          <Button compact>
+            <i aria-hidden="true" class="send small icon"></i>Submit Translation
+          </Button>
         </Link>
         <Button
+          className="ui red compact button"
           onClick={() => props.handleCancelTranslationClick(translationId)}
         >
+          <i aria-hidden="true" class="delete icon"></i>
           Cancel
         </Button>
       </Table.Cell>
@@ -46,8 +52,9 @@ const ActionColumn = props => {
       <Table.Cell>
         <View id={id} />
         {status === "Waiting" ? (
-          <Button onClick={() => props.handlePickDocumentClick(id)}>
-            Pick Document
+          <Button compact onClick={() => props.handlePickDocumentClick(id)}>
+            <i aria-hidden="true" class="plus square small icon"></i> Pick
+            Document
           </Button>
         ) : null}
       </Table.Cell>
