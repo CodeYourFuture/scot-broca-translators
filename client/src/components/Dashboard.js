@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Header, Container, Table, Button, Message } from "semantic-ui-react";
+import {
+  Header,
+  Container,
+  Table,
+  Button,
+  Message,
+  Icon
+} from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 import { pickDocument } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
+import { sortDocuments } from "./helpers/sortArray";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,7 +28,9 @@ class Dashboard extends Component {
 
   setDocuments = () => {
     getDocuments()
-      .then(documents => this.setState({ documents }))
+      .then(documents =>
+        this.setState({ documents: sortDocuments(documents, "due_date") })
+      )
       .catch(err => console.log(err));
   };
 
