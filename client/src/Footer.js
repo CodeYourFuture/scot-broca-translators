@@ -19,7 +19,7 @@ export const Footer = () => (
               <List.Item as="a">Adnan Oglah</List.Item>
               <List.Item as="a">Blaise Lubuma</List.Item>
               <List.Item as="a">Mariama Sillah</List.Item>
-              <List.Item as="a">Mohammed Lafiteh</List.Item>
+              <List.Item as="a">Mohamed Lafiteh</List.Item>
               <List.Item as="a">Viktoriia Kosenko</List.Item>
             </List>
           </Grid.Column>
@@ -36,6 +36,23 @@ export const Footer = () => (
               >
                 Github.
               </a>
+              {""}
+              <br />
+              Thanks to {""}
+              <a
+                style={{ textDecoration: "underline", color: "white" }}
+                href="https://www.flaticon.com/authors/smashicons>Smashicons"
+              >
+                Smashicons
+              </a>{" "}
+              for the logo and to{" "}
+              <a
+                style={{ textDecoration: "underline", color: "white" }}
+                href="https://unsplash.com/"
+              >
+                unsplash
+              </a>{" "}
+              for the free images.
             </p>
           </Grid.Column>
         </Grid.Row>
