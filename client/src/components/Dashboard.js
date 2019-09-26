@@ -75,11 +75,26 @@ class Dashboard extends Component {
         <Table celled unstackable selectable striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Document</Table.HeaderCell>
-              <Table.HeaderCell>Due Date</Table.HeaderCell>
-              <Table.HeaderCell>From Language</Table.HeaderCell>
-              <Table.HeaderCell>To Language</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon fitted name="sort" />
+                Document
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon fitted name="sort" />
+                Due Date
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon fitted name="sort" />
+                From Language
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon fitted name="sort" />
+                To Language
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon fitted name="sort" />
+                Status
+              </Table.HeaderCell>
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
