@@ -18,7 +18,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: []
+      documents: [],
+      sorted: true
     };
   }
 
@@ -53,6 +54,20 @@ class Dashboard extends Component {
       });
   };
 
+  sortOnClick = sortKey => {
+    const documentsToSort = this.state.documents;
+    const sortedDocuments = sortDocuments(documentsToSort, sortKey);
+    this.state.sorted
+      ? this.setState({
+          documents: sortedDocuments,
+          sorted: !this.state.sorted
+        })
+      : this.setState({
+          data: sortedDocuments.reverse(),
+          sorted: !this.state.sorted
+        });
+  };
+
   render() {
     const { documents } = this.state;
     const userName = sessionStorage.getItem("userName");
@@ -75,23 +90,27 @@ class Dashboard extends Component {
         <Table celled unstackable selectable striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>
+              <Table.HeaderCell onClick={() => this.sortOnClick("name")}>
                 <Icon fitted name="sort" />
                 Document
               </Table.HeaderCell>
-              <Table.HeaderCell>
+              <Table.HeaderCell onClick={() => this.sortOnClick("due_date")}>
                 <Icon fitted name="sort" />
                 Due Date
               </Table.HeaderCell>
-              <Table.HeaderCell>
+              <Table.HeaderCell
+                onClick={() => this.sortOnClick("from_language_name")}
+              >
                 <Icon fitted name="sort" />
                 From Language
               </Table.HeaderCell>
-              <Table.HeaderCell>
+              <Table.HeaderCell
+                onClick={() => this.sortOnClick("to_language_name")}
+              >
                 <Icon fitted name="sort" />
                 To Language
               </Table.HeaderCell>
-              <Table.HeaderCell>
+              <Table.HeaderCell onClick={() => this.sortOnClick("status")}>
                 <Icon fitted name="sort" />
                 Status
               </Table.HeaderCell>
