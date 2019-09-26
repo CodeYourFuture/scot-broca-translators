@@ -28,32 +28,35 @@ export const Footer = () => (
               Broca Translation
             </Header>
             <p>
-              Broca Translation is an open source project hosted on
-              <Icon name="github" />
+              Broca Translation is an open source project hosted on{" "}
+              <Icon name="github" />{" "}
               <a
                 title="github"
                 className="footerStyle"
                 href="https://github.com/CodeYourFuture/scot-broca-translators"
               >
-                <title> Github.</title>
+                {" "}
+                Github.
               </a>
               <br />
-              Thanks to
+              Thanks to{" "}
               <a
                 title="smashicons"
                 className="footerStyle"
                 href="https://www.flaticon.com/authors/smashicons>Smashicons"
               >
-                Smashicons
-              </a>
+                {" "}
+                Smashicons{" "}
+              </a>{" "}
               for the logo and to
               <a
                 title="unsplash"
                 className="footerStyle"
                 href="https://unsplash.com/"
               >
-                Unsplash
-              </a>
+                {" "}
+                Unsplash{" "}
+              </a>{" "}
               for the free images.
             </p>
           </Grid.Column>
