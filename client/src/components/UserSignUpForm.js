@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Message, Card } from "semantic-ui-react";
 
 export class UserSignUpForm extends Component {
@@ -78,18 +77,14 @@ export class UserSignUpForm extends Component {
   render() {
     const { email, name, password, confirmationPassword } = this.state;
     return (
-      <Grid centered column={16}>
-        <Grid.Column width={6}>
+      <Grid padded="horizontally" centered column={16}>
+        <Grid.Column computer="8" mobile="16" tablet="8" width={6}>
           <Header as="h1" textAlign="center">
             <Header.Content style={{ marginTop: "20px" }}>
               User Registration
             </Header.Content>
           </Header>
-          <Card
-            centered
-            fluid
-            style={{ marginTop: "4em", padding: "2em", width: "100%" }}
-          >
+          <Card style={{ marginTop: "4em", padding: "2em", width: "100%" }}>
             {this.state.hasErrors ? (
               <Message negative>
                 <Message.Header>An error occurred</Message.Header>
@@ -106,9 +101,10 @@ export class UserSignUpForm extends Component {
                 <Button onClick={this.clickLogin}>Login</Button>
               </div>
             ) : (
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Field>
+              <Form size="large" onSubmit={this.handleSubmit}>
+                <Form.Field inline>
                   <Form.Input
+                    fluid="true"
                     icon="user"
                     iconPosition="left"
                     onChange={this.handleChange}
@@ -118,8 +114,10 @@ export class UserSignUpForm extends Component {
                     label="Name"
                     required
                   />
-
+                </Form.Field>
+                <Form.Field>
                   <Form.Input
+                    fluid="true"
                     icon="envelope"
                     iconPosition="left"
                     onChange={this.handleChange}
@@ -130,8 +128,9 @@ export class UserSignUpForm extends Component {
                     required
                   />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field inline>
                   <Form.Input
+                    fluid="true"
                     type="password"
                     icon="lock"
                     iconPosition="left"
@@ -143,8 +142,9 @@ export class UserSignUpForm extends Component {
                     required
                   />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field inline>
                   <Form.Input
+                    fluid="true"
                     type="password"
                     icon="lock"
                     iconPosition="left"

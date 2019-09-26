@@ -95,18 +95,14 @@ class InterpreterSignUpForm extends Component {
   render() {
     return (
       <div>
-        <Grid centered column={16}>
-          <Grid.Column width={6}>
+        <Grid padded="horizontally" centered column={16}>
+          <Grid.Column computer="8" mobile="16" tablet="8" width={6}>
             <Header as="h1" icon textAlign="center">
               <Header.Content style={{ marginTop: "18px" }}>
                 Translator Registration
               </Header.Content>
             </Header>
-            <Card
-              centered
-              fluid
-              style={{ marginTop: "4em", padding: "2em", width: "" }}
-            >
+            <Card fluid style={{ marginTop: "4em", padding: "2em", width: "" }}>
               {this.state.hasErrors ? (
                 <div>
                   <Message negative>
@@ -128,9 +124,22 @@ class InterpreterSignUpForm extends Component {
                   </Button>
                 </div>
               ) : (
-                <Form onSubmit={this.handleSubmit}>
+                <Form size="large" onSubmit={this.handleSubmit}>
                   <Form.Field>
                     <Form.Input
+                      icon="user"
+                      iconPosition="left"
+                      label="Name"
+                      value={this.state.name}
+                      onChange={this.handleChange}
+                      placeholder="Username"
+                      name="name"
+                      required
+                    />
+                  </Form.Field>
+                  <Form.Field inline>
+                    <Form.Input
+                      fluid="true"
                       icon="envelope"
                       iconPosition="left"
                       label="Email"
@@ -138,18 +147,6 @@ class InterpreterSignUpForm extends Component {
                       value={this.state.email}
                       placeholder="Email"
                       name="email"
-                      required
-                    />
-                  </Form.Field>
-                  <Form.Field>
-                    <Form.Input
-                      icon="user"
-                      iconPosition="left"
-                      label="name"
-                      value={this.state.name}
-                      onChange={this.handleChange}
-                      placeholder="Username"
-                      name="name"
                       required
                     />
                   </Form.Field>
