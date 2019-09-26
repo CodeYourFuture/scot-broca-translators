@@ -28,12 +28,12 @@ class NavBar extends React.Component {
             onToggle={this.handleToggle}
             visible={visible}
           >
-            <Container>{children}</Container>
+            {children}
           </NavBarMobile>
         </Responsive>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
           <NavBarDesktop />
-          <Container>{children}</Container>
+          {children}
         </Responsive>
       </div>
     );
