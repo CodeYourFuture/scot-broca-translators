@@ -5,6 +5,7 @@ function HeaderCell({ handleHeaderCellClick, headerCell, id, sortIconName }) {
   const { header, sortKey } = headerCell;
   return (
     <Table.HeaderCell
+      style={{ cursor: "pointer" }}
       onClick={() => handleHeaderCellClick(id, sortKey)}
       id={id}
     >
