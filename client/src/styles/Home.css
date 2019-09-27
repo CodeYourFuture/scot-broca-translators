@@ -33,6 +33,16 @@
   margin-top: 20px;
 }
 
+.footerStyle:hover {
+  text-decoration: underline;
+  color: rgb(167, 186, 202);
+}
+
+.footerStyle {
+  text-decoration: underline;
+  color: white;
+}
+
 @media only screen and (max-width: 800px) {
   .mainImage::after {
     margin-top: -50px;
