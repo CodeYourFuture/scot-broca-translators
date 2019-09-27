@@ -6,7 +6,6 @@ import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
-import SortableHeaderCell from "./SortableHeaderCell";
 import HeaderCell from "./HeaderCell";
 
 class Dashboard extends Component {
@@ -27,14 +26,12 @@ class Dashboard extends Component {
   setDocuments = () => {
     getDocuments()
       .then(documents => {
+        const { sorted, sortKey } = this.state;
         let docsToDisplay = sortDocuments(documents, "due_date");
-        if (this.state.sorted === "desc") {
-          docsToDisplay = sortDocuments(documents, this.state.sortKey);
-        } else if (this.state.sorted === "acs") {
-          docsToDisplay = sortDocuments(
-            documents,
-            this.state.sortKey
-          ).reverse();
+        if (sorted === "desc") {
+          docsToDisplay = sortDocuments(documents, sortKey);
+        } else if (sorted === "acs") {
+          docsToDisplay = sortDocuments(documents, sortKey).reverse();
         }
         this.setState({ documents: docsToDisplay });
       })
@@ -59,6 +56,7 @@ class Dashboard extends Component {
         );
       });
   };
+
   handleCancelTranslationClick = id => {
     cancelTranslation(id)
       .then(response => {
@@ -82,29 +80,20 @@ class Dashboard extends Component {
     this.setState({ sortedHeaderCellIndex: id, sortKey: sortKey }, () => {
       const documentsToSort = this.state.documents;
       const sortedDocuments = sortDocuments(documentsToSort, sortKey);
-      this.setState({
-        documents: sortedDocuments,
-        sorted: "desc"
-      });
+      this.state.sorted === "desc"
+        ? this.setState({
+            documents: sortedDocuments.reverse(),
+            sorted: "acs"
+          })
+        : this.setState({
+            documents: sortedDocuments,
+            sorted: "desc"
+          });
     });
   };
 
-  sortOnClick = (sortKey, isSorted) => {
-    const documentsToSort = this.state.documents;
-    const sortedDocuments = sortDocuments(documentsToSort, sortKey);
-    isSorted
-      ? this.setState({
-          documents: sortedDocuments,
-          sorted: "desc"
-        })
-      : this.setState({
-          documents: sortedDocuments.reverse(),
-          sorted: "acs"
-        });
-  };
-
   render() {
-    const { documents } = this.state;
+    const { documents, sorted, sortedHeaderCellIndex } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
     const headerCells = [
@@ -133,24 +122,21 @@ class Dashboard extends Component {
           <Table.Header>
             <Table.Row>
               {headerCells.map((headerCell, index) => {
-                if (index !== this.state.sortedHeaderCellIndex) {
-                  return (
-                    <HeaderCell
-                      key={index}
-                      id={index}
-                      headerCell={headerCell}
-                      handleHeaderCellClick={this.handleHeaderCellClick}
-                    />
-                  );
-                } else {
-                  return (
-                    <SortableHeaderCell
-                      key={index}
-                      headerCell={headerCell}
-                      sortOnClick={this.sortOnClick}
-                    />
-                  );
-                }
+                let sortIconName = "sort";
+                if (index === sortedHeaderCellIndex && sorted === "desc")
+                  sortIconName = "sort down";
+                if (index === sortedHeaderCellIndex && sorted === "acs")
+                  sortIconName = "sort up";
+
+                return (
+                  <HeaderCell
+                    key={index}
+                    id={index}
+                    headerCell={headerCell}
+                    handleHeaderCellClick={this.handleHeaderCellClick}
+                    sortIconName={sortIconName}
+                  />
+                );
               })}
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
