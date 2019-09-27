@@ -8,7 +8,8 @@ const query = `select
   lf.name as from_language_name,
   lt.name as to_language_name,
   u.name as owner_name,
-  t.start_date, u2.name as translator_name
+  t.start_date, u2.name as translator_name,
+  t.id as translation_id
 from documents as d
 inner join languages as lf
   on  lf.code = d.from_language_code

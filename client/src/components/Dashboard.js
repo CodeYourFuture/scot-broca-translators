@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Header, Container, Table, Button, Message } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
-import { pickDocument } from "../api/translations";
+import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
@@ -43,6 +43,24 @@ class Dashboard extends Component {
 
   handlePickDocumentClick = id => {
     pickDocument(id)
+      .then(response => {
+        if (response.status === 200) {
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
+  handleCancelTranslationClick = id => {
+    cancelTranslation(id)
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
@@ -147,7 +165,8 @@ class Dashboard extends Component {
                   from_language_name,
                   to_language_name,
                   status,
-                  translator_name
+                  translator_name,
+                  translation_id
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
                 return (
@@ -166,7 +185,11 @@ class Dashboard extends Component {
                       status={status}
                       userName={userName}
                       userRole={userRole}
+                      translationId={translation_id}
                       handlePickDocumentClick={this.handlePickDocumentClick}
+                      handleCancelTranslationClick={
+                        this.handleCancelTranslationClick
+                      }
                     />
                   </Table.Row>
                 );
