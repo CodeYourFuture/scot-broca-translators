@@ -5,6 +5,7 @@ import { getDocuments } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
+import NameColumn from "./NameColumn";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -107,9 +108,29 @@ class Dashboard extends Component {
                   translation_id
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
+                const currentDate = new Date();
+                const dateOnly = moment(currentDate).format("L");
+                const threeDaysLeft = moment(currentDate)
+                  .add(3, "days")
+                  .format("L");
+                const twoDaysLeft = moment(currentDate)
+                  .add(2, "days")
+                  .format("L");
+                const oneDayLeft = moment(currentDate)
+                  .add(1, "days")
+                  .format("L");
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell>{name}</Table.Cell>
+                    <NameColumn
+                      name={name}
+                      status={status}
+                      dueDate={dueDate}
+                      currentDate={currentDate}
+                      dateOnly={dateOnly}
+                      oneDayLeft={oneDayLeft}
+                      twoDaysLeft={twoDaysLeft}
+                      threeDaysLeft={threeDaysLeft}
+                    />
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
