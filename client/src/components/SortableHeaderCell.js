@@ -10,7 +10,7 @@ class SortableHeaderCell extends Component {
     };
   }
 
-  handleClick = () => {
+  handleClick = event => {
     this.setState({ isSorted: !this.state.isSorted }, () => {
       const { sortKey } = this.props.headerCell;
       const { isSorted } = this.state;

@@ -14,7 +14,9 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       documents: [],
-      sortedHeaderCellIndex: null
+      sortedHeaderCellIndex: null,
+      sortKey: "",
+      sorted: ""
     };
   }
 
@@ -24,9 +26,18 @@ class Dashboard extends Component {
 
   setDocuments = () => {
     getDocuments()
-      .then(documents =>
-        this.setState({ documents: sortDocuments(documents, "due_date") })
-      )
+      .then(documents => {
+        let docsToDisplay = sortDocuments(documents, "due_date");
+        if (this.state.sorted === "desc") {
+          docsToDisplay = sortDocuments(documents, this.state.sortKey);
+        } else if (this.state.sorted === "acs") {
+          docsToDisplay = sortDocuments(
+            documents,
+            this.state.sortKey
+          ).reverse();
+        }
+        this.setState({ documents: docsToDisplay });
+      })
       .catch(err => console.log(err));
   };
 
@@ -50,11 +61,12 @@ class Dashboard extends Component {
   };
 
   handleHeaderCellClick = (id, sortKey) => {
-    this.setState({ sortedHeaderCellIndex: id }, () => {
+    this.setState({ sortedHeaderCellIndex: id, sortKey: sortKey }, () => {
       const documentsToSort = this.state.documents;
       const sortedDocuments = sortDocuments(documentsToSort, sortKey);
       this.setState({
-        documents: sortedDocuments
+        documents: sortedDocuments,
+        sorted: "desc"
       });
     });
   };
@@ -64,10 +76,12 @@ class Dashboard extends Component {
     const sortedDocuments = sortDocuments(documentsToSort, sortKey);
     isSorted
       ? this.setState({
-          documents: sortedDocuments
+          documents: sortedDocuments,
+          sorted: "desc"
         })
       : this.setState({
-          documents: sortedDocuments.reverse()
+          documents: sortedDocuments.reverse(),
+          sorted: "acs"
         });
   };
 
