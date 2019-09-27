@@ -7,12 +7,14 @@ import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import SortableHeaderCell from "./SortableHeaderCell";
+import HeaderCell from "./HeaderCell";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      documents: []
+      documents: [],
+      sortedHeaderCellIndex: null
     };
   }
 
@@ -47,11 +49,19 @@ class Dashboard extends Component {
       });
   };
 
+  handleHeaderCellClick = (id, sortKey) => {
+    this.setState({ sortedHeaderCellIndex: id }, () => {
+      const documentsToSort = this.state.documents;
+      const sortedDocuments = sortDocuments(documentsToSort, sortKey);
+      this.setState({
+        documents: sortedDocuments
+      });
+    });
+  };
+
   sortOnClick = (sortKey, isSorted) => {
     const documentsToSort = this.state.documents;
-    console.log(documentsToSort);
     const sortedDocuments = sortDocuments(documentsToSort, sortKey);
-    console.log(sortedDocuments);
     isSorted
       ? this.setState({
           documents: sortedDocuments
@@ -91,13 +101,24 @@ class Dashboard extends Component {
           <Table.Header>
             <Table.Row>
               {headerCells.map((headerCell, index) => {
-                return (
-                  <SortableHeaderCell
-                    key={index}
-                    headerCell={headerCell}
-                    sortOnClick={this.sortOnClick}
-                  />
-                );
+                if (index !== this.state.sortedHeaderCellIndex) {
+                  return (
+                    <HeaderCell
+                      key={index}
+                      id={index}
+                      headerCell={headerCell}
+                      handleHeaderCellClick={this.handleHeaderCellClick}
+                    />
+                  );
+                } else {
+                  return (
+                    <SortableHeaderCell
+                      key={index}
+                      headerCell={headerCell}
+                      sortOnClick={this.sortOnClick}
+                    />
+                  );
+                }
               })}
               <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>

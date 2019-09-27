@@ -6,7 +6,7 @@ class SortableHeaderCell extends Component {
     super(props);
 
     this.state = {
-      isSorted: null
+      isSorted: true
     };
   }
 
@@ -21,17 +21,13 @@ class SortableHeaderCell extends Component {
   render() {
     const { isSorted } = this.state;
     const { header } = this.props.headerCell;
-    let sortIconName;
-    if (isSorted === null) {
-      sortIconName = "sort";
-    } else if (isSorted) {
+    let sortIconName = "sort up";
+    if (isSorted) {
       sortIconName = "sort down";
-    } else {
-      sortIconName = "sort up";
     }
 
     return (
-      <Table.HeaderCell onClick={this.handleClick}>
+      <Table.HeaderCell onClick={this.handleClick} id={this.props.id}>
         <Icon fitted name={sortIconName} /> {header}
       </Table.HeaderCell>
     );
