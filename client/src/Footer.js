@@ -27,25 +27,38 @@ export const Footer = () => (
             <Header as="h4" inverted>
               Broca Translation
             </Header>
-            <p >
-              Broca Translation is an open source project hosted on <Icon name="github" />
-              <a className="footerStyle linksStyle"
+            <p>
+              Broca Translation is an open source project hosted on{" "}
+              <Icon name="github" />
+              <a
+                className="footerStyle"
                 title="github"
-                href="https://github.com/CodeYourFuture/scot-broca-translators">Github.</a>
+                href="https://github.com/CodeYourFuture/scot-broca-translators"
+              >
+                Github.
+              </a>
               <br />
-              Thanks to <a
+              Thanks to{" "}
+              <a
                 title="smashicons"
-                className="footerStyle linksStyle"
-
-                href="https://www.flaticon.com/authors/smashicons>Smashicons">Smashicons</a> for the logo and to <a
-                  title="unsplash"
-                  className="footerStyle linksStyle"
-
-                  href="https://unsplash.com/">Unsplash</a> for the free images.</p>
+                className="footerStyle"
+                href="https://www.flaticon.com/authors/smashicons>Smashicons"
+              >
+                Smashicons
+              </a>{" "}
+              for the logo and to{" "}
+              <a
+                title="unsplash"
+                className="footerStyle"
+                href="https://unsplash.com/"
+              >
+                Unsplash
+              </a>{" "}
+              for the free images.
+            </p>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     </Container>
   </Segment>
 );
-

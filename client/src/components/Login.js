@@ -94,7 +94,7 @@ export class Login extends Component {
             </Link>{" "}
             or
             <Link to={`/sign-up-interpreter/`}>
-              <span> become an Interpretor</span>
+              <span> Become translator</span>
             </Link>
           </Segment>
         </Grid.Column>

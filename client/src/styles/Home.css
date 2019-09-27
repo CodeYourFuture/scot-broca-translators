@@ -35,9 +35,10 @@
 
 .footerStyle:hover {
   text-decoration: underline;
-  color: white;
+  color: rgb(167, 186, 202);
 }
 
-.linksStyle {
-  color:white;
+.footerStyle {
+  text-decoration: underline;
+  color: white;
 }
