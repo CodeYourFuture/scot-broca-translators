@@ -84,11 +84,11 @@ class NavBarMenuItems extends React.Component {
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name="interpreter registration"
+              name="translator registration"
               as={Link}
               to="/sign-up-interpreter"
               header
-              active={activeItem === "interpreter registration"}
+              active={activeItem === "translator registration"}
               onClick={this.handleItemClick}
             />
           </React.Fragment>
