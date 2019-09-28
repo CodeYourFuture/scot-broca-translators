@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Header, Container, Table, Button, Message } from "semantic-ui-react";
+import {
+  Header,
+  Container,
+  Table,
+  Button,
+  Message,
+  Label
+} from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
@@ -104,7 +111,6 @@ class Dashboard extends Component {
       { header: "To Language", sortKey: "to_language_name" },
       { header: "Status", sortKey: "status" }
     ];
-
     return (
       <Container>
         <Header as="h2">Hello {userName}!</Header>
@@ -153,13 +159,23 @@ class Dashboard extends Component {
                   to_language_name,
                   status,
                   translator_name,
-                  translation_id
+                  translation_id,
+                  due_date,
+                  submission_date
                 } = document;
-                const dueDate = moment(document.due_date).format("L");
-
+                const dueDate = moment(due_date).format("L");
+                const submissionDate = moment(submission_date).format("L");
+                const todayDate = moment(new Date()).format("L");
+                const label =
+                  todayDate === submissionDate ? (
+                    <Label ribbon color="blue" size="tiny">
+                      New
+                    </Label>
+                  ) : null;
                 return (
                   <Table.Row key={id}>
                     <NameColumn
+                      label={label}
                       name={name}
                       userRole={userRole}
                       status={status}
