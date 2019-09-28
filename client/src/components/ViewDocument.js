@@ -68,7 +68,7 @@ export class ViewDocument extends Component {
               {this.state.document && this.state.document.name}
             </Header>
 
-            <Table celled unstackable structured>
+            <Table celled structured>
               <Table.Header fullWidth>
                 <DocumentInformationBar
                   fromLanguageName={this.state.document.from_language_name}
