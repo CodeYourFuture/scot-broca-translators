@@ -44,14 +44,11 @@ class Dashboard extends Component {
       .then(response => {
         if (response.status === 200) {
           toast({
-            title: "Info Toast",
-            description: <p>You picked document successfully</p>,
-            type: "warning",
-            icon: "envelope",
-            title: "Warning Toast",
+            type: "success",
+            icon: "check",
             description: "You picked document successfully",
-            animation: "bounce",
-            time: 2000
+            animation: "fade left",
+            time: 5000
           });
           this.setDocuments();
         } else {
@@ -60,14 +57,11 @@ class Dashboard extends Component {
       })
       .catch(error => {
         toast({
-          title: "Info Toast",
-          description: <p>This is a Semantic UI toast</p>,
-          type: "warning",
-          icon: "envelope",
-          title: "Warning Toast",
+          type: "error",
+          icon: "cancel",
           description: "There is error",
-          animation: "bounce",
-          time: 2000
+          animation: "fade left",
+          time: 5000
         });
         error.text().then(errorMessage =>
           this.setState({
@@ -85,13 +79,10 @@ class Dashboard extends Component {
           this.setDocuments();
 
           toast({
-            title: "Info Toast",
-            description: <p>You cancelled translation successfully</p>,
-            type: "warning",
-            icon: "envelope",
-            title: "Warning Toast",
+            type: "success",
+            icon: "check",
             description: "You cancelled translation successfully",
-            animation: "bounce",
+            animation: "fade left",
             time: 2000
           });
         } else {
@@ -99,7 +90,13 @@ class Dashboard extends Component {
         }
       })
       .catch(error => {
-        // call the toast to show error
+        toast({
+          type: "error",
+          icon: "cancel",
+          description: "There is error",
+          animation: "fade left",
+          time: 3000
+        });
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -139,7 +136,6 @@ class Dashboard extends Component {
 
     return (
       <Container>
-        <SemanticToastContainer position="top-right" />
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>

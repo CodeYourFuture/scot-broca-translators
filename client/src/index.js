@@ -16,6 +16,7 @@ import Login from "./components/Login";
 import { isLoggedIn } from "./components/helpers/isLoggedIn";
 import { isUser } from "./components/helpers/isUser";
 import ViewDocument from "./components/ViewDocument";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 
 import NavBar from "./components/navbar/NavBar";
 
@@ -25,6 +26,9 @@ class Routes extends Component {
   render() {
     return (
       <Router>
+        <div className="notifications">
+          <SemanticToastContainer position="top-right" />
+        </div>
         <div className="site">
           <NavBar>
             <div>
