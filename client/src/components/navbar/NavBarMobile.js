@@ -12,7 +12,7 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => (
       vertical
       visible={visible}
     >
-      <NavBarMenuItems />
+      <NavBarMenuItems onPusherClick={onPusherClick} />
     </Sidebar>
     <Sidebar.Pusher
       dimmed={visible}

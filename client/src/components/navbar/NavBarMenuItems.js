@@ -4,13 +4,20 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
 class NavBarMenuItems extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+  }
   logout = () => {
     sessionStorage.clear();
     window.location.href = "/";
   };
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+  handleItemClick = (e, { name }) => {
+    if (this.props.onPusherClick) {
+      this.props.onPusherClick();
+    }
+    this.setState({ activeItem: name });
+  };
 
   render() {
     const activeItem = this.props.activeItem;
