@@ -15,6 +15,7 @@ import StatusColumn from "./StatusColumn";
 import NameColumn from "./NameColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
+import displayToastMessage from "./helpers/displayToastMessage";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -50,12 +51,18 @@ class Dashboard extends Component {
     pickDocument(id)
       .then(response => {
         if (response.status === 200) {
+          displayToastMessage(
+            "success",
+            "check",
+            "You picked document successfully"
+          );
           this.setDocuments();
         } else {
           throw response;
         }
       })
       .catch(error => {
+        displayToastMessage("error", "cancel", "There is error");
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -70,11 +77,19 @@ class Dashboard extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
+
+          displayToastMessage(
+            "success",
+            "check",
+            "Translation has been cancelled"
+          );
         } else {
           throw response;
         }
       })
       .catch(error => {
+        displayToastMessage("error", "cancel", "There is error");
+
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
