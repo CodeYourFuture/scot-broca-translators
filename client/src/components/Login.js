@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Segment,
-  Grid,
-  Header,
-  GridColumn,
-  GridRow
-} from "semantic-ui-react";
+import { Form, Input, Button, Segment, Grid, Header } from "semantic-ui-react";
 import { getToken } from "../api/status";
 import { Link } from "react-router-dom";
 

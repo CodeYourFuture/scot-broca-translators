@@ -5,6 +5,7 @@ import { getDocuments } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
+import NameColumn from "./NameColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
 
@@ -155,9 +156,15 @@ class Dashboard extends Component {
                   translation_id
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
+
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell>{name}</Table.Cell>
+                    <NameColumn
+                      name={name}
+                      userRole={userRole}
+                      status={status}
+                      dueDate={dueDate}
+                    />
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
