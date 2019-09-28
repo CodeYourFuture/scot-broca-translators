@@ -17,31 +17,31 @@ function getOverDueLabel(dueDate) {
 
   if (dueDate < todayDate) {
     return (
-      <Label color="red" style={{ float: "right" }}>
+      <Label size="small" color="red" style={{ float: "right" }}>
         Overdue
       </Label>
     );
   } else if (dueDate === oneDayLeft) {
     return (
-      <Label color="red" style={{ float: "right" }}>
+      <Label size="small" color="yellow" style={{ float: "right" }}>
         Due in 1 day
       </Label>
     );
   } else if (dueDate === twoDaysLeft) {
     return (
-      <Label color="red" style={{ float: "right" }}>
+      <Label size="small" color="yellow" style={{ float: "right" }}>
         Due in 2 days
       </Label>
     );
   } else if (dueDate === threeDaysLeft) {
     return (
-      <Label color="red" style={{ float: "right" }}>
+      <Label size="small" color="yellow" style={{ float: "right" }}>
         Due in 3 days
       </Label>
     );
   } else if (dueDate === todayDate) {
     return (
-      <Label color="red" style={{ float: "right" }}>
+      <Label size="small" color="yellow" style={{ float: "right" }}>
         Due today
       </Label>
     );
