@@ -63,7 +63,7 @@ export class AddTranslationForm extends Component {
         <Segment>
           <Form>
             <Form.Group>
-              <Table celled unstackable structured>
+              <Table celled structured>
                 <Table.Header fullWidth>
                   {this.state.document[0] && (
                     <DocumentInformationBar

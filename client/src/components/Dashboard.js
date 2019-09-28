@@ -118,7 +118,7 @@ class Dashboard extends Component {
             <p>{this.state.errorMessage}</p>
           </Message>
         ) : null}
-        <Table celled unstackable selectable striped>
+        <Table celled selectable striped>
           <Table.Header>
             <Table.Row>
               {headerCells.map((headerCell, index) => {
