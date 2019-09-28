@@ -73,7 +73,7 @@ class Dashboard extends Component {
           displayToastMessage(
             "success",
             "check",
-            "You picked document successfully"
+            "Translation has been cancelled"
           );
         } else {
           throw response;
