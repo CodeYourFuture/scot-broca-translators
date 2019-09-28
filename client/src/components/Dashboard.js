@@ -51,7 +51,7 @@ class Dashboard extends Component {
             title: "Warning Toast",
             description: "You picked document successfully",
             animation: "bounce",
-            time: 1000
+            time: 2000
           });
           this.setDocuments();
         } else {
@@ -67,7 +67,7 @@ class Dashboard extends Component {
           title: "Warning Toast",
           description: "There is error",
           animation: "bounce",
-          time: 1000
+          time: 2000
         });
         error.text().then(errorMessage =>
           this.setState({
@@ -92,7 +92,7 @@ class Dashboard extends Component {
             title: "Warning Toast",
             description: "You cancelled translation successfully",
             animation: "bounce",
-            time: 1000
+            time: 2000
           });
         } else {
           throw response;
