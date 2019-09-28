@@ -38,8 +38,14 @@ export class Login extends Component {
   render() {
     const { email, password, loginErr } = this.state;
     return (
-      <Grid padded="horizontally" centered columns={2}>
-        <Grid.Column computer="8" mobile="16" tablet="8">
+      <Grid padded="horizontally" centered columns={16}>
+        <Grid.Column
+          largeScreen="6"
+          computer="10"
+          mobile="16"
+          tablet="10"
+          width={6}
+        >
           <Header as="h2" textAlign="center">
             Log-in to your account
           </Header>
@@ -85,7 +91,7 @@ export class Login extends Component {
             </Link>{" "}
             or
             <Link to={`/sign-up-interpreter/`}>
-              <span> become an Interpretor</span>
+              <span> become a translator</span>
             </Link>
           </Segment>
         </Grid.Column>
