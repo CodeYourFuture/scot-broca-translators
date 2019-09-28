@@ -1,11 +1,8 @@
 import React from "react";
 import { Table, Label } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 import moment from "moment";
 
-const NameColumn = props => {
-  const { status, userRole, dueDate, name } = props;
-
+function getOverDueLabel(dueDate) {
   const currentDate = new Date();
   const todayDate = moment(currentDate).format("L");
   const threeDaysLeft = moment(currentDate)
@@ -18,74 +15,50 @@ const NameColumn = props => {
     .add(1, "days")
     .format("L");
 
-  if (status === "Waiting" && dueDate < todayDate) {
+  if (dueDate < todayDate) {
     return (
-      <Table.Cell>
-        {name}
-        {userRole === "User" ? (
-          <Label
-            basic
-            color="red"
-            as={Link}
-            to="add-document"
-            style={{ float: "right" }}
-          >
-            Re-sumbit the document again please!
-          </Label>
-        ) : (
-          <Label color="red" style={{ float: "right" }}>
-            Overdue
-          </Label>
-        )}
-      </Table.Cell>
+      <Label color="red" style={{ float: "right" }}>
+        Overdue
+      </Label>
     );
-  } else if (status === "Waiting" && dueDate === oneDayLeft) {
+  } else if (dueDate === oneDayLeft) {
     return (
-      <Table.Cell>
-        {name}
-        {userRole === "Interpreter" ? (
-          <Label color="red" style={{ float: "right" }}>
-            Due in 1 day
-          </Label>
-        ) : null}
-      </Table.Cell>
+      <Label color="red" style={{ float: "right" }}>
+        Due in 1 day
+      </Label>
     );
-  } else if (status === "Waiting" && dueDate === twoDaysLeft) {
+  } else if (dueDate === twoDaysLeft) {
     return (
-      <Table.Cell>
-        {name}
-        {userRole === "Interpreter" ? (
-          <Label color="red" style={{ float: "right" }}>
-            Due in 2 days
-          </Label>
-        ) : null}
-      </Table.Cell>
+      <Label color="red" style={{ float: "right" }}>
+        Due in 2 days
+      </Label>
     );
-  } else if (status === "Waiting" && dueDate === threeDaysLeft) {
+  } else if (dueDate === threeDaysLeft) {
     return (
-      <Table.Cell>
-        {name}
-        {userRole === "Interpreter" ? (
-          <Label color="red" style={{ float: "right" }}>
-            Due in 3 days
-          </Label>
-        ) : null}
-      </Table.Cell>
+      <Label color="red" style={{ float: "right" }}>
+        Due in 3 days
+      </Label>
     );
-  } else if (status === "Waiting" && dueDate === todayDate) {
+  } else if (dueDate === todayDate) {
     return (
-      <Table.Cell>
-        {name}
-        {userRole === "Interpreter" ? (
-          <Label color="red" style={{ float: "right" }}>
-            Due today
-          </Label>
-        ) : null}
-      </Table.Cell>
+      <Label color="red" style={{ float: "right" }}>
+        Due today
+      </Label>
     );
   } else {
-    return <Table.Cell>{name}</Table.Cell>;
+    return null;
   }
-};
+}
 
+const NameColumn = props => {
+  const { status, dueDate, name, userRole } = props;
+  return (
+    <Table.Cell>
+      {name}
+      {userRole === "Interpreter" && status !== "Completed"
+        ? getOverDueLabel(dueDate)
+        : null}
+    </Table.Cell>
+  );
+};
 export default NameColumn;
