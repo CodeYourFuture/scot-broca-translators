@@ -4,7 +4,7 @@ import { Header, Card } from "semantic-ui-react";
 const About = () => {
   return (
     <div>
-      <Header as="h1" icon textAlign="centre">
+      <Header as="h1" icon textAlign="centre" style={{ marginBottom: "30px" }}>
         <Header.Content>About Broca Translation</Header.Content>
       </Header>
 
