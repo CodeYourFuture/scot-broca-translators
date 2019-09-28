@@ -107,9 +107,15 @@ class Dashboard extends Component {
 
     return (
       <Container>
-        <Header as="h2">Hello {userName}!</Header>
+        <Header style={{ marginTop: "25px" }} as="h2">
+          Hello {userName}!
+        </Header>
         {userRole === "User" ? (
-          <Button onClick={() => this.props.history.push("/add-document")}>
+          <Button
+            style={{ marginBottom: "1em" }}
+            color="blue"
+            onClick={() => this.props.history.push("/add-document")}
+          >
             Add document
           </Button>
         ) : null}
