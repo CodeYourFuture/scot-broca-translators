@@ -1,15 +1,21 @@
 import React from "react";
-import { Table, Button } from "semantic-ui-react";
+import { Table, Button, Icon, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const View = props => {
   let { id } = props;
   return (
-    <Button compact>
-      <Link to={`/document/${id}`}>
-        <i aria-hidden="true" class="file text icon"></i> View
-      </Link>
-    </Button>
+    <Popup
+      content="View"
+      trigger={
+        <Button
+          as={Link}
+          to={`/document/${id}`}
+          compact
+          icon="file text icon"
+        />
+      }
+    />
   );
 };
 
@@ -33,18 +39,27 @@ const ActionColumn = props => {
     return (
       <Table.Cell>
         <View id={id} />
-        <Link to={`/add-document-translation/${id}`}>
-          <Button compact>
-            <i aria-hidden="true" class="send small icon"></i>Submit Translation
-          </Button>
-        </Link>
-        <Button
-          className="ui red compact button"
-          onClick={() => props.handleCancelTranslationClick(translationId)}
-        >
-          <i aria-hidden="true" class="delete icon"></i>
-          Cancel
-        </Button>
+        <Popup
+          content="Submit Translation"
+          trigger={
+            <Button
+              as={Link}
+              to={`/add-document-translation/${id}`}
+              compact
+              icon="send icon"
+            />
+          }
+        />
+        <Popup
+          content="Cancel Translation"
+          trigger={
+            <Button
+              compact
+              onClick={() => props.handleCancelTranslationClick(translationId)}
+              icon="delete icon"
+            />
+          }
+        />
       </Table.Cell>
     );
   } else {
@@ -52,10 +67,16 @@ const ActionColumn = props => {
       <Table.Cell>
         <View id={id} />
         {status === "Waiting" ? (
-          <Button compact onClick={() => props.handlePickDocumentClick(id)}>
-            <i aria-hidden="true" class="plus square small icon"></i> Pick
-            Document
-          </Button>
+          <Popup
+            content="Pick Document"
+            trigger={
+              <Button
+                compact
+                onClick={() => props.handlePickDocumentClick(id)}
+                icon="add icon"
+              />
+            }
+          />
         ) : null}
       </Table.Cell>
     );
