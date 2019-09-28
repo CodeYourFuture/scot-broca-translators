@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Header,
-  Grid,
-  Segment,
-  Icon,
-  Card,
-  Image,
-  CardDescription
-} from "semantic-ui-react";
+import { Header, Card } from "semantic-ui-react";
 
 const About = () => {
   return (
