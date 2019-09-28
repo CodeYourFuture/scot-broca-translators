@@ -4,10 +4,8 @@ import { Header, Card } from "semantic-ui-react";
 const About = () => {
   return (
     <div>
-      <Header as="h2" icon textAlign="centre">
-        <Header.Content style={textStyle}>
-          About Broca Translation
-        </Header.Content>
+      <Header as="h1" icon textAlign="centre">
+        <Header.Content>About Broca Translation</Header.Content>
       </Header>
 
       <Card
@@ -27,10 +25,3 @@ const About = () => {
 };
 
 export default About;
-
-const textStyle = {
-  fontSize: "20px",
-  color: "black",
-  fontFamily: "Helvetica, Arial, sansSerif",
-  fontWeight: "bold"
-};
