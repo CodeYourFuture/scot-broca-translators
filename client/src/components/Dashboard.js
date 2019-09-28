@@ -108,28 +108,14 @@ class Dashboard extends Component {
                   translation_id
                 } = document;
                 const dueDate = moment(document.due_date).format("L");
-                const currentDate = new Date();
-                const dateOnly = moment(currentDate).format("L");
-                const threeDaysLeft = moment(currentDate)
-                  .add(3, "days")
-                  .format("L");
-                const twoDaysLeft = moment(currentDate)
-                  .add(2, "days")
-                  .format("L");
-                const oneDayLeft = moment(currentDate)
-                  .add(1, "days")
-                  .format("L");
+
                 return (
                   <Table.Row key={id}>
                     <NameColumn
                       name={name}
+                      userRole={userRole}
                       status={status}
                       dueDate={dueDate}
-                      currentDate={currentDate}
-                      dateOnly={dateOnly}
-                      oneDayLeft={oneDayLeft}
-                      twoDaysLeft={twoDaysLeft}
-                      threeDaysLeft={threeDaysLeft}
                     />
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
