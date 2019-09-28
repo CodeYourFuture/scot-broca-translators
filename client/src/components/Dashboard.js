@@ -7,7 +7,7 @@ import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
-import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import displayToastMessage from "./helpers/displayToastMessage";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -43,26 +43,18 @@ class Dashboard extends Component {
     pickDocument(id)
       .then(response => {
         if (response.status === 200) {
-          toast({
-            type: "success",
-            icon: "check",
-            description: "You picked document successfully",
-            animation: "fade left",
-            time: 5000
-          });
+          displayToastMessage(
+            "success",
+            "check",
+            "You picked document successfully"
+          );
           this.setDocuments();
         } else {
           throw response;
         }
       })
       .catch(error => {
-        toast({
-          type: "error",
-          icon: "cancel",
-          description: "There is error",
-          animation: "fade left",
-          time: 5000
-        });
+        displayToastMessage("error", "cancel", "There is error");
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -78,25 +70,18 @@ class Dashboard extends Component {
         if (response.status === 200) {
           this.setDocuments();
 
-          toast({
-            type: "success",
-            icon: "check",
-            description: "You cancelled translation successfully",
-            animation: "fade left",
-            time: 2000
-          });
+          displayToastMessage(
+            "success",
+            "check",
+            "You picked document successfully"
+          );
         } else {
           throw response;
         }
       })
       .catch(error => {
-        toast({
-          type: "error",
-          icon: "cancel",
-          description: "There is error",
-          animation: "fade left",
-          time: 3000
-        });
+        displayToastMessage("error", "cancel", "There is error");
+
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
