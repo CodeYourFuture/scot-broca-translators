@@ -7,6 +7,7 @@ import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -42,12 +43,32 @@ class Dashboard extends Component {
     pickDocument(id)
       .then(response => {
         if (response.status === 200) {
+          toast({
+            title: "Info Toast",
+            description: <p>You picked document successfully</p>,
+            type: "warning",
+            icon: "envelope",
+            title: "Warning Toast",
+            description: "You picked document successfully",
+            animation: "bounce",
+            time: 1000
+          });
           this.setDocuments();
         } else {
           throw response;
         }
       })
       .catch(error => {
+        toast({
+          title: "Info Toast",
+          description: <p>This is a Semantic UI toast</p>,
+          type: "warning",
+          icon: "envelope",
+          title: "Warning Toast",
+          description: "There is error",
+          animation: "bounce",
+          time: 1000
+        });
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -62,11 +83,23 @@ class Dashboard extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
+
+          toast({
+            title: "Info Toast",
+            description: <p>You cancelled translation successfully</p>,
+            type: "warning",
+            icon: "envelope",
+            title: "Warning Toast",
+            description: "You cancelled translation successfully",
+            animation: "bounce",
+            time: 1000
+          });
         } else {
           throw response;
         }
       })
       .catch(error => {
+        // call the toast to show error
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -106,6 +139,7 @@ class Dashboard extends Component {
 
     return (
       <Container>
+        <SemanticToastContainer position="top-right" />
         <Header as="h2">Hello {userName}!</Header>
         {userRole === "User" ? (
           <Button onClick={() => this.props.history.push("/add-document")}>
