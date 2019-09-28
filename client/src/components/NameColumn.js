@@ -51,9 +51,10 @@ function getOverDueLabel(dueDate) {
 }
 
 const NameColumn = props => {
-  const { status, dueDate, name, userRole } = props;
+  const { status, dueDate, name, userRole, label } = props;
   return (
     <Table.Cell>
+      {label}
       {name}
       {userRole === "Interpreter" && status !== "Completed"
         ? getOverDueLabel(dueDate)
