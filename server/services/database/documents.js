@@ -110,6 +110,20 @@ const getDocumentIdByTranslationId = translationId => {
     .then(result => result.rows[0].document_id);
 };
 
+const deleteDocument = documentId => {
+  const query = "DELETE FROM documents WHERE id =$1";
+  return pool
+    .query(query, [documentId])
+    .then(result => result.rows);
+};
+
+const checkUserIdFromDocument = userId => {
+  const query = "select owner_id from documents where id=$1";
+  return pool.query(query, [userId]).then(result => {
+    return result.rows[0].owner_id;
+  });
+};
+
 const checkDocumentStatus = documentId => {
   const query = "select status from documents where id=$1";
   return pool.query(query, [documentId]).then(result => result.rows[0].status);
@@ -122,5 +136,7 @@ module.exports = {
   updateDocumentStatusById,
   getDocumentIdByTranslationId,
   checkDocumentId,
-  checkDocumentStatus
+  checkDocumentStatus,
+  checkUserIdFromDocument,
+  deleteDocument
 };

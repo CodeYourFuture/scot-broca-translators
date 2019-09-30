@@ -94,4 +94,37 @@ router.get(
   }
 );
 
+router.delete(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const documentId = req.params.id;
+    const userId = req.user.id;
+
+    if (req.user === false) {
+      return res.send("Unauthorised");
+    } else {
+      docsDb
+        .checkDocumentStatus(documentId)
+        .then(status => {
+          if (status !== "Waiting") {
+            return res.status(400).send("Error");
+          }
+
+          return docsDb.checkUserIdFromDocument(userId);
+        })
+        .then(owner_id => {
+          if (owner_id === userId) {
+            return docsDb.deleteDocument(documentId);
+          } else {
+            return res.status(400).send("Error");
+          }
+        })
+        .catch(e => {
+          return res.status(500).send("An error occurred " + e);
+        });
+    }
+  }
+);
+
 module.exports = router;
