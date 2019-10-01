@@ -117,9 +117,9 @@ const deleteDocument = documentId => {
     .then(result => result.rows);
 };
 
-const checkUserIdFromDocument = userId => {
-  const query = "select owner_id from documents where id=$1";
-  return pool.query(query, [userId]).then(result => {
+const checkUserIdFromDocument = ownerId => {
+  const query = "select owner_id from documents where documents.owner_id =$1";
+  return pool.query(query, [ownerId]).then(result => {
     return result.rows[0].owner_id;
   });
 };

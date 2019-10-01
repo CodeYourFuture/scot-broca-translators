@@ -39,7 +39,14 @@ const ActionColumn = props => {
             trigger={
               <Button
                 compact
-                onClick={() => props.handleDeleteDocumentClick(id)}
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete this document?"
+                    )
+                  )
+                    props.handleDeleteDocumentClick(id);
+                }}
                 icon="trash"
               />
             }
