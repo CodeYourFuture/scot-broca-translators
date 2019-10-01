@@ -130,11 +130,11 @@ class Dashboard extends Component {
     const hours = date.getHours();
     let timeOfDay;
     if (hours < 12) {
-      timeOfDay = "morning";
+      timeOfDay = "Morning";
     } else if (hours >= 12 && hours < 17) {
-      timeOfDay = "afternoon";
+      timeOfDay = "Afternoon";
     } else {
-      timeOfDay = "night";
+      timeOfDay = "Evening";
     }
     return (
       <Container>
