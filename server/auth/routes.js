@@ -46,7 +46,6 @@ router.post("/register", async (req, res, next) => {
     role,
     languages
   };
-  console.log(user);
   const errorMessages = [];
 
   if (!emailValidate(email)) {

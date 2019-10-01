@@ -37,7 +37,6 @@ const getUserIdByEmail = email => {
       "SELECT id FROM users where email = $1",
       [email],
       (error, result) => {
-        console.log(result.rows[0]);
         resolve(result.rows[0]);
       }
     );
@@ -78,7 +77,6 @@ const submitUserLanguages = (id, languages) => {
   const values = languages
     .map((language, index) => `($1,$${2 + index})`)
     .join(", ");
-  console.log(values);
   const sqlQuery = `INSERT INTO users_languages (user_id, language_code) VALUES ${values}`;
 
   return pool
