@@ -37,15 +37,16 @@ router.post("/login", async (req, res, next) => {
  * Users Registration
  */
 router.post("/register", async (req, res, next) => {
-  const { email, password, name, role } = req.body;
+  const { email, password, name, role, languages } = req.body;
 
   const user = {
     email,
     password,
     name,
-    role
+    role,
+    languages
   };
-
+  console.log(user);
   const errorMessages = [];
 
   if (!emailValidate(email)) {
