@@ -35,7 +35,18 @@ function dateValidate(date) {
   }
 }
 
+const validateFutureDate = date => {
+  const newDate = new Date(date);
+  const todayDate = new Date();
+  if (newDate >= todayDate) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 module.exports = {
+  validateFutureDate: validateFutureDate,
   emailValidate: emailValidate,
   nameValidate: nameValidate,
   passwordValidate: passwordValidate,
