@@ -6,8 +6,7 @@ const languageOptions = [
   { text: "English", value: "en" },
   { text: "Russian", value: "ru" },
   { text: "Bengali", value: "be" },
-  { text: "French", value: "fr" },
-  { text: "Italian", value: "it" }
+  { text: "French", value: "fr" }
 ];
 
 export default languageOptions;
