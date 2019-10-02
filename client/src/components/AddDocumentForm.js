@@ -25,7 +25,8 @@ class AddDocumentForm extends Component {
       haveAllFieldsValue: false,
       documentCreated: false,
       error: false,
-      errorMessage: false
+      errorMessage: false,
+      isDueDateValid: true
     };
   }
   handleErrors(response) {
@@ -73,12 +74,20 @@ class AddDocumentForm extends Component {
       this.state.fromLanguage &&
       this.state.toLanguage &&
       this.state.text &&
-      this.state.dueDate &&
+      this.state.isDueDateValid &&
       this.state.name;
     this.setState({ haveAllFieldsValue });
   };
+  updateDueDateValidity = isDueDateValid => {
+    this.setState({
+      isDueDateValid: isDueDateValid
+    });
+  };
 
   handleChange = (e, { value, name }) => {
+    if (name === "dueDate") {
+      this.updateDueDateValidity(e.target.checkValidity());
+    }
     this.setState({ [name]: value }, () => this.checkAllFields());
   };
 
@@ -163,7 +172,9 @@ class AddDocumentForm extends Component {
                   name="dueDate"
                   value={dueDate}
                   required
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={this.handleChange}
+                  error={!this.state.isDueDateValid}
                 />
               </Form.Group>
               <Form.Input
