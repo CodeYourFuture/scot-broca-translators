@@ -115,7 +115,10 @@ router.delete(
         })
         .then(owner_id => {
           if (owner_id === userId) {
-            return docsDb.deleteDocument(documentId);
+            docsDb.deleteDocument(documentId)
+            .then(() => {
+              return res.send("")
+            });
           } else {
             return res.status(400).send("Error");
           }
