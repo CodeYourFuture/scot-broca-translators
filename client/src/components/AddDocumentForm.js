@@ -18,7 +18,6 @@ class AddDocumentForm extends Component {
     this.state = {
       fromLanguage: "",
       toLanguage: "",
-      haveAllFieldsValue: false,
       dueDate: "",
       text: "",
       name: "",
@@ -54,7 +53,7 @@ class AddDocumentForm extends Component {
         }
       })
       .catch(error => {
-        this.state.hasErrors = true;
+        this.setState({ hasErrors: true });
       });
 
     this.setState({

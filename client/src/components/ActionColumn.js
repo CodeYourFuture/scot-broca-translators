@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Icon, Popup } from "semantic-ui-react";
+import { Table, Button, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const View = props => {
