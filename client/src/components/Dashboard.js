@@ -184,9 +184,12 @@ class Dashboard extends Component {
                   due_date,
                   submission_date
                 } = document;
-                const dueDate = moment(due_date).format("L");
-                const submissionDate = moment(submission_date).format("L");
-                const todayDate = moment(new Date()).format("L");
+
+                const dueDate = moment(due_date).format("DD/MM/YYYY");
+                const submissionDate = moment(submission_date).format(
+                  "DD/MM/YYYY"
+                );
+                const todayDate = moment(new Date()).format("DD/MM/YYYY");
                 const label =
                   todayDate === submissionDate ? (
                     <Label ribbon color="blue" size="tiny">
