@@ -173,7 +173,6 @@ class AddDocumentForm extends Component {
                   value={dueDate}
                   required
                   min={new Date().toISOString().split("T")[0]}
-                  max="2100-01-01"
                   onChange={this.handleChange}
                   error={!this.state.isDueDateValid}
                 />
