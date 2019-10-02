@@ -26,7 +26,7 @@ class AddDocumentForm extends Component {
       documentCreated: false,
       error: false,
       errorMessage: false,
-      isDueDateValid: false
+      isDueDateValid: true
     };
   }
   handleErrors(response) {
