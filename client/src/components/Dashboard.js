@@ -16,6 +16,7 @@ import NameColumn from "./NameColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
 import displayToastMessage from "./helpers/displayToastMessage";
+import getGreeting from "./helpers/getGreeting";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -126,20 +127,11 @@ class Dashboard extends Component {
       { header: "To Language", sortKey: "to_language_name" },
       { header: "Status", sortKey: "status" }
     ];
-    const date = new Date();
-    const hours = date.getHours();
-    let timeOfDay;
-    if (hours < 12) {
-      timeOfDay = "Morning";
-    } else if (hours >= 12 && hours < 17) {
-      timeOfDay = "Afternoon";
-    } else {
-      timeOfDay = "Evening";
-    }
+
     return (
       <Container>
         <Header style={{ marginTop: "25px" }} as="h2">
-          Good {timeOfDay} {userName}!
+          Good {getGreeting()} {userName}!
         </Header>
         {userRole === "User" ? (
           <Button
