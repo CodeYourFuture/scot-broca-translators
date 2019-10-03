@@ -31,18 +31,6 @@ const getUserByEmail = email => {
   });
 };
 
-const getUserIdByEmail = email => {
-  return new Promise(resolve => {
-    pool.query(
-      "SELECT id FROM users where email = $1",
-      [email],
-      (error, result) => {
-        resolve(result.rows[0]);
-      }
-    );
-  });
-};
-
 const createUser = ({ email, password, name, role, languages }) => {
   return getUserByEmail(email)
     .then(users => {
@@ -54,35 +42,32 @@ const createUser = ({ email, password, name, role, languages }) => {
         }
       });
     })
-    .then(() => {
-      return new Promise((resolve, reject) => {
-        pool.query(
-          "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
-          [email, password, name, role],
-          (error, result) => {
-            if (error) {
-              console.log(error);
-              reject("An unexpected error occured, please try again later.");
-            }
-            resolve(result.rows);
-          }
-        );
-      })
-        .then(() => getUserIdByEmail(email))
-        .then(id => submitUserLanguages(id.id, languages));
+    .then(async () => {
+      const client = await pool.connect();
+      try {
+        await client.query("BEGIN");
+        const queryText =
+          "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4) RETURNING id";
+        const res = await client.query(queryText, [
+          email,
+          password,
+          name,
+          role
+        ]);
+        const id = res.rows[0].id;
+        const values = languages
+          .map((language, index) => `($1,$${2 + index})`)
+          .join(", ");
+        const sqlQuery = `INSERT INTO users_languages (user_id, language_code) VALUES ${values}`;
+        await client.query(sqlQuery, [id, ...languages]);
+        await client.query("COMMIT");
+      } catch (e) {
+        await client.query("ROLLBACK");
+        throw "Someting went wrong";
+      } finally {
+        client.release();
+      }
     });
-};
-
-const submitUserLanguages = (id, languages) => {
-  const values = languages
-    .map((language, index) => `($1,$${2 + index})`)
-    .join(", ");
-  const sqlQuery = `INSERT INTO users_languages (user_id, language_code) VALUES ${values}`;
-
-  return pool
-    .query(sqlQuery, [id, ...languages])
-    .then(result => result.rows)
-    .catch(error => console.error(error));
 };
 
 const getUserById = id => {
