@@ -112,10 +112,7 @@ const getDocumentIdByTranslationId = translationId => {
 
 const deleteDocument = documentId => {
   const query = "DELETE FROM documents WHERE id =$1";
-  return pool
-    .query(query, [documentId])
-    .then(result => result.rows)
-    .catch(error => console.error(error));
+  return pool.query(query, [documentId]).then(result => result.rows);
 };
 
 const checkUserIdFromDocument = ownerId => {

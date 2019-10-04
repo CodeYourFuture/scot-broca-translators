@@ -108,23 +108,29 @@ router.delete(
         .checkDocumentStatus(documentId)
         .then(status => {
           if (status !== "Waiting") {
-            return res.status(400).send("Error");
+            throw {
+              errorCode: 400,
+              errorMessage: "Can not delete this document"
+            };
           }
 
           return docsDb.checkUserIdFromDocument(userId);
         })
         .then(owner_id => {
           if (owner_id === userId) {
-            docsDb.deleteDocument(documentId)
-            .then(() => {
-              return res.send("")
+            docsDb.deleteDocument(documentId).then(() => {
+              return res.send("");
             });
           } else {
             return res.status(400).send("Error");
           }
         })
-        .catch(e => {
-          return res.status(500).send("An error occurred " + e);
+        .catch(err => {
+          if (err.errorCode) {
+            res.status(err.errorCode).send(err.errorMessage);
+          } else {
+            res.status(500).send("Error");
+          }
         });
     }
   }
