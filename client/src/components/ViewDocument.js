@@ -59,7 +59,6 @@ export class ViewDocument extends Component {
     this.state.translation
       ? (translationContent = this.state.translation.content)
       : (translationContent = "");
-    //console.log(this.state.document.content);
     return (
       <Container>
         {this.state.document && (

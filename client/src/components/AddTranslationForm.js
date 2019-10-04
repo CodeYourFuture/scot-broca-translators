@@ -32,7 +32,6 @@ export class AddTranslationForm extends Component {
     let documentId = this.props.match.params.documentId;
     getDocumentById(documentId)
       .then(document => {
-        console.log(document);
         this.setState({ document: document });
       })
       .catch(err =>
