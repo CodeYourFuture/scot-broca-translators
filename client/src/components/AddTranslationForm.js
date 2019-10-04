@@ -9,7 +9,6 @@ import {
   Message,
   Table,
   Grid,
-  Image,
   Divider
 } from "semantic-ui-react";
 import { getDocumentById } from "../api/documents";
