@@ -7,7 +7,9 @@ import {
   Button,
   Form,
   Message,
-  Table
+  Table,
+  Grid,
+  Divider
 } from "semantic-ui-react";
 import { getDocumentById } from "../api/documents";
 import { putTranslation } from "../api/translations";
@@ -45,7 +47,7 @@ export class AddTranslationForm extends Component {
     const { translation_id } = this.state.document[0];
     const { content } = this.state;
     putTranslation(translation_id, content)
-      .then(res => this.setState({ isSend: true, content: "" }))
+      .then(res => this.setState({ isSend: true, content: "", document: [] }))
       .catch(err => {
         err.text().then(errorMessage => this.setState({ errorMessage }));
       });
@@ -53,6 +55,7 @@ export class AddTranslationForm extends Component {
 
   render() {
     const { content, errorMessage } = this.state;
+
     return (
       <Container>
         <Header as="h2">
@@ -97,15 +100,25 @@ export class AddTranslationForm extends Component {
                 </Link>
               </Message>
             ) : null}
+            <Segment>
+              <Grid columns={2} relaxed="very">
+                <Grid.Column>
+                  {this.state.document[0] && this.state.document[0].content}
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.TextArea
+                    rows={20}
+                    required
+                    placeholder="Please, enter the translation here..."
+                    name="content"
+                    value={content}
+                    onChange={this.handleChange}
+                  />
+                </Grid.Column>
+              </Grid>
 
-            <Form.TextArea
-              rows={20}
-              required
-              placeholder="Please, enter the translation here..."
-              name="content"
-              value={content}
-              onChange={this.handleChange}
-            />
+              <Divider />
+            </Segment>
 
             <Form.Group>
               {content.length ? (
