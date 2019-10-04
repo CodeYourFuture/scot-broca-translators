@@ -97,4 +97,46 @@ router.get(
   }
 );
 
+router.delete(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const documentId = req.params.id;
+    const userId = req.user.id;
+
+    if (req.user === false) {
+      return res.send("Unauthorised");
+    } else {
+      docsDb
+        .checkDocumentStatus(documentId)
+        .then(status => {
+          if (status !== "Waiting") {
+            throw {
+              errorCode: 400,
+              errorMessage: "Can not delete this document"
+            };
+          }
+
+          return docsDb.checkUserIdFromDocument(userId);
+        })
+        .then(owner_id => {
+          if (owner_id === userId) {
+            docsDb.deleteDocument(documentId).then(() => {
+              return res.send("");
+            });
+          } else {
+            return res.status(400).send("Error");
+          }
+        })
+        .catch(err => {
+          if (err.errorCode) {
+            res.status(err.errorCode).send(err.errorMessage);
+          } else {
+            res.status(500).send("Error");
+          }
+        });
+    }
+  }
+);
+
 module.exports = router;
