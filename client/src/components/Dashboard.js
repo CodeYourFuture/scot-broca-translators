@@ -179,22 +179,24 @@ class Dashboard extends Component {
       <Container>
         <Header style={{ marginTop: "25px" }} as="h2">
           Good {getGreeting()} {userName}!
+          {userRole === "User" ? (
+            <Button
+              style={({ marginBottom: "1em" }, { float: "right" })}
+              color="blue"
+              onClick={() => this.props.history.push("/add-document")}
+            >
+              Add document
+            </Button>
+          ) : (
+            <Checkbox
+              style={{ float: "right" }}
+              toggle
+              label="Only show documents I can translate"
+              onClick={() => this.handleToggle(languages)}
+            />
+          )}
         </Header>
-        {userRole === "User" ? (
-          <Button
-            style={{ marginBottom: "1em" }}
-            color="blue"
-            onClick={() => this.props.history.push("/add-document")}
-          >
-            Add document
-          </Button>
-        ) : (
-          <Checkbox
-            toggle
-            label="Only show documents I can translate"
-            onClick={() => this.handleToggle(languages)}
-          />
-        )}
+
         {this.state.hasErrors ? (
           <Message negative>
             <Message.Header>An error occurred</Message.Header>
