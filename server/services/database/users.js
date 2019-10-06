@@ -51,7 +51,7 @@ const createUser = ({ email, password, name, role, languages }) => {
     });
 };
 const createTranslator = (email, password, name, role, languages) => {
-  (async () => {
+  return (async () => {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
