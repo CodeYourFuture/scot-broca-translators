@@ -211,7 +211,7 @@ class Dashboard extends Component {
                   due_date,
                   submission_date
                 } = document;
-
+                const labelDueDate = moment(due_date);
                 const dueDate = moment(due_date).format("DD/MM/YYYY");
                 const submissionDate = moment(submission_date).format(
                   "DD/MM/YYYY"
@@ -230,7 +230,7 @@ class Dashboard extends Component {
                       name={name}
                       userRole={userRole}
                       status={status}
-                      dueDate={dueDate}
+                      labelDueDate={labelDueDate}
                     />
                     <Table.Cell>{dueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
