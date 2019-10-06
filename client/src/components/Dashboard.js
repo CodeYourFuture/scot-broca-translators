@@ -211,8 +211,8 @@ class Dashboard extends Component {
                   due_date,
                   submission_date
                 } = document;
-                const labelDueDate = moment(due_date);
-                const dueDate = moment(due_date).format("DD/MM/YYYY");
+                const dueDate = moment(due_date);
+                const labelDueDate = moment(due_date).format("DD/MM/YYYY");
                 const submissionDate = moment(submission_date).format(
                   "DD/MM/YYYY"
                 );
@@ -230,9 +230,9 @@ class Dashboard extends Component {
                       name={name}
                       userRole={userRole}
                       status={status}
-                      labelDueDate={labelDueDate}
+                      dueDate={dueDate}
                     />
-                    <Table.Cell>{dueDate}</Table.Cell>
+                    <Table.Cell>{labelDueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
                     <StatusColumn

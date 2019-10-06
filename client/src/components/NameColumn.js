@@ -2,9 +2,9 @@ import React from "react";
 import { Table, Label } from "semantic-ui-react";
 import moment from "moment";
 
-function getOverDueLabel(labelDueDate) {
+function getOverDueLabel(dueDate) {
   const todayDate = moment();
-  const duration = labelDueDate.diff(todayDate, "hours");
+  const duration = dueDate.diff(todayDate, "hours");
 
   if (duration < -24) {
     return (
@@ -42,13 +42,13 @@ function getOverDueLabel(labelDueDate) {
 }
 
 const NameColumn = props => {
-  const { status, name, userRole, label, labelDueDate } = props;
+  const { status, name, userRole, label, dueDate } = props;
   return (
     <Table.Cell>
       {label}
       {name}
       {userRole === "Interpreter" && status !== "Completed"
-        ? getOverDueLabel(labelDueDate)
+        ? getOverDueLabel(dueDate)
         : null}
     </Table.Cell>
   );
