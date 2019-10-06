@@ -28,7 +28,7 @@ router.post("/login", async (req, res, next) => {
     const token = jwt.sign({ userId: user.id }, secret);
     delete user.password;
     delete user.salt;
-    return res.send({ token, user });
+    return res.send({ token, user, languages });
   } catch (e) {
     console.error(e);
     next(e);

@@ -83,11 +83,14 @@ const getUserById = id => {
 };
 
 const getUserLanguages = email => {
-  const sqlQuery = `SELECT u_l.language_code from users_languages as u_l INNER join users as u on u.id=u_l.user_id where u.email = $1`;
-  return pool
-    .query(sqlQuery, [email])
-    .then(result => result.rows)
-    .then(res => res.map(pair => pair.language_code));
+  const sqlQuery = `SELECT l.name as language_name
+        from users as u 
+        INNER JOIN users_languages as u_l 
+          on u_l.user_id = u.id
+        INNER JOIN languages as l
+          on l.code = u_l.language_code 
+        where u.email = $1`;
+  return pool.query(sqlQuery, [email]).then(result => result.rows);
 };
 
 module.exports = {

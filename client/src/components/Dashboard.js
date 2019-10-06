@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import moment from "moment";
+import moment, { lang } from "moment";
 import {
   Header,
   Container,
@@ -26,7 +26,8 @@ class Dashboard extends Component {
       documents: [],
       sortedHeaderCellIndex: null,
       sortKey: "",
-      sorted: ""
+      sorted: "",
+      toggled: false
     };
   }
 
@@ -142,10 +143,30 @@ class Dashboard extends Component {
     });
   };
 
+  handleToggle = languages => {
+    this.setState({ toggled: !this.state.toggled }, () => {
+      if (!this.state.toggled) {
+        this.setDocuments();
+      } else {
+        const filtereddDocs = this.state.documents.filter(document => {
+          return (
+            languages.includes(document.from_language_name) &&
+            languages.includes(document.to_language_name)
+          );
+        });
+        this.setState({ documents: filtereddDocs });
+      }
+    });
+  };
+
   render() {
     const { documents, sorted, sortedHeaderCellIndex } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+    let languages = JSON.parse(sessionStorage.languages).map(
+      language => language.language_name
+    );
+
     const headerCells = [
       { header: "Document", sortKey: "name" },
       { header: "Due Date", sortKey: "due_date" },
@@ -168,10 +189,11 @@ class Dashboard extends Component {
             Add document
           </Button>
         ) : (
-          <div>
-            <p>Show documents I can translate </p>
-            <Checkbox toggle />
-          </div>
+          <Checkbox
+            toggle
+            label="Show documents I can translate"
+            onClick={() => this.handleToggle(languages)}
+          />
         )}
         {this.state.hasErrors ? (
           <Message negative>
