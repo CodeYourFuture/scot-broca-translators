@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Icon, Popup } from "semantic-ui-react";
+import { Table, Button, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const View = props => {
@@ -33,6 +33,25 @@ const ActionColumn = props => {
     return (
       <Table.Cell>
         <View id={id} />
+        {status === "Waiting" ? (
+          <Popup
+            content="Delete document"
+            trigger={
+              <Button
+                compact
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete this document?"
+                    )
+                  )
+                    props.handleDeleteDocumentClick(id);
+                }}
+                icon="trash"
+              />
+            }
+          />
+        ) : null}
       </Table.Cell>
     );
   } else if (userName === translatorName && status === "Processing") {

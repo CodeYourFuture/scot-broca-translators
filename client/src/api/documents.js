@@ -8,6 +8,21 @@ export const getDocuments = () => {
   }).then(res => res.json());
 };
 
+export const deleteDocumentById = id => {
+  const userRequest = {
+    method: "DELETE",
+    body: JSON.stringify({
+      document_id: id
+    }),
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      "Content-Type": "application/json"
+    }
+  };
+
+  return fetch(`/api/documents/${id}`, userRequest);
+};
+
 export const getDocumentById = documentId => {
   return fetch(`/api/documents/${documentId}`, {
     method: "get",

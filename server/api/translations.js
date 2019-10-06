@@ -106,7 +106,7 @@ router.put(
         }
       })
       .catch(err => {
-        res.send(500, err);
+        res.status(500).send("An error occured");
       });
   }
 );

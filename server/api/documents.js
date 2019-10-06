@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const docsDb = require("../services/database/documents");
 const { INTERPRETER } = require("../auth/roles");
-const { dateValidate } = require("../auth/validator.js");
+const { dateValidate, validateFutureDate } = require("../auth/validator.js");
 const router = express.Router();
 
 router.post(
@@ -37,7 +37,10 @@ router.post(
       document.due_date === ""
     ) {
       return res.status(400).send("Some mandatory field is missing");
-    } else if (!dateValidate(document.due_date)) {
+    } else if (
+      !dateValidate(document.due_date) &&
+      validateFutureDate(document.due_date)
+    ) {
       return res.status(400).send("The due_date format is incorrect");
     } else if (document.content === null || document.content === "") {
       return res.status(400).send("Some mandatory field is missing");
@@ -91,6 +94,48 @@ router.get(
       .catch(err => {
         res.send(500);
       });
+  }
+);
+
+router.delete(
+  `/:id`,
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const documentId = req.params.id;
+    const userId = req.user.id;
+
+    if (req.user === false) {
+      return res.send("Unauthorised");
+    } else {
+      docsDb
+        .checkDocumentStatus(documentId)
+        .then(status => {
+          if (status !== "Waiting") {
+            throw {
+              errorCode: 400,
+              errorMessage: "Can not delete this document"
+            };
+          }
+
+          return docsDb.checkUserIdFromDocument(userId);
+        })
+        .then(owner_id => {
+          if (owner_id === userId) {
+            docsDb.deleteDocument(documentId).then(() => {
+              return res.send("");
+            });
+          } else {
+            return res.status(400).send("Error");
+          }
+        })
+        .catch(err => {
+          if (err.errorCode) {
+            res.status(err.errorCode).send(err.errorMessage);
+          } else {
+            res.status(500).send("Error");
+          }
+        });
+    }
   }
 );
 

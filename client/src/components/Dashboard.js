@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Header, Container, Table, Button, Message } from "semantic-ui-react";
-import { getDocuments } from "../api/documents";
+import {
+  Header,
+  Container,
+  Table,
+  Button,
+  Message,
+  Label
+} from "semantic-ui-react";
+import { getDocuments, deleteDocumentById } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
 import NameColumn from "./NameColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
+import displayToastMessage from "./helpers/displayToastMessage";
+import getGreeting from "./helpers/getGreeting";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -43,12 +52,43 @@ class Dashboard extends Component {
     pickDocument(id)
       .then(response => {
         if (response.status === 200) {
+          displayToastMessage(
+            "success",
+            "check",
+            "You picked document successfully"
+          );
           this.setDocuments();
         } else {
           throw response;
         }
       })
       .catch(error => {
+        displayToastMessage("error", "cancel", "There is error");
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
+
+  handleDeleteDocumentClick = id => {
+    deleteDocumentById(id)
+      .then(response => {
+        if (response.status === 200) {
+          displayToastMessage(
+            "success",
+            "check",
+            "You deleted document successfully"
+          );
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        displayToastMessage("error", "cancel", "There is an error");
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -63,11 +103,19 @@ class Dashboard extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setDocuments();
+
+          displayToastMessage(
+            "success",
+            "check",
+            "Translation has been cancelled"
+          );
         } else {
           throw response;
         }
       })
       .catch(error => {
+        displayToastMessage("error", "cancel", "There is error");
+
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -107,9 +155,15 @@ class Dashboard extends Component {
 
     return (
       <Container>
-        <Header as="h2">Hello {userName}!</Header>
+        <Header style={{ marginTop: "25px" }} as="h2">
+          Good {getGreeting()} {userName}!
+        </Header>
         {userRole === "User" ? (
-          <Button onClick={() => this.props.history.push("/add-document")}>
+          <Button
+            style={{ marginBottom: "1em" }}
+            color="blue"
+            onClick={() => this.props.history.push("/add-document")}
+          >
             Add document
           </Button>
         ) : null}
@@ -153,19 +207,32 @@ class Dashboard extends Component {
                   to_language_name,
                   status,
                   translator_name,
-                  translation_id
+                  translation_id,
+                  due_date,
+                  submission_date
                 } = document;
-                const dueDate = moment(document.due_date).format("L");
-
+                const dueDate = moment(due_date);
+                const labelDueDate = moment(due_date).format("DD/MM/YYYY");
+                const submissionDate = moment(submission_date).format(
+                  "DD/MM/YYYY"
+                );
+                const todayDate = moment(new Date()).format("DD/MM/YYYY");
+                const label =
+                  todayDate === submissionDate ? (
+                    <Label ribbon color="blue" size="tiny">
+                      New
+                    </Label>
+                  ) : null;
                 return (
                   <Table.Row key={id}>
                     <NameColumn
+                      label={label}
                       name={name}
                       userRole={userRole}
                       status={status}
                       dueDate={dueDate}
                     />
-                    <Table.Cell>{dueDate}</Table.Cell>
+                    <Table.Cell>{labelDueDate}</Table.Cell>
                     <Table.Cell>{from_language_name}</Table.Cell>
                     <Table.Cell>{to_language_name}</Table.Cell>
                     <StatusColumn
@@ -183,6 +250,7 @@ class Dashboard extends Component {
                       handleCancelTranslationClick={
                         this.handleCancelTranslationClick
                       }
+                      handleDeleteDocumentClick={this.handleDeleteDocumentClick}
                     />
                   </Table.Row>
                 );
