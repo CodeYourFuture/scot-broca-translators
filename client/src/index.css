@@ -11,10 +11,3 @@ body {
   min-height: 75vh;
   flex-direction: column;
 }
-
-.notifications {
-  width: 20%;
-  position: fixed;
-  top: 70px;
-  right: 10px;
-}

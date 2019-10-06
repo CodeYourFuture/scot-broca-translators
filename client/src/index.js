@@ -1,4 +1,5 @@
 import "semantic-ui-css/semantic.min.css";
+import "react-semantic-toasts/styles/react-semantic-alert.css";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -26,9 +27,8 @@ class Routes extends Component {
   render() {
     return (
       <Router>
-        <div className="notifications">
-          <SemanticToastContainer position="top-right" />
-        </div>
+        <SemanticToastContainer position="top-right" />
+
         <div className="site">
           <NavBar>
             <div>
