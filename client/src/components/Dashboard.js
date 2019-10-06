@@ -144,19 +144,20 @@ class Dashboard extends Component {
   };
 
   handleToggle = languages => {
-    this.setState({ toggled: !this.state.toggled }, () => {
-      if (!this.state.toggled) {
-        this.setDocuments();
-      } else {
-        const filtereddDocs = this.state.documents.filter(document => {
-          return (
-            languages.includes(document.from_language_name) &&
-            languages.includes(document.to_language_name)
-          );
-        });
-        this.setState({ documents: filtereddDocs });
-      }
-    });
+    this.setState({ toggled: !this.state.toggled });
+  };
+
+  getFilteredDocs = (documents, languages) => {
+    if (!this.state.toggled) {
+      return documents;
+    } else {
+      return this.state.documents.filter(document => {
+        return (
+          languages.includes(document.from_language_name) &&
+          languages.includes(document.to_language_name)
+        );
+      });
+    }
   };
 
   render() {
@@ -229,7 +230,7 @@ class Dashboard extends Component {
 
           <Table.Body>
             {documents &&
-              documents.map(document => {
+              this.getFilteredDocs(documents, languages).map(document => {
                 const {
                   id,
                   name,
