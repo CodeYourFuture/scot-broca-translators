@@ -12,5 +12,5 @@ export const putUser = (id, newName, newEmail, newPassword) => {
     }
   };
 
-  return fetch(`/api/translations/${id}`, putParams);
+  return fetch(`/api/users/${id}`, putParams);
 };
