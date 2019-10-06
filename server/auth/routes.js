@@ -17,13 +17,12 @@ router.post("/login", async (req, res, next) => {
   console.log(`Login attempt ${email}`);
   try {
     const user = await db.getUserByEmail(email);
-    const languages = await db.getUserLanguages(email);
-    console.log(languages);
 
     if (!email || !password || !user || password !== user.password) {
       return res.sendStatus(403);
     }
-
+    const id = user.id;
+    const languages = await db.getUserLanguages(id);
     const secret = process.env.JWT_SECRET || "your_jwt_secret";
     const token = jwt.sign({ userId: user.id }, secret);
     delete user.password;

@@ -191,7 +191,7 @@ class Dashboard extends Component {
         ) : (
           <Checkbox
             toggle
-            label="Show documents I can translate"
+            label="Only show documents I can translate"
             onClick={() => this.handleToggle(languages)}
           />
         )}
