@@ -164,7 +164,7 @@ class Dashboard extends Component {
     const { documents, sorted, sortedHeaderCellIndex } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
-    let languages = JSON.parse(sessionStorage.languages).map(
+    let languages = JSON.parse(sessionStorage.getItem("languages")).map(
       language => language.language_name
     );
 

@@ -24,7 +24,7 @@ export class Login extends Component {
     const { email, password } = this.state;
     getToken(email, password)
       .then(res => {
-        sessionStorage.languages = JSON.stringify(res.languages);
+        sessionStorage.setItem("languages", JSON.stringify(res.languages));
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("userName", res.user.name);
         sessionStorage.setItem("userRole", res.user.role);
