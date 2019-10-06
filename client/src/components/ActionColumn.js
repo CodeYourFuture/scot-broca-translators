@@ -28,6 +28,25 @@ const ActionColumn = props => {
     return (
       <Table.Cell>
         <View id={id} />
+        {status === "Waiting" ? (
+          <Popup
+            content="Delete document"
+            trigger={
+              <Button
+                compact
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete this document?"
+                    )
+                  )
+                    props.handleDeleteDocumentClick(id);
+                }}
+                icon="trash"
+              />
+            }
+          />
+        ) : null}
       </Table.Cell>
     );
   } else if (userName === translatorName && status === "Processing") {

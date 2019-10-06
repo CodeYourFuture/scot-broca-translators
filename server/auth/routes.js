@@ -17,7 +17,8 @@ router.post("/login", async (req, res, next) => {
   console.log(`Login attempt ${email}`);
   try {
     const user = await db.getUserByEmail(email);
-    // const languages = await db.getUserLanguages();
+    const languages = await db.getUserLanguages(email);
+    console.log(languages);
 
     if (!email || !password || !user || password !== user.password) {
       return res.sendStatus(403);
@@ -38,15 +39,15 @@ router.post("/login", async (req, res, next) => {
  * Users Registration
  */
 router.post("/register", async (req, res, next) => {
-  const { email, password, name, role } = req.body;
+  const { email, password, name, role, languages } = req.body;
 
   const user = {
     email,
     password,
     name,
-    role
+    role,
+    languages
   };
-
   const errorMessages = [];
 
   if (!emailValidate(email)) {

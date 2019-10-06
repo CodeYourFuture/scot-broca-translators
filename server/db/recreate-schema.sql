@@ -1,11 +1,14 @@
 DROP TABLE if exists translations;
 DROP TABLE if exists documents;
+DROP TABLE if exists users_languages;
 DROP TABLE if exists languages;
 DROP TABLE if exists users;
+
 
 DROP TYPE if exists user_role;
 DROP Type if exists document_status;
 DROP TYPE if exists format_types;
+
 
 
 create type user_role as enum ('Interpreter', 'User');
@@ -48,4 +51,11 @@ CREATE TABLE translations (
   start_date       DATE NOT NULL,
   submission_date  DATE,
   content          TEXT
+);
+
+CREATE TABLE users_languages (
+
+  id               SERIAL PRIMARY KEY,
+  user_id          uuid REFERENCES users(id) NOT NULL, 
+  language_code    VARCHAR(6) REFERENCES languages(code) NOT NULL
 )

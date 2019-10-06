@@ -9,7 +9,7 @@ import {
   Label,
   Checkbox
 } from "semantic-ui-react";
-import { getDocuments } from "../api/documents";
+import { getDocuments, deleteDocumentById } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
 import ActionColumn from "./ActionColumn";
 import StatusColumn from "./StatusColumn";
@@ -17,6 +17,7 @@ import NameColumn from "./NameColumn";
 import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
 import displayToastMessage from "./helpers/displayToastMessage";
+import getGreeting from "./helpers/getGreeting";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -64,6 +65,31 @@ class Dashboard extends Component {
       })
       .catch(error => {
         displayToastMessage("error", "cancel", "There is error");
+        error.text().then(errorMessage =>
+          this.setState({
+            hasErrors: true,
+            errorMessage: errorMessage
+          })
+        );
+      });
+  };
+
+  handleDeleteDocumentClick = id => {
+    deleteDocumentById(id)
+      .then(response => {
+        if (response.status === 200) {
+          displayToastMessage(
+            "success",
+            "check",
+            "You deleted document successfully"
+          );
+          this.setDocuments();
+        } else {
+          throw response;
+        }
+      })
+      .catch(error => {
+        displayToastMessage("error", "cancel", "There is an error");
         error.text().then(errorMessage =>
           this.setState({
             hasErrors: true,
@@ -127,10 +153,11 @@ class Dashboard extends Component {
       { header: "To Language", sortKey: "to_language_name" },
       { header: "Status", sortKey: "status" }
     ];
+
     return (
       <Container>
         <Header style={{ marginTop: "25px" }} as="h2">
-          Hello {userName}!
+          Good {getGreeting()} {userName}!
         </Header>
         {userRole === "User" ? (
           <Button
@@ -190,9 +217,12 @@ class Dashboard extends Component {
                   due_date,
                   submission_date
                 } = document;
-                const dueDate = moment(due_date).format("L");
-                const submissionDate = moment(submission_date).format("L");
-                const todayDate = moment(new Date()).format("L");
+
+                const dueDate = moment(due_date).format("DD/MM/YYYY");
+                const submissionDate = moment(submission_date).format(
+                  "DD/MM/YYYY"
+                );
+                const todayDate = moment(new Date()).format("DD/MM/YYYY");
                 const label =
                   todayDate === submissionDate ? (
                     <Label ribbon color="blue" size="tiny">
@@ -226,6 +256,7 @@ class Dashboard extends Component {
                       handleCancelTranslationClick={
                         this.handleCancelTranslationClick
                       }
+                      handleDeleteDocumentClick={this.handleDeleteDocumentClick}
                     />
                   </Table.Row>
                 );
