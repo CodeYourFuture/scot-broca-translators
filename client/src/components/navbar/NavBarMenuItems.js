@@ -67,7 +67,7 @@ class NavBarMenuItems extends React.Component {
                 onClick={this.handleItemClick}
               />
             ) : null}
-            <Menu.Item onClick={this.logout} as={Link} header name="logout" />
+            <Menu.Item onClick={this.logout} header name="logout" />
           </React.Fragment>
         ) : (
           <React.Fragment>

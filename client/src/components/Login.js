@@ -22,10 +22,8 @@ export class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    console.log("hi");
     getToken(email, password)
       .then(res => {
-        console.log(res.user);
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("userName", res.user.name);
         sessionStorage.setItem("userRole", res.user.role);

@@ -6,7 +6,8 @@ import {
   Table,
   Button,
   Message,
-  Label
+  Label,
+  Checkbox
 } from "semantic-ui-react";
 import { getDocuments } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
@@ -139,7 +140,12 @@ class Dashboard extends Component {
           >
             Add document
           </Button>
-        ) : null}
+        ) : (
+          <div>
+            <p>Show documents I can translate </p>
+            <Checkbox toggle />
+          </div>
+        )}
         {this.state.hasErrors ? (
           <Message negative>
             <Message.Header>An error occurred</Message.Header>

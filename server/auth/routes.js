@@ -17,6 +17,7 @@ router.post("/login", async (req, res, next) => {
   console.log(`Login attempt ${email}`);
   try {
     const user = await db.getUserByEmail(email);
+    // const languages = await db.getUserLanguages();
 
     if (!email || !password || !user || password !== user.password) {
       return res.sendStatus(403);
