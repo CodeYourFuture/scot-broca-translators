@@ -82,9 +82,17 @@ const getUserById = id => {
   });
 };
 
+const updateUser = ({ newName, newEmail, newPassword, userId }) => {
+  const sqlQuery = `update users SET name = $1, email=$2, password=$3 WHERE id =$4`;
+  return pool
+    .query(sqlQuery, [newName, newEmail, newPassword, userId])
+    .then(result => result.rows);
+};
+
 module.exports = {
   getUserByEmail,
   createUser,
   getUserById,
-  getAllUsers
+  getAllUsers,
+  updateUser
 };
