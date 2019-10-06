@@ -73,22 +73,6 @@ const createUser = ({ email, password, name, role, languages }) => {
     });
 };
 
-const createUserUser = (email, password, name, role) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "INSERT INTO users (email, password,name,role) values ($1, $2,$3,$4)",
-      [email, password, name, role],
-      (error, result) => {
-        if (error) {
-          reject("An unexpected error occured, please try again later.");
-        }
-
-        resolve(result.rows);
-      }
-    );
-  });
-};
-
 const getUserById = id => {
   return new Promise((resolve, reject) => {
     pool.query("SELECT * FROM users where id = $1", [id], (error, result) => {
