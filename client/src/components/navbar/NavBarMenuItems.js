@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Link } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";

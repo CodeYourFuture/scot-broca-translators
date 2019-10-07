@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Image, Container, Dropdown, Link } from "semantic-ui-react";
+import { Menu, Image, Container, Dropdown } from "semantic-ui-react";
 import NavBarMenuItems from "./NavBarMenuItems";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { logout } from "../helpers/logout";
@@ -19,7 +19,7 @@ const NavBarDesktop = () => (
         <Menu.Menu position="right">
           <Dropdown item icon="user">
             <Dropdown.Menu>
-              <Dropdown.Item onClick={logout} as={Link} header name="logout">
+              <Dropdown.Item onClick={logout} header name="logout">
                 Logout
               </Dropdown.Item>
             </Dropdown.Menu>
