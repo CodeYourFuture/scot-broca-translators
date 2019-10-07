@@ -6,6 +6,9 @@ import { isUser } from "../helpers/isUser";
 class NavBarMenuItems extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      clicked: false
+    };
   }
   logout = () => {
     sessionStorage.clear();
@@ -19,6 +22,11 @@ class NavBarMenuItems extends React.Component {
     this.setState({ activeItem: name });
   };
 
+  handleUserClick = () => {
+    this.setState({
+      clicked: !this.state.clicked
+    });
+  };
   render() {
     const activeItem = this.props.activeItem;
 
@@ -60,6 +68,7 @@ class NavBarMenuItems extends React.Component {
               active={activeItem === "dashboard"}
               onClick={this.handleItemClick}
             />
+
             {isUser() ? (
               <Menu.Item
                 name="add document"
@@ -70,7 +79,11 @@ class NavBarMenuItems extends React.Component {
                 onClick={this.handleItemClick}
               />
             ) : null}
-            <Menu.Item onClick={this.logout} as={Link} header name="logout" />
+
+            <Menu.Item icon="user" onClick={this.handleUserClick} />
+            {this.state.clicked ? (
+              <Menu.Item onClick={this.logout} as={Link} header name="logout" />
+            ) : null}
           </React.Fragment>
         ) : (
           <React.Fragment>
