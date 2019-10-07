@@ -1,6 +1,8 @@
 import React from "react";
-import { Menu, Image, Container } from "semantic-ui-react";
+import { Menu, Image, Container, Dropdown, Link } from "semantic-ui-react";
 import NavBarMenuItems from "./NavBarMenuItems";
+import { isLoggedIn } from "../helpers/isLoggedIn";
+import { logout } from "../helpers/logout";
 
 const NavBarDesktop = () => (
   <Menu inverted>
@@ -13,6 +15,17 @@ const NavBarDesktop = () => (
       </Menu.Item>
 
       <NavBarMenuItems />
+      {isLoggedIn() ? (
+        <Menu.Menu position="right">
+          <Dropdown item icon="user">
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={logout} as={Link} header name="logout">
+                Logout
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Menu>
+      ) : null}
     </Container>
   </Menu>
 );

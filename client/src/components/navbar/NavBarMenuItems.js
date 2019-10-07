@@ -1,16 +1,13 @@
 import React from "react";
-import { Menu, Dropdown } from "semantic-ui-react";
+import { Menu, Link } from "semantic-ui-react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
+import { logout } from "../helpers/logout";
 class NavBarMenuItems extends React.Component {
   constructor(props) {
     super(props);
   }
-  logout = () => {
-    sessionStorage.clear();
-    window.location.href = "/";
-  };
 
   handleItemClick = (e, { name }) => {
     if (this.props.onPusherClick) {
@@ -70,22 +67,7 @@ class NavBarMenuItems extends React.Component {
                 onClick={this.handleItemClick}
               />
             ) : null}
-
-            <Menu.Menu position="right">
-              <Dropdown item icon="user">
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={this.logout}
-                    as={Link}
-                    header
-                    name="logout"
-                  >
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu.Menu>
-            <Menu.Item />
+            <Menu.Item onClick={logout} as={Link} header name="logout" />
           </React.Fragment>
         ) : (
           <React.Fragment>
