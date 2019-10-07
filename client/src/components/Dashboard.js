@@ -143,13 +143,13 @@ class Dashboard extends Component {
     });
   };
 
-  handleToggle = languages => {
+  handleToggle = () => {
     this.setState({ toggled: !this.state.toggled });
   };
 
-  getFilteredDocs = (documents, languages) => {
+  getFilteredDocs = languages => {
     if (!this.state.toggled) {
-      return documents;
+      return this.state.documents;
     } else {
       return this.state.documents.filter(document => {
         return (
@@ -193,7 +193,7 @@ class Dashboard extends Component {
               style={{ float: "right" }}
               toggle
               label="Only show documents I can translate"
-              onClick={() => this.handleToggle(languages)}
+              onClick={this.handleToggle}
             />
           )}
         </Header>
@@ -230,7 +230,7 @@ class Dashboard extends Component {
 
           <Table.Body>
             {documents &&
-              this.getFilteredDocs(documents, languages).map(document => {
+              this.getFilteredDocs(languages).map(document => {
                 const {
                   id,
                   name,
