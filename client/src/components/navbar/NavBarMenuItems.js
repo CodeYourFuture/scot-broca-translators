@@ -1,14 +1,11 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Dropdown } from "semantic-ui-react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
 class NavBarMenuItems extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      clicked: false
-    };
   }
   logout = () => {
     sessionStorage.clear();
@@ -22,11 +19,6 @@ class NavBarMenuItems extends React.Component {
     this.setState({ activeItem: name });
   };
 
-  handleUserClick = () => {
-    this.setState({
-      clicked: !this.state.clicked
-    });
-  };
   render() {
     const activeItem = this.props.activeItem;
 
@@ -79,20 +71,21 @@ class NavBarMenuItems extends React.Component {
               />
             ) : null}
 
-            <Menu.Item
-              position="top right"
-              icon="user"
-              onClick={this.handleUserClick}
-            />
-            {this.state.clicked ? (
-              <Menu.Item
-                icon="sign out"
-                onClick={this.logout}
-                as={Link}
-                header
-                name="logout"
-              />
-            ) : null}
+            <Menu.Menu position="right">
+              <Dropdown item icon="user">
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={this.logout}
+                    as={Link}
+                    header
+                    name="logout"
+                  >
+                    Logout
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Menu>
+            <Menu.Item />
           </React.Fragment>
         ) : (
           <React.Fragment>
