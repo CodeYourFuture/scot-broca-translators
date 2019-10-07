@@ -68,7 +68,6 @@ class NavBarMenuItems extends React.Component {
               active={activeItem === "dashboard"}
               onClick={this.handleItemClick}
             />
-
             {isUser() ? (
               <Menu.Item
                 name="add document"
@@ -80,9 +79,19 @@ class NavBarMenuItems extends React.Component {
               />
             ) : null}
 
-            <Menu.Item icon="user" onClick={this.handleUserClick} />
+            <Menu.Item
+              position="top right"
+              icon="user"
+              onClick={this.handleUserClick}
+            />
             {this.state.clicked ? (
-              <Menu.Item onClick={this.logout} as={Link} header name="logout" />
+              <Menu.Item
+                icon="sign out"
+                onClick={this.logout}
+                as={Link}
+                header
+                name="logout"
+              />
             ) : null}
           </React.Fragment>
         ) : (
