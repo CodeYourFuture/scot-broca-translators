@@ -19,7 +19,12 @@ const NavBarDesktop = () => (
         <Menu.Menu position="right">
           <Dropdown item icon="user">
             <Dropdown.Menu>
-              <Dropdown.Item onClick={logout} header name="logout">
+              <Dropdown.Item
+                icon="sign out"
+                onClick={logout}
+                header
+                name="logout"
+              >
                 Logout
               </Dropdown.Item>
             </Dropdown.Menu>
