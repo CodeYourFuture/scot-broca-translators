@@ -7,7 +7,8 @@ import {
   Button,
   Message,
   Label,
-  Checkbox
+  Checkbox,
+  Responsive
 } from "semantic-ui-react";
 import { getDocuments, deleteDocumentById } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
@@ -160,6 +161,27 @@ class Dashboard extends Component {
     }
   };
 
+  getDashboardOptions = userRole => {
+    if (userRole === "User") {
+      return (
+        <Button
+          color="blue"
+          onClick={() => this.props.history.push("/add-document")}
+        >
+          Add document
+        </Button>
+      );
+    } else {
+      return (
+        <Checkbox
+          toggle
+          label="Only show documents I can translate"
+          onClick={this.handleToggle}
+        />
+      );
+    }
+  };
+
   render() {
     const { documents, sorted, sortedHeaderCellIndex } = this.state;
     const userName = sessionStorage.getItem("userName");
@@ -180,22 +202,15 @@ class Dashboard extends Component {
       <Container>
         <Header style={{ marginTop: "25px" }} as="h2">
           Good {getGreeting()} {userName}!
-          {userRole === "User" ? (
-            <Button
-              style={({ marginBottom: "1em" }, { float: "right" })}
-              color="blue"
-              onClick={() => this.props.history.push("/add-document")}
-            >
-              Add document
-            </Button>
-          ) : (
-            <Checkbox
-              style={{ float: "right" }}
-              toggle
-              label="Only show documents I can translate"
-              onClick={this.handleToggle}
-            />
-          )}
+          <Responsive {...Responsive.onlyMobile} style={{ margin: "1em 0" }}>
+            {this.getDashboardOptions(userRole)}
+          </Responsive>
+          <Responsive
+            minWidth={Responsive.onlyTablet.minWidth}
+            style={{ float: "right" }}
+          >
+            {this.getDashboardOptions(userRole)}
+          </Responsive>
         </Header>
 
         {this.state.hasErrors ? (
