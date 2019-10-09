@@ -8,12 +8,7 @@ const View = props => {
     <Popup
       content="View"
       trigger={
-        <Button
-          as={Link}
-          to={`/document/${id}`}
-          compact
-          icon="file text icon"
-        />
+        <Button as={Link} to={`/document/${id}`} compact icon="file text" />
       }
     />
   );
@@ -65,7 +60,7 @@ const ActionColumn = props => {
               as={Link}
               to={`/add-document-translation/${id}`}
               compact
-              icon="send icon"
+              icon="send"
             />
           }
         />
@@ -75,7 +70,7 @@ const ActionColumn = props => {
             <Button
               compact
               onClick={() => props.handleCancelTranslationClick(translationId)}
-              icon="delete icon"
+              icon="delete"
             />
           }
         />
@@ -92,7 +87,7 @@ const ActionColumn = props => {
               <Button
                 compact
                 onClick={() => props.handlePickDocumentClick(id)}
-                icon="add icon"
+                icon="add"
               />
             }
           />

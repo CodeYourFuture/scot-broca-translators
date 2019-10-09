@@ -96,13 +96,7 @@ class InterpreterSignUpForm extends Component {
     return (
       <div>
         <Grid padded="horizontally" centered column={16}>
-          <Grid.Column
-            largeScreen="6"
-            computer="10"
-            mobile="16"
-            tablet="10"
-            width={6}
-          >
+          <Grid.Column largeScreen="6" computer="10" mobile="16" tablet="10">
             <Header as="h1" icon textAlign="center">
               <Header.Content style={{ marginTop: "18px" }}>
                 Translator Registration
@@ -145,7 +139,7 @@ class InterpreterSignUpForm extends Component {
                   </Form.Field>
                   <Form.Field inline>
                     <Form.Input
-                      fluid="true"
+                      fluid
                       icon="envelope"
                       iconPosition="left"
                       label="Email"

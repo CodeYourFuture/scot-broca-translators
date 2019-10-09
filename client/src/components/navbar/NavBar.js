@@ -1,7 +1,7 @@
 import React from "react";
 import NavBarDesktop from "./NavBarDesktop";
 import NavBarMobile from "./NavBarMobile";
-import { Container, Responsive } from "semantic-ui-react";
+import { Responsive } from "semantic-ui-react";
 
 class NavBar extends React.Component {
   state = {
