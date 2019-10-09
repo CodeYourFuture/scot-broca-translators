@@ -14,6 +14,7 @@ INSERT INTO languages (code, name) VALUES ('be','Bengali');
 INSERT INTO languages (code, name) VALUES ('fr','French');
 
 
+
 INSERT INTO documents (name, from_language_code, to_language_code, status, submission_date, due_date, owner_id, format, content) values ('Birth Certificate', 'ar','en', 'Waiting', '2019-10-08',NOW() - INTERVAL '2 DAY','a2deeae9-1d8c-44ef-a187-a85dfa56fee8','Text', E'كان لايزال " لويس باستور" مدرسا للكيمياء في جامعة ستراسبورغ حين التقى بـ"ماري آن لوران" ابنة رئيس الجامعة التي غيرت حياته وليصبح زوجها  عالما أنقذ ملايين البشر وترك بصمة وأثراً كبيراً لدى البشرية.
 ولد "باستور" في 27 كانون الاول / ديسمبر 1822 بمدينة دول في فرنسا، حصل على درجة بكالوريوس آداب سنة 1840، وحصل على الدكتوراه سنة 1847، ثم أصبح أستاذ للكيمياء في جامعة ستراسبورغ، بعد أن قضى فترة وجيزة كأستاذ فيزياء في ثانوية ديجون عام 1848.
 باستور  مع زوجته
