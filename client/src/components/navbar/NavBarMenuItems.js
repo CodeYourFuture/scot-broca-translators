@@ -3,7 +3,7 @@ import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
-import { logout } from "../helpers/logout";
+
 class NavBarMenuItems extends React.Component {
   constructor(props) {
     super(props);

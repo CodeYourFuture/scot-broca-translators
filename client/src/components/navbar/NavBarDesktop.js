@@ -17,16 +17,15 @@ const NavBarDesktop = () => (
       <NavBarMenuItems />
       {isLoggedIn() ? (
         <Menu.Menu position="right">
-          <Dropdown item icon="user">
+          <Dropdown item icon="user" floating pointing="top right">
             <Dropdown.Menu>
               <Dropdown.Item
                 icon="sign out"
                 onClick={logout}
                 header
                 name="logout"
-              >
-                Logout
-              </Dropdown.Item>
+                text="Logout"
+              ></Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>

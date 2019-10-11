@@ -22,9 +22,9 @@ export class Login extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
-
     getToken(email, password)
       .then(res => {
+        sessionStorage.setItem("languages", JSON.stringify(res.languages));
         sessionStorage.setItem("token", res.token);
         sessionStorage.setItem("userName", res.user.name);
         sessionStorage.setItem("userRole", res.user.role);
@@ -39,13 +39,7 @@ export class Login extends Component {
     const { email, password, loginErr } = this.state;
     return (
       <Grid padded="horizontally" centered columns={16}>
-        <Grid.Column
-          largeScreen="6"
-          computer="10"
-          mobile="16"
-          tablet="10"
-          width={6}
-        >
+        <Grid.Column largeScreen="6" computer="10" mobile="16" tablet="10">
           <Header as="h2" textAlign="center">
             Log-in to your account
           </Header>
@@ -54,7 +48,7 @@ export class Login extends Component {
             <Form size="large" onSubmit={this.handleSubmit}>
               <Form.Field inline>
                 <Input
-                  fluid="true"
+                  fluid
                   icon="user"
                   iconPosition="left"
                   placeholder="E-mail Address"
@@ -67,7 +61,7 @@ export class Login extends Component {
 
               <Form.Field inline>
                 <Input
-                  fluid="true"
+                  fluid
                   icon="lock"
                   iconPosition="left"
                   placeholder="Password"
@@ -81,10 +75,10 @@ export class Login extends Component {
               {loginErr ? (
                 <p>Something went wrong! Please check email or password!</p>
               ) : null}
-              <Button fluid="true" type="submit" content="Login" primary />
+              <Button fluid type="submit" content="Login" primary />
             </Form>
           </Segment>
-          <Segment size="medium" secondary textAlign="center">
+          <Segment size="small" secondary textAlign="center">
             New to us ?
             <Link to={`/sign-up-user/`}>
               <span> Sign up </span>
