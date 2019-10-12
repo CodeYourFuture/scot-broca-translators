@@ -90,3 +90,6 @@ INSERT INTO documents (name, from_language_code, to_language_code, status, submi
 Чтобы узнать, как вы в целом, как холестерин или сахар в крови,');
 
 insert into translations (user_id, document_id, start_date) values ('db5b2e53-acd2-4af0-bd91-8554d9dc09ef', 2, '2019-07-20');
+
+INSERT INTO users_languages(user_id,language_code) VALUES ('db5b2e53-acd2-4af0-bd91-8554d9dc09ef','en');
+INSERT INTO users_languages(user_id,language_code) VALUES ('db5b2e53-acd2-4af0-bd91-8554d9dc09ef','es');
