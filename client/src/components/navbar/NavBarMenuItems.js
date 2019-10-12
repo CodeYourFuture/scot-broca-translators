@@ -1,13 +1,13 @@
 import React from "react";
 import { Menu } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
+
 class NavBarMenuItems extends React.Component {
-  logout = () => {
-    sessionStorage.clear();
-    window.location.href = "/";
-  };
+  constructor(props) {
+    super(props);
+  }
 
   handleItemClick = (e, { name }) => {
     if (this.props.onPusherClick) {
@@ -67,7 +67,6 @@ class NavBarMenuItems extends React.Component {
                 onClick={this.handleItemClick}
               />
             ) : null}
-            <Menu.Item onClick={this.logout} header name="logout" />
           </React.Fragment>
         ) : (
           <React.Fragment>
