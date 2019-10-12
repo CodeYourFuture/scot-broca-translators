@@ -14,7 +14,7 @@ const DocumentTranslationContent = ({ document, translation }) => {
           <Grid.Column as="p">{translation}</Grid.Column>
         </Grid>
       ) : (
-        <p>{document}</p>
+        <p className="text">{document}</p>
       )}
     </Container>
   );
