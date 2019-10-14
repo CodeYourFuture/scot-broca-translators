@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const usersDb = require("../services/database/users");
 const passport = require("passport");
+import {
+  nameValidate,
+  emailValidate,
+  passwordValidate
+} from "../auth/validator";
 
 /**
  * The route here will be: /users/ (remember the prefix users is defined in api/index.js)
@@ -26,30 +31,23 @@ router.put(
     const newName = req.body.name;
     const newPassword = req.body.password;
     const newEmail = req.body.email;
-
-    const currentName = req.user.name;
-    const currentEmail = req.user.email;
-    const currentPassword = req.user.password;
-
-    if (req.user == null || req.user == undefined) {
+    const nameResult = nameValidate(newName);
+    const emailResult = emailValidate(newEmail);
+    const passwordResult = passwordValidate(newPassword);
+    if (!req.use) {
       res.status(401).send("Unauthorised");
       return;
     }
 
-    if (newName === "" || newName.length == undefined || newName == null) {
-      return currentName;
+    if (nameResult == false) {
+      res.status(400).send("Error");
     }
 
-    if (
-      !newEmail.includes("@") ||
-      newEmail === "" ||
-      newEmail === undefined ||
-      newEmail == null
-    ) {
-      return currentEmail;
+    if (emailResult==false) {
+      res.status(400).send("Error");
     }
-    if (newPassword === "" || newPassword == undefined || newPassword == null) {
-      return currentPassword;
+    if (passwordResult==false) {
+      res.status(400).send("Error");
     } else {
       userDb
         .updateUser(newName, newEmail, newPassword, userId)
