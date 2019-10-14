@@ -3,14 +3,11 @@ import { Menu } from "semantic-ui-react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import { isLoggedIn } from "../helpers/isLoggedIn";
 import { isUser } from "../helpers/isUser";
+
 class NavBarMenuItems extends React.Component {
   constructor(props) {
     super(props);
   }
-  logout = () => {
-    sessionStorage.clear();
-    window.location.href = "/";
-  };
 
   handleItemClick = (e, { name }) => {
     if (this.props.onPusherClick) {
@@ -70,7 +67,6 @@ class NavBarMenuItems extends React.Component {
                 onClick={this.handleItemClick}
               />
             ) : null}
-            <Menu.Item onClick={this.logout} as={Link} header name="logout" />
           </React.Fragment>
         ) : (
           <React.Fragment>

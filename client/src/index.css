@@ -11,3 +11,6 @@ body {
   min-height: 75vh;
   flex-direction: column;
 }
+.text {
+  white-space: pre-wrap;
+}

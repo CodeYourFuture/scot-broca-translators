@@ -21,12 +21,13 @@ router.post("/login", async (req, res, next) => {
     if (!email || !password || !user || password !== user.password) {
       return res.sendStatus(403);
     }
-
+    const id = user.id;
+    const languages = await db.getUserLanguages(id);
     const secret = process.env.JWT_SECRET || "your_jwt_secret";
     const token = jwt.sign({ userId: user.id }, secret);
     delete user.password;
     delete user.salt;
-    return res.send({ token, user });
+    return res.send({ token, user, languages });
   } catch (e) {
     console.error(e);
     next(e);

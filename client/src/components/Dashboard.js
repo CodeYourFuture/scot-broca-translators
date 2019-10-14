@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import moment from "moment";
+import moment, { lang } from "moment";
 import {
   Header,
   Container,
   Table,
   Button,
   Message,
-  Label
+  Label,
+  Checkbox,
+  Responsive
 } from "semantic-ui-react";
 import { getDocuments, deleteDocumentById } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
@@ -25,7 +27,8 @@ class Dashboard extends Component {
       documents: [],
       sortedHeaderCellIndex: null,
       sortKey: "",
-      sorted: ""
+      sorted: "",
+      toggled: false
     };
   }
 
@@ -141,10 +144,52 @@ class Dashboard extends Component {
     });
   };
 
+  handleToggle = () => {
+    this.setState({ toggled: !this.state.toggled });
+  };
+
+  getFilteredDocs = languages => {
+    if (!this.state.toggled) {
+      return this.state.documents;
+    } else {
+      return this.state.documents.filter(document => {
+        return (
+          languages.includes(document.from_language_name) &&
+          languages.includes(document.to_language_name)
+        );
+      });
+    }
+  };
+
+  getDashboardOptions = userRole => {
+    if (userRole === "User") {
+      return (
+        <Button
+          color="blue"
+          onClick={() => this.props.history.push("/add-document")}
+        >
+          Add document
+        </Button>
+      );
+    } else {
+      return (
+        <Checkbox
+          toggle
+          label="Only show documents I can translate"
+          onClick={this.handleToggle}
+        />
+      );
+    }
+  };
+
   render() {
     const { documents, sorted, sortedHeaderCellIndex } = this.state;
     const userName = sessionStorage.getItem("userName");
     const userRole = sessionStorage.getItem("userRole");
+    let languages = JSON.parse(sessionStorage.getItem("languages")).map(
+      language => language.language_name
+    );
+
     const headerCells = [
       { header: "Document", sortKey: "name" },
       { header: "Due Date", sortKey: "due_date" },
@@ -157,16 +202,17 @@ class Dashboard extends Component {
       <Container>
         <Header style={{ marginTop: "25px" }} as="h2">
           Good {getGreeting()} {userName}!
-        </Header>
-        {userRole === "User" ? (
-          <Button
-            style={{ marginBottom: "1em" }}
-            color="blue"
-            onClick={() => this.props.history.push("/add-document")}
+          <Responsive {...Responsive.onlyMobile} style={{ margin: "1em 0" }}>
+            {this.getDashboardOptions(userRole)}
+          </Responsive>
+          <Responsive
+            minWidth={Responsive.onlyTablet.minWidth}
+            style={{ float: "right" }}
           >
-            Add document
-          </Button>
-        ) : null}
+            {this.getDashboardOptions(userRole)}
+          </Responsive>
+        </Header>
+
         {this.state.hasErrors ? (
           <Message negative>
             <Message.Header>An error occurred</Message.Header>
@@ -199,7 +245,7 @@ class Dashboard extends Component {
 
           <Table.Body>
             {documents &&
-              documents.map(document => {
+              this.getFilteredDocs(languages).map(document => {
                 const {
                   id,
                   name,

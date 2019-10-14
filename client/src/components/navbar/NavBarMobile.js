@@ -1,6 +1,8 @@
 import React from "react";
 import { Menu, Image, Sidebar, Icon } from "semantic-ui-react";
 import NavBarMenuItems from "./NavBarMenuItems";
+import { logout } from "../helpers/logout";
+import { isLoggedIn } from "../helpers/isLoggedIn";
 
 const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => (
   <Sidebar.Pushable>
@@ -13,6 +15,9 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => (
       visible={visible}
     >
       <NavBarMenuItems onPusherClick={onPusherClick} />
+      {isLoggedIn() ? (
+        <Menu.Item onClick={logout} header name="logout" />
+      ) : null}
     </Sidebar>
     <Sidebar.Pusher
       dimmed={visible}
