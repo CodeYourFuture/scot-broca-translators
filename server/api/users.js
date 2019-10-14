@@ -34,19 +34,12 @@ router.put(
     const nameResult = nameValidate(newName);
     const emailResult = emailValidate(newEmail);
     const passwordResult = passwordValidate(newPassword);
-    if (!req.use) {
+    if (!req.user) {
       res.status(401).send("Unauthorised");
       return;
     }
 
-    if (nameResult == false) {
-      res.status(400).send("Error");
-    }
-
-    if (emailResult==false) {
-      res.status(400).send("Error");
-    }
-    if (passwordResult==false) {
+    if (!nameResult || !emailResult || !passwordResult) {
       res.status(400).send("Error");
     } else {
       userDb
