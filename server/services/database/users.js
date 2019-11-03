@@ -20,12 +20,17 @@ const getAllUsers = () => {
 };
 
 const getUserByEmail = email => {
-  return new Promise(resolve => {
+  return new Promise((resolve , reject) => {
     pool.query(
       "SELECT * FROM users where email = $1",
       [email],
       (error, result) => {
-        resolve(result.rows[0]);
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else {
+          resolve(result.rows[0]);
+        }
       }
     );
   });

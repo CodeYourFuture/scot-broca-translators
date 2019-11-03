@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import moment, { lang } from "moment";
+import moment from "moment";
 import {
   Header,
   Container,
@@ -8,7 +8,8 @@ import {
   Message,
   Label,
   Checkbox,
-  Responsive
+  Responsive,
+  Icon
 } from "semantic-ui-react";
 import { getDocuments, deleteDocumentById } from "../api/documents";
 import { pickDocument, cancelTranslation } from "../api/translations";
@@ -19,6 +20,7 @@ import { sortDocuments } from "./helpers/sortDocuments";
 import HeaderCell from "./HeaderCell";
 import displayToastMessage from "./helpers/displayToastMessage";
 import getGreeting from "./helpers/getGreeting";
+import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -303,6 +305,12 @@ class Dashboard extends Component {
               })}
           </Table.Body>
         </Table>
+        <div>
+          <Icon name="angle double left"></Icon>Back to
+          <Link to={`/`}>
+            <span> Homepage </span>
+          </Link>
+        </div>
       </Container>
     );
   }

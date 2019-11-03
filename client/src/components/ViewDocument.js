@@ -1,9 +1,17 @@
 import React, { Component } from "react";
-import { Header, Container, Segment, Table, Grid } from "semantic-ui-react";
+import {
+  Header,
+  Container,
+  Segment,
+  Table,
+  Grid,
+  Icon
+} from "semantic-ui-react";
 import DocumentInformationBar from "./DocumentInformationBar";
 import { getDocumentById } from "../api/documents";
 import { getTranslationById } from "../api/translations";
 import TranslationInfoBar from "./TranslationInfoBar";
+import { Link } from "react-router-dom";
 
 const DocumentTranslationContent = ({ document, translation }) => {
   return (
@@ -94,6 +102,12 @@ export class ViewDocument extends Component {
             />
           </Segment>
         )}
+        <div>
+          <Icon name="angle double left"></Icon>Back to
+          <Link to={`/dashboard/`}>
+            <span> Dashboard </span>
+          </Link>{" "}
+        </div>
       </Container>
     );
   }
